@@ -42,7 +42,7 @@ class LoadPredictionController(QMainWindow):
 
     def save_csv(self):
         self.loader = LoadPreprocessedData(self.csv_path)
-        data_frame = self.loader.load_data()
+        self.data_frame = self.loader.load_data()
 
         data_frame = self.calibrator.fill_missing_value(data_frame=data_frame)
 
@@ -77,7 +77,7 @@ class LoadPredictionController(QMainWindow):
             QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
             return
 
-
+        
         #TODO train model between dates
 
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)
