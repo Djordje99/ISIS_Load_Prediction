@@ -4,8 +4,8 @@ from PyQt5.QtGui import *
 from PyQt5 import uic
 
 from database.controller import DatabaseController
-from services.preprocessing.load_preprocessed_data import LoadPreprocessedData
-from services.preprocessing.weather.temperature_calibrator import TemperatureCalibrator
+from services.training.model_creator import ModelCreator
+
 
 class LoadPredictionController(QMainWindow):
     def __init__(self):
@@ -16,7 +16,7 @@ class LoadPredictionController(QMainWindow):
         self.show()
 
         self.database_controller = DatabaseController()
-        self.calibrator = TemperatureCalibrator()
+        self.model_creator = ModelCreator()
         self.csv_path = ''
 
 
@@ -36,24 +36,20 @@ class LoadPredictionController(QMainWindow):
             self.save_csv_btn.setEnabled(False)
             self.from_date_edit.setEnabled(False)
             self.to_date_edit.setEnabled(False)
-
             self.train_btn.setEnabled(False)
 
 
     def save_csv(self):
-        self.loader = LoadPreprocessedData(self.csv_path)
-        self.data_frame = self.loader.load_data()
-
-        data_frame = self.calibrator.fill_missing_value(data_frame=data_frame)
-
-        self.database_controller.save_to_db(data_frame)
+        self.database_controller.save_to_db(self.csv_path)
 
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
 
-        self.__set_dates(data_frame['date'].min(), data_frame['date'].max())
+        self.__set_dates()
 
 
-    def __set_dates(self, min_date, max_date):
+    def __set_dates(self):
+        max_date, min_date = self.database_controller.get_max_min_dates()
+
         q_date_min = QDateTime(min_date)
         q_date_max = QDateTime(max_date)
 
@@ -77,7 +73,7 @@ class LoadPredictionController(QMainWindow):
             QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
             return
 
-        
         #TODO train model between dates
+        self.model_creator.create_model()
 
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)
