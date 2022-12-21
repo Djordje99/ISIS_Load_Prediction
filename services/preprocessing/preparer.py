@@ -18,8 +18,6 @@ class Preparer:
         self.string_normalizer = StringNormalizer(data_frame)
         data_frame = self.string_normalizer.normalize_string()
 
-        print(data_frame.head())
-
         self.dataset_values = data_frame.values
         self.dataset_values = self.dataset_values.astype('float32')
 
@@ -29,6 +27,8 @@ class Preparer:
 
 
     def prepare_for_training(self):
+        print(len(self.dataset_values[0]))
+
         dataset = self.scaler.fit_transform(self.dataset_values)
 
         train_size = int(len(dataset) * self.share_for_training)
