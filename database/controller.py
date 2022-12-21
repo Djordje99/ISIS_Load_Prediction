@@ -16,6 +16,8 @@ class DatabaseController():
         self.data_frame = self.loader.load_data()
 
         self.data_frame = self.calibrator.fill_missing_value(data_frame=self.data_frame)
+        self.data_frame = self.calibrator.fill_mean_temperature(data_frame=self.data_frame)
+
         self.connection = sqlite3.connect(DATABASE_NAME)
         self.data_frame.to_sql(name='Load', con=self.connection, if_exists='replace')
         self.connection.close()

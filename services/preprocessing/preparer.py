@@ -12,11 +12,16 @@ class Preparer:
         self.date_normalizer = DateNormalizer(data_frame)
         data_frame = self.date_normalizer.normalize_date()
 
+        self.string_normalizer = StringNormalizer(data_frame)
+        data_frame = self.string_normalizer.normalize_string()
+
         self.missing_value_normalizer = MissingValue(data_frame)
         data_frame = self.missing_value_normalizer.normalize_missing_value()
 
-        self.string_normalizer = StringNormalizer(data_frame)
-        data_frame = self.string_normalizer.normalize_string()
+        data_frame = data_frame.drop(['PTID'], axis=1)
+        data_frame = data_frame.drop(['uvindex'], axis=1)
+
+        print(data_frame.head())
 
         self.dataset_values = data_frame.values
         self.dataset_values = self.dataset_values.astype('float32')

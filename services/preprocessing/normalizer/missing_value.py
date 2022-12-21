@@ -1,5 +1,5 @@
 
-MISSING_VALUE_BORDER = 0.50
+MISSING_VALUE_BORDER = 0
 
 class MissingValue():
     def __init__(self, data_frame) -> None:
