@@ -23,13 +23,18 @@ class LoadDataLoader():
     def __load_folder_data(self, folder_path):
         for filename in os.scandir(folder_path):
             if filename.is_file() and filename.name.endswith('.csv'):
-                data_frame_temp = pd.read_csv(filename.path, engine='python', sep=',', names=["date","time_zone","name","PTID","load"])
-                data_frame_temp = data_frame_temp.drop(0)
+                data_frame_temp = pd.read_csv(filename.path, engine='python', sep=',', header=0, usecols=[0, 2, 4], names=['date', 'name', 'load'])
+
+                print(data_frame_temp.head())
+
+                #data_frame_temp = data_frame_temp.drop(0)
                 self.data_frame = pd.concat([self.data_frame, data_frame_temp], axis=0)
 
 
     def __filter_data(self):
         self.data_frame = self.data_frame.loc[self.data_frame['name'] == TARGETED_CITY]
+
+        self.data_frame = self.data_frame.drop('name', axis=1)
 
         self.data_frame = self.data_frame[self.data_frame['date'].str.endswith("00:00")]
 

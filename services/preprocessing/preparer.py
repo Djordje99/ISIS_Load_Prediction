@@ -18,8 +18,8 @@ class Preparer:
         self.missing_value_normalizer = MissingValue(data_frame)
         data_frame = self.missing_value_normalizer.normalize_missing_value()
 
-        data_frame = data_frame.drop(['PTID'], axis=1)
-        data_frame = data_frame.drop(['uvindex'], axis=1)
+        # data_frame = data_frame.drop(['PTID'], axis=1)
+        # data_frame = data_frame.drop(['uvindex'], axis=1)
 
         print(data_frame.head())
 
@@ -32,8 +32,6 @@ class Preparer:
 
 
     def prepare_for_training(self):
-        print(len(self.dataset_values[0]))
-
         dataset = self.scaler.fit_transform(self.dataset_values)
 
         train_size = int(len(dataset) * self.share_for_training)

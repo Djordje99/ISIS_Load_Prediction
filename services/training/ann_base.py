@@ -22,7 +22,7 @@ class AnnBase:
         self.kernel_initializer = KERNEL_INITIALIZER
         self.activation_function = ACTIVATION_FUNCTION
         self.number_of_hidden_layers = NUMBER_OF_HIDDEN_LAYERS
-        self.number_of_neurons_in_first_hidden_layer = 20
+        self.number_of_neurons_in_first_hidden_layer = 16
         self.number_of_neurons_in_other_hidden_layers = 8
         self.verbose = VERBOSE
 

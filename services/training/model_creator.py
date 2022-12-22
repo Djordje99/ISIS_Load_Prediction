@@ -6,7 +6,7 @@ from services.scorer.ploting import CustomPloting
 from time import time
 
 
-NUMBER_OF_COLUMNS = 26
+NUMBER_OF_COLUMNS = 24
 SHARE_FOR_TRAINING = 0.85
 
 
