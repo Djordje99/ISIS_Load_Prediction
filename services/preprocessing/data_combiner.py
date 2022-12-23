@@ -3,6 +3,7 @@ from services.loader.load_data_loader import LoadDataLoader
 
 from services.preprocessing.weather.temperature_calibrator import TemperatureCalibrator
 from services.preprocessing.weather.weather_calibrator import WeatherCalibrator
+from services.preprocessing.load.load_calibrator import LoadCalibrator
 from services.preprocessing.normalizer.date import DateNormalizer
 from services.preprocessing.normalizer.missing_value import MissingValue
 from services.preprocessing.normalizer.string import StringNormalizer
@@ -19,7 +20,7 @@ class DataCombiner():
         self.weather_loader = WeatherDataLoader(f'{folder_path}\{WEATHER_PATH}')
         self.weather_calibrator = WeatherCalibrator()
         self.temperature_calibrator = TemperatureCalibrator()
-
+        self.load_calibrator = LoadCalibrator()
 
     def __load_load_data(self) -> pd.DataFrame:
         load_data_frame = self.load_loader.load_data()
@@ -56,5 +57,7 @@ class DataCombiner():
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
         data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
         data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
+        data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
+        data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame)
 
         return data_frame

@@ -17,7 +17,7 @@ class LoadPredictionController(QMainWindow):
 
         self.csv_path = ''
 
-        self.init_training()
+        #self.init_training()
 
 
     def __connect_buttons(self):
