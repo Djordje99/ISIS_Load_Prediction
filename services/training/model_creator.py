@@ -5,40 +5,44 @@ from services.scorer.scrorer import Scorer
 from services.scorer.ploting import CustomPloting
 from time import time
 
-
-NUMBER_OF_COLUMNS = 24
 SHARE_FOR_TRAINING = 0.85
 
 
 class ModelCreator():
     def __init__(self) -> None:
         self.controller = DatabaseController()
-        self.preparer = Preparer(self.controller.load_data_frame(), NUMBER_OF_COLUMNS, SHARE_FOR_TRAINING)
+        self.data_frame = self.controller.load_data()
+        self.column_number = len(self.data_frame.columns)
+        self.preparer = Preparer(self.data_frame, self.column_number, SHARE_FOR_TRAINING)
 
 
     def create_model(self):
+        print(self.data_frame.head())
+
         trainX, trainY, testX, testY = self.preparer.prepare_for_training()
 
-        # make predictions
         ann_regression = AnnRegression()
 
         time_begin = time()
 
-        trainPredict, testPredict = ann_regression.compile_fit_predict(trainX, trainY, testX)
+        trainPredict, testPredict = ann_regression.compile_fit_predict(trainX, trainY, testX, self.column_number - 1)
 
         time_end = time()
 
         print('Training duration: ' + str((time_end - time_begin)) + ' seconds')
 
-        # invert predictions
         trainPredict, trainY, testPredict, testY = self.preparer.inverse_transform(trainPredict, testPredict)
 
-        # calculate root mean squared error
         scorer = Scorer()
-        trainScore, testScore = scorer.get_score(trainY, trainPredict, testY, testPredict)
+        trainScore, testScore = scorer.get_rmse_score(trainY, trainPredict, testY, testPredict)
         print('Train Score: %.2f RMSE' % (trainScore))
         print('Test Score: %.2f RMSE' % (testScore))
 
-        # plotting
+        print()
+
+        trainScore, testScore = scorer.get_mare_score(trainY, trainPredict, testY, testPredict)
+        print(f'Train Score: {round(trainScore, 2)}% MARE')
+        print(f'Test Score: {round(testScore, 2)}% MARE')
+
         custom_plotting = CustomPloting()
         custom_plotting.show_plots(testPredict, testY)

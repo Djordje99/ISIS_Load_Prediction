@@ -17,6 +17,8 @@ class LoadPredictionController(QMainWindow):
 
         self.csv_path = ''
 
+        self.init_training()
+
 
     def __connect_buttons(self):
         self.csv_btn.clicked.connect(self.load_csv)
@@ -38,8 +40,8 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.database_controller = DatabaseController(self.csv_path)
-        self.database_controller.save_to_db()
+        self.database_controller = DatabaseController()
+        self.database_controller.save_to_db(self.csv_path)
 
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
 
@@ -67,12 +69,12 @@ class LoadPredictionController(QMainWindow):
     def init_training(self):
         self.model_creator = ModelCreator()
 
-        date_form = self.from_date_edit.dateTime()
-        date_to = self.to_date_edit.dateTime()
+        # date_form = self.from_date_edit.dateTime()
+        # date_to = self.to_date_edit.dateTime()
 
-        if date_to <= date_form:
-            QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
-            return
+        # if date_to <= date_form:
+        #     QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
+        #     return
 
         self.model_creator.create_model()
 

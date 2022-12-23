@@ -25,9 +25,6 @@ class LoadDataLoader():
             if filename.is_file() and filename.name.endswith('.csv'):
                 data_frame_temp = pd.read_csv(filename.path, engine='python', sep=',', header=0, usecols=[0, 2, 4], names=['date', 'name', 'load'])
 
-                print(data_frame_temp.head())
-
-                #data_frame_temp = data_frame_temp.drop(0)
                 self.data_frame = pd.concat([self.data_frame, data_frame_temp], axis=0)
 
 
