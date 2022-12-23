@@ -1,6 +1,12 @@
 import pandas as pd
 import os
 
+import logging
+logging.basicConfig(filename="log.log", format='%(asctime)s %(message)s',filemode='w')
+logging.getLogger().addHandler(logging.StreamHandler())
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 TARGETED_CITY = 'N.Y.C.'
 
 class LoadDataLoader():
@@ -23,6 +29,7 @@ class LoadDataLoader():
     def __load_folder_data(self, folder_path):
         for filename in os.scandir(folder_path):
             if filename.is_file() and filename.name.endswith('.csv'):
+                logger.info(f'Loading {filename.name}...')
                 data_frame_temp = pd.read_csv(filename.path, engine='python', sep=',', header=0, usecols=[0, 2, 4], names=['date', 'name', 'load'])
 
                 self.data_frame = pd.concat([self.data_frame, data_frame_temp], axis=0)

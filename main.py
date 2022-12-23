@@ -9,16 +9,16 @@ from database.controller import DatabaseController
 
 
 if __name__ == '__main__':
-    db_controller = DatabaseController()
-    data_frame = db_controller.load_data()
-    column_num = len(data_frame.columns)
+    # db_controller = DatabaseController()
+    # data_frame = db_controller.load_data()
+    # column_num = len(data_frame.columns)
 
-    gen_optimizer = GeneticFeatureSelection()
+    # gen_optimizer = GeneticFeatureSelection()
 
-    population = gen_optimizer.run_genetic_selection(column_num, data_frame, 5)
+    # population = gen_optimizer.run_genetic_selection(column_num, data_frame, 5)
 
-    print(population)
+    # print(population)
 
-    # app = QApplication(sys.argv)
-    # main_window = LoadPredictionController()
-    # app.exec_()
+    app = QApplication(sys.argv)
+    main_window = LoadPredictionController()
+    app.exec_()

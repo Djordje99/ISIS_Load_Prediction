@@ -6,13 +6,22 @@ from services.preprocessing.normalizer.string import StringNormalizer
 
 
 class Preparer:
-    def __init__(self, data_frame, number_of_columns, share_for_training):
+    def __init__(self, data_frame, share_for_training):
         self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+        self.date_normalizer = DateNormalizer(data_frame)
+        data_frame = self.date_normalizer.normalize_date()
+
+        self.string_normalizer = StringNormalizer(data_frame)
+        data_frame = self.string_normalizer.normalize_string()
+
+        self.missing_value_normalizer = MissingValue(data_frame)
+        data_frame = self.missing_value_normalizer.normalize_missing_value()
 
         self.dataset_values = data_frame.values
         self.dataset_values = self.dataset_values.astype('float32')
 
-        self.number_of_columns = number_of_columns
+        self.number_of_columns = len(data_frame.columns)
         self.predictor_column_no = self.number_of_columns - 1
         self.share_for_training = share_for_training
 

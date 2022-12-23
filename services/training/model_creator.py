@@ -11,21 +11,17 @@ SHARE_FOR_TRAINING = 0.85
 class ModelCreator():
     def __init__(self) -> None:
         self.controller = DatabaseController()
-        self.data_frame = self.controller.load_data()
-        self.column_number = len(self.data_frame.columns)
-        self.preparer = Preparer(self.data_frame, self.column_number, SHARE_FOR_TRAINING)
+        self.preparer = Preparer(self.controller.load_data(), SHARE_FOR_TRAINING)
 
 
     def create_model(self):
-        print(self.data_frame.head())
-
         trainX, trainY, testX, testY = self.preparer.prepare_for_training()
 
         ann_regression = AnnRegression()
 
         time_begin = time()
 
-        trainPredict, testPredict = ann_regression.compile_fit_predict(trainX, trainY, testX, self.column_number - 1)
+        trainPredict, testPredict = ann_regression.compile_fit_predict(trainX, trainY, testX, trainX.shape[2])
 
         time_end = time()
 

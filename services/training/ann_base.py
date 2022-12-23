@@ -8,8 +8,10 @@ OPTIMIZER = 'nadam'#'adam'
 KERNEL_INITIALIZER = 'random_normal' #'normal'
 ACTIVATION_FUNCTION = 'relu' #'sigmoid'
 NUMBER_OF_HIDDEN_LAYERS = 2
-NUMBER_OF_NEURONS_IN_FIRST_HIDDEN_LAYER = 16
-NUMBER_OF_NEURONS_IN_OTHER_HIDDEN_LAYERS = 8
+NUMBER_OF_NEURONS_IN_FIRST_HIDDEN_LAYER = 8
+NUMBER_OF_NEURONS_IN_SECOND_HIDDEN_LAYERS = 4
+NUMBER_OF_NEURONS_IN_OTHER_HIDDEN_LAYERS = 2
+
 VERBOSE = 2
 
 class AnnBase:
@@ -23,6 +25,7 @@ class AnnBase:
         self.activation_function = ACTIVATION_FUNCTION
         self.number_of_hidden_layers = NUMBER_OF_HIDDEN_LAYERS
         self.number_of_neurons_in_first_hidden_layer = NUMBER_OF_NEURONS_IN_FIRST_HIDDEN_LAYER
+        self.number_of_neurons_in_second_hidden_layer = NUMBER_OF_NEURONS_IN_SECOND_HIDDEN_LAYERS
         self.number_of_neurons_in_other_hidden_layers = NUMBER_OF_NEURONS_IN_OTHER_HIDDEN_LAYERS
         self.verbose = VERBOSE
 
@@ -136,6 +139,14 @@ class AnnBase:
     @number_of_neurons_in_other_hidden_layers.setter
     def number_of_neurons_in_other_hidden_layers(self, value):
         self._number_of_neurons_in_other_hidden_layers = value
+
+    @property
+    def number_of_neurons_in_second_hidden_layers(self):
+        return self.number_of_neurons_in_second_hidden_layers
+
+    @number_of_neurons_in_second_hidden_layers.setter
+    def number_of_neurons_in_second_hidden_layers(self, value):
+        self.number_of_neurons_in_second_hidden_layers = value
 
     @property
     def verbose(self):

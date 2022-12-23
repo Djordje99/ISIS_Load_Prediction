@@ -1,6 +1,6 @@
 import pandas as pd
 
-FEATURE_DROP = ['precip' ,'precipprob','preciptype','snow','snowdepth', 'sealevelpressure', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
+FEATURE_DROP = ['precip' ,'precipprob','preciptype','snow','snowdepth', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
 
 class WeatherCalibrator():
     def interpolate_missing_value(self, data_frame:pd.DataFrame):

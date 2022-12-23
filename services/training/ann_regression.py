@@ -19,6 +19,7 @@ class AnnRegression(AnnBase):
                 for i in range(self.number_of_hidden_layers - 1):
                     model.add(Dense(self.number_of_neurons_in_other_hidden_layers, kernel_initializer=self.kernel_initializer, activation=self.activation_function))
 
+        model.add(Dense(self.number_of_neurons_in_second_hidden_layer, kernel_initializer=self.kernel_initializer, activation=self.activation_function))
         model.add(Dense(1, kernel_initializer=self.kernel_initializer))
 
         return model
