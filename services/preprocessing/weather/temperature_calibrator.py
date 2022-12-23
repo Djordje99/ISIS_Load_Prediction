@@ -19,7 +19,7 @@ class TemperatureCalibrator():
         return data_frame
 
 
-    def fill_mean_temperature(self, data_frame:pd.DataFrame):
+    def create_additional_temperature_feature(self, data_frame:pd.DataFrame):
         means = data_frame.groupby([data_frame['date'].dt.date]).mean()['temp'].reset_index(name='temp')
         maxs = data_frame.groupby([data_frame['date'].dt.date]).max()['temp'].reset_index(name='temp')
         mins = data_frame.groupby([data_frame['date'].dt.date]).min()['temp'].reset_index(name='temp')

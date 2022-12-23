@@ -40,7 +40,7 @@ class ModelCreator():
 
         print()
 
-        trainScore, testScore = scorer.get_mare_score(trainY, trainPredict, testY, testPredict)
+        trainScore, testScore = scorer.get_mape_score(trainY, trainPredict, testY, testPredict)
         print(f'Train Score: {round(trainScore, 2)}% MARE')
         print(f'Test Score: {round(testScore, 2)}% MARE')
 

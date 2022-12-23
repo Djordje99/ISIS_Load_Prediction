@@ -11,13 +11,13 @@ class Scorer:
         return train_score, test_score
 
 
-    def get_mare_score(self, train_y, train_predict, test_y, test_predict):
-        train_score = self.__mean_absolute_percentage_error(train_y, train_predict)
-        test_score = self.__mean_absolute_percentage_error(test_y, test_predict)
+    def get_mape_score(self, train_y, train_predict, test_y, test_predict):
+        train_score = self.get_mean_absolute_percentage_error(train_y, train_predict)
+        test_score = self.get_mean_absolute_percentage_error(test_y, test_predict)
 
         return train_score, test_score
 
 
-    def __mean_absolute_percentage_error(self, y_actual, y_predicted):
+    def get_mean_absolute_percentage_error(self, y_actual, y_predicted):
         mape = np.mean(np.abs((y_actual - y_predicted)/y_actual))*100
         return mape

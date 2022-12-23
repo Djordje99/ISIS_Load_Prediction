@@ -2,9 +2,11 @@ from keras.layers import Dense
 from keras.models import Sequential
 from tensorflow import keras
 from services.training.ann_base import AnnBase
+import os
 
-MODEL_NAME = 'less_features'
-MODEL_PATH = 'D:\\Master\\ISIS\\ISIS_Load_Prediction\\model'
+
+MODEL_NAME = 'model\\previous_load_model'
+MODEL_PATH =  os.path.dirname(__file__)
 
 
 class AnnRegression(AnnBase):

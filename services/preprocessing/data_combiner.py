@@ -1,5 +1,5 @@
-from services.preprocessing.weather.weather_data_loader import WeatherDataLoader
-from services.preprocessing.load.load_data_loader import LoadDataLoader
+from services.loader.weather_data_loader import WeatherDataLoader
+from services.loader.load_data_loader import LoadDataLoader
 
 import pandas as pd
 

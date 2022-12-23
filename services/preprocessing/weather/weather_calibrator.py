@@ -1,6 +1,6 @@
 import pandas as pd
 
-FEATURE_DROP = ['dew', 'precip' ,'precipprob','preciptype','snow','snowdepth', 'sealevelpressure', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
+FEATURE_DROP = ['precip' ,'precipprob','preciptype','snow','snowdepth', 'sealevelpressure', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
 
 class WeatherCalibrator():
     def interpolate_missing_value(self, data_frame:pd.DataFrame):
@@ -10,6 +10,9 @@ class WeatherCalibrator():
         data_frame['windgust'] = data_frame['windgust'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         data_frame['winddir'] = data_frame['winddir'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         data_frame['cloudcover'] = data_frame['cloudcover'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
+
+        data_frame['dew'] = data_frame['dew'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
+        data_frame['sealevelpressure'] = data_frame['sealevelpressure'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
 
         return data_frame
 
