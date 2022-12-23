@@ -3,14 +3,16 @@ from keras.models import Sequential
 from tensorflow import keras
 from services.training.ann_base import AnnBase
 
-MODEL_NAME = 'current_model'
+MODEL_NAME = 'less_features'
+MODEL_PATH = 'D:\\Master\\ISIS\\ISIS_Load_Prediction\\model'
+
 
 class AnnRegression(AnnBase):
-    def get_model(self):
+    def get_model(self, size_shape):
         model = Sequential()
 
         if self.number_of_hidden_layers > 0:
-            model.add(Dense(self._number_of_neurons_in_first_hidden_layer, input_shape=(1, 23), kernel_initializer=self.kernel_initializer, activation=self.activation_function))
+            model.add(Dense(self._number_of_neurons_in_first_hidden_layer, input_shape=(1, size_shape), kernel_initializer=self.kernel_initializer, activation=self.activation_function))
             if self.number_of_hidden_layers > 1:
                 for i in range(self.number_of_hidden_layers - 1):
                     model.add(Dense(self.number_of_neurons_in_other_hidden_layers, kernel_initializer=self.kernel_initializer, activation=self.activation_function))
@@ -25,13 +27,14 @@ class AnnRegression(AnnBase):
         return model
 
 
-    def compile_and_fit(self, trainX, trainY):
-        self.model = self.get_model()
+    def compile_and_fit(self, trainX, trainY, size_shape):
+        self.model = self.get_model(size_shape)
         self.model.compile(loss=self.cost_function, optimizer=self.optimizer)
         self.trainX = trainX
 
         self.model.fit(trainX, trainY, epochs=self.epoch_number, batch_size=self.batch_size_number, verbose=self.verbose)
-        #self.model.save(MODEL_NAME)
+
+        self.model.save(f'{MODEL_PATH}\\{MODEL_NAME}')
 
 
     def use_current_model(self, path, trainX):
@@ -45,7 +48,7 @@ class AnnRegression(AnnBase):
         return trainPredict, testPredict
 
 
-    def compile_fit_predict(self, trainX, trainY, testX):
-        self.compile_and_fit(trainX, trainY)
-        #self.use_current_model(MODEL_NAME, trainX)
+    def compile_fit_predict(self, trainX, trainY, testX, size_shape):
+        self.compile_and_fit(trainX, trainY, size_shape)
+        #self.use_current_model(f'{MODEL_PATH}\\{MODEL_NAME}', trainX)
         return self.get_predict(testX)

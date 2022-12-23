@@ -1,7 +1,6 @@
 import pandas as pd
 import os
-#names=['name','date','temp','feelslike','dew','humidity','precip','precipprob','preciptype','snow','snowdepth','windgust','windspeed','winddir',
-                #'sealevelpressure','cloudcover','visibility','solarradiation','solarenergy','uvindex','severerisk','conditions']
+
 class WeatherDataLoader():
     def __init__(self, input_path) -> None:
         self.input_path = input_path
@@ -16,8 +15,6 @@ class WeatherDataLoader():
                         'snowdepth':float,'windgust':float,'windspeed':float,'winddir':float,'sealevelpressure':float,'cloudcover':float,'visibility':float,'solarradiation':float,
                         'solarenergy':float,'uvindex':float,'severerisk':float,'conditions':str})
 
-                print(data_frame_temp.head())
-                #data_frame_temp = data_frame_temp.drop(0)
                 self.data_frame = pd.concat([self.data_frame, data_frame_temp], axis=0)
 
         self.data_frame.rename(columns={'datetime':'date'}, inplace=True)
