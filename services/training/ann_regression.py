@@ -1,11 +1,12 @@
 from keras.layers import Dense
 from keras.models import Sequential
+from keras.layers import LSTM
 from tensorflow import keras
 from services.training.ann_base import AnnBase
 import os
 
 
-MODEL_NAME = 'model\\previous_load_model'
+MODEL_NAME = 'model\\basic_previous_load_model'
 MODEL_PATH =  os.path.dirname(__file__)
 
 
@@ -22,6 +23,15 @@ class AnnRegression(AnnBase):
         model.add(Dense(1, kernel_initializer=self.kernel_initializer))
 
         return model
+
+
+    def test_model(self, size_shape, epochs, X_train, y_train, X_test):
+        self.model = self.get_model(size_shape)
+        self.model.compile(loss=self.cost_function, optimizer=self.optimizer)
+        self.model.fit(X_train, y_train, epochs=epochs, batch_size=self.batch_size_number, verbose=self.verbose)
+        y_test_predict = self.model.predict(X_test)
+
+        return y_test_predict
 
 
     def get_model_from_path(self, path):

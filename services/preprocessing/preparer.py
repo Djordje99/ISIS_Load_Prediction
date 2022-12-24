@@ -3,30 +3,61 @@ from sklearn.preprocessing import MinMaxScaler
 from services.preprocessing.normalizer.date import DateNormalizer
 from services.preprocessing.normalizer.missing_value import MissingValue
 from services.preprocessing.normalizer.string import StringNormalizer
+from database.controller import DatabaseController
 
 
 class Preparer:
-    def __init__(self, data_frame, share_for_training):
-        self.scaler = MinMaxScaler(feature_range=(0, 1))
-
-        self.date_normalizer = DateNormalizer(data_frame)
-        data_frame = self.date_normalizer.normalize_date()
-
-        self.string_normalizer = StringNormalizer(data_frame)
-        data_frame = self.string_normalizer.normalize_string()
-
-        self.missing_value_normalizer = MissingValue(data_frame)
-        data_frame = self.missing_value_normalizer.normalize_missing_value()
-
-        self.dataset_values = data_frame.values
-        self.dataset_values = self.dataset_values.astype('float32')
-
-        self.number_of_columns = len(data_frame.columns)
-        self.predictor_column_no = self.number_of_columns - 1
+    def __init__(self, share_for_training):
         self.share_for_training = share_for_training
 
+        self.controller = DatabaseController()
+        self.data_frame = self.controller.load_data()
 
-    def prepare_for_training(self):
+        self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+        self.date_normalizer = DateNormalizer(self.data_frame)
+        self.data_frame = self.date_normalizer.normalize_date()
+
+        self.string_normalizer = StringNormalizer(self.data_frame)
+        self.data_frame = self.string_normalizer.normalize_string()
+
+        self.missing_value_normalizer = MissingValue(self.data_frame)
+        self.data_frame = self.missing_value_normalizer.normalize_missing_value()
+
+
+    def prepare_data_frame(self, selected_features=''):
+        self.controller = DatabaseController()
+        self.data_frame = self.controller.load_data()
+
+        self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+        self.date_normalizer = DateNormalizer(self.data_frame)
+        self.data_frame = self.date_normalizer.normalize_date()
+
+        self.string_normalizer = StringNormalizer(self.data_frame)
+        self.data_frame = self.string_normalizer.normalize_string()
+
+        self.missing_value_normalizer = MissingValue(self.data_frame)
+        self.data_frame = self.missing_value_normalizer.normalize_missing_value()
+
+        if len(selected_features) > 0:
+            selected_features += '1'
+            self.data_frame = self.data_frame.loc[:, [True if selected_features[i] == '1' else False for i in range(len(selected_features))]]
+
+        self.dataset_values = self.data_frame.values
+        self.dataset_values = self.dataset_values.astype('float32')
+
+        self.number_of_columns = len(self.data_frame.columns)
+        self.predictor_column_no = self.number_of_columns - 1
+
+
+    def get_prepared_data_frame(self):
+        return self.data_frame
+
+
+    def prepare_for_training(self, selected_features=[]):
+        self.prepare_data_frame(selected_features)
+
         dataset = self.scaler.fit_transform(self.dataset_values)
 
         train_size = int(len(dataset) * self.share_for_training)

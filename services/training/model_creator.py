@@ -10,8 +10,7 @@ SHARE_FOR_TRAINING = 0.85
 
 class ModelCreator():
     def __init__(self) -> None:
-        self.controller = DatabaseController()
-        self.preparer = Preparer(self.controller.load_data(), SHARE_FOR_TRAINING)
+        self.preparer = Preparer(SHARE_FOR_TRAINING)
 
 
     def create_model(self):
