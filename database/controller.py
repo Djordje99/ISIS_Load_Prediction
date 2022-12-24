@@ -27,11 +27,13 @@ class DatabaseController():
 
     def load_data(self):
         self.connection = sqlite3.connect(DATABASE_NAME)
+        #set max min date in sql
         self.data_frame = pd.read_sql_query('SELECT * FROM Load', self.connection)
         self.connection.close()
 
         self.data_frame = self.data_frame.drop(['index'], axis=1)
+        self.data_frame = self.data_frame.drop(['date'], axis=1)
 
-        self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y-%m-%d %H:%M:%S')
+        #self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y-%m-%d %H:%M:%S')
 
         return self.data_frame

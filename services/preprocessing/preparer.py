@@ -9,36 +9,16 @@ from database.controller import DatabaseController
 class Preparer:
     def __init__(self, share_for_training):
         self.share_for_training = share_for_training
-
         self.controller = DatabaseController()
         self.data_frame = self.controller.load_data()
 
         self.scaler = MinMaxScaler(feature_range=(0, 1))
-
-        self.date_normalizer = DateNormalizer(self.data_frame)
-        self.data_frame = self.date_normalizer.normalize_date()
-
-        self.string_normalizer = StringNormalizer(self.data_frame)
-        self.data_frame = self.string_normalizer.normalize_string()
-
-        self.missing_value_normalizer = MissingValue(self.data_frame)
-        self.data_frame = self.missing_value_normalizer.normalize_missing_value()
 
 
     def prepare_data_frame(self, selected_features=''):
         self.controller = DatabaseController()
         self.data_frame = self.controller.load_data()
-
         self.scaler = MinMaxScaler(feature_range=(0, 1))
-
-        self.date_normalizer = DateNormalizer(self.data_frame)
-        self.data_frame = self.date_normalizer.normalize_date()
-
-        self.string_normalizer = StringNormalizer(self.data_frame)
-        self.data_frame = self.string_normalizer.normalize_string()
-
-        self.missing_value_normalizer = MissingValue(self.data_frame)
-        self.data_frame = self.missing_value_normalizer.normalize_missing_value()
 
         if len(selected_features) > 0:
             selected_features += '1'

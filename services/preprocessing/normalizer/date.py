@@ -62,7 +62,7 @@ class DateNormalizer():
         self.__create_month_column()
         self.__cerate_season_column()
 
-        self.data_frame = self.data_frame.drop(['date'], axis=1)
+        #self.data_frame = self.data_frame.drop(['date'], axis=1)
 
         return self.data_frame
 

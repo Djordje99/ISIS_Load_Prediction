@@ -60,4 +60,13 @@ class DataCombiner():
         data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
         data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame)
 
+        self.date_normalizer = DateNormalizer(data_frame)
+        data_frame = self.date_normalizer.normalize_date()
+
+        self.string_normalizer = StringNormalizer(data_frame)
+        data_frame = self.string_normalizer.normalize_string()
+
+        self.missing_value_normalizer = MissingValue(data_frame)
+        data_frame = self.missing_value_normalizer.normalize_missing_value()
+
         return data_frame
