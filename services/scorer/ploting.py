@@ -13,6 +13,9 @@ class CustomPloting:
     def show_plots(self, testPredict, testY):
         plot1 = self.make_plot(testPredict)
         plot2 = self.make_plot(testY)
-        plt.plot(plot1)
-        plt.plot(plot2)
+
+        plt.plot(plot1, label='predicted load')
+        plt.plot(plot2, label='load')
+
+        plt.legend()
         plt.show()

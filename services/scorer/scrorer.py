@@ -21,3 +21,7 @@ class Scorer:
     def get_mean_absolute_percentage_error(self, y_actual, y_predicted):
         mape = np.mean(np.abs((y_actual - y_predicted)/y_actual))*100
         return mape
+
+    def get_mean_square_error(self, y_actual, y_predicted):
+        rmes = math.sqrt(mean_squared_error(y_actual, y_predicted))
+        return rmes

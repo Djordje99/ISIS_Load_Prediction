@@ -1,8 +1,8 @@
 import numpy
 from sklearn.preprocessing import MinMaxScaler
-from services.preprocessing.normalizer.date import DateNormalizer
-from services.preprocessing.normalizer.missing_value import MissingValue
-from services.preprocessing.normalizer.string import StringNormalizer
+# from services.preprocessing.normalizer.date import DateNormalizer
+# from services.preprocessing.normalizer.missing_value import MissingValue
+# from services.preprocessing.normalizer.string import StringNormalizer
 from database.controller import DatabaseController
 
 
@@ -10,9 +10,32 @@ class Preparer:
     def __init__(self, share_for_training):
         self.share_for_training = share_for_training
         self.controller = DatabaseController()
-        self.data_frame = self.controller.load_data()
 
         self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+
+    def prepare_predict_date(self, from_date, to_date):
+        data_frame = self.controller.get_data_frame_from_date(from_date, to_date)
+
+        self.number_of_columns = len(data_frame.columns)
+        self.predictor_column_no = self.number_of_columns - 1
+
+        print(len(data_frame.columns))
+
+        predict_dataset_values = data_frame.values
+        predict_dataset_values = predict_dataset_values.astype('float32')
+
+        dataset = self.scaler.fit_transform(predict_dataset_values)
+
+        X_test, y_test = self.create_dataset(dataset, len(data_frame.columns))
+
+        X_test = numpy.reshape(X_test, (X_test.shape[0], 1, X_test.shape[1]))
+
+        self.testX = X_test
+        self.testY = y_test
+
+        return X_test.copy(), y_test.copy()
+
 
 
     def prepare_data_frame(self, selected_features=''):
@@ -57,6 +80,26 @@ class Preparer:
         self.testY = testY
 
         return trainX.copy(), trainY.copy(), testX.copy(), testY.copy()
+
+
+    def inverse_predict_transform(self, test_predict):
+        test_predict = numpy.reshape(test_predict, (test_predict.shape[0], test_predict.shape[1]))
+
+        self.testX = numpy.reshape(self.testX, (self.testX.shape[0], self.testX.shape[2]))
+
+        testXAndPredict = numpy.concatenate((self.testX, test_predict),axis=1)
+
+        y_test = numpy.reshape(self.testY, (self.testY.shape[0], 1))
+
+        testXAndY = numpy.concatenate((self.testX, y_test),axis=1)
+
+        testXAndPredict = self.scaler.inverse_transform(testXAndPredict)
+        testXAndY = self.scaler.inverse_transform(testXAndY)
+
+        test_predict = testXAndPredict[:,self.predictor_column_no]
+        y_test = testXAndY[:,self.predictor_column_no]
+
+        return test_predict, y_test
 
 
     def inverse_transform(self, train_predict, test_predict):

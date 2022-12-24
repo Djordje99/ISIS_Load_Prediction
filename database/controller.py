@@ -37,3 +37,20 @@ class DatabaseController():
         #self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y-%m-%d %H:%M:%S')
 
         return self.data_frame
+
+
+    def get_data_frame_from_date(self, from_date, to_date):
+        self.connection = sqlite3.connect(DATABASE_NAME)
+        #set max min date in sql
+        query = 'SELECT * FROM Load WHERE date >= ? and date <= ?'
+        parameters = [from_date, to_date]
+
+        self.data_frame = pd.read_sql_query(query, params=parameters, con=self.connection)
+        self.connection.close()
+
+        self.data_frame = self.data_frame.drop(['index'], axis=1)
+        self.data_frame = self.data_frame.drop(['date'], axis=1)
+
+        #self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y-%m-%d %H:%M:%S')
+
+        return self.data_frame

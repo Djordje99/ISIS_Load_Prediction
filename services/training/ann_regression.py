@@ -1,14 +1,14 @@
+from tensorflow import keras
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.layers import LSTM
-from tensorflow import keras
 from services.training.ann_base import AnnBase
 import os
 
 
 MODEL_NAME = 'model\\basic_previous_load_model'
 MODEL_PATH =  os.path.dirname(__file__)
-
+LOAD_MODEL_NAME = 'model\\basic_previous_load_model_305_MAPE'
 
 class AnnRegression(AnnBase):
     def get_model(self, size_shape):
@@ -25,6 +25,7 @@ class AnnRegression(AnnBase):
         return model
 
 
+    #genetic feature selection
     def test_model(self, size_shape, epochs, X_train, y_train, X_test):
         self.model = self.get_model(size_shape)
         self.model.compile(loss=self.cost_function, optimizer=self.optimizer)
@@ -41,17 +42,21 @@ class AnnRegression(AnnBase):
 
     def compile_and_fit(self, trainX, trainY, size_shape):
         self.model = self.get_model(size_shape)
-        self.model.compile(loss=self.cost_function, optimizer=self.optimizer)
         self.trainX = trainX
-
+        self.model.compile(loss=self.cost_function, optimizer=self.optimizer)
         self.model.fit(trainX, trainY, epochs=self.epoch_number, batch_size=self.batch_size_number, verbose=self.verbose)
-
         self.model.save(f'{MODEL_PATH}\\{MODEL_NAME}')
 
 
     def use_current_model(self, path, trainX):
         self.trainX = trainX
         self.model = self.get_model_from_path(path)
+
+
+    def predict(self, X_test):
+        self.model = self.get_model_from_path(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}')
+        y_predict = self.model.predict(X_test)
+        return y_predict
 
 
     def get_predict(self, testX):
@@ -62,5 +67,5 @@ class AnnRegression(AnnBase):
 
     def compile_fit_predict(self, trainX, trainY, testX, size_shape):
         self.compile_and_fit(trainX, trainY, size_shape)
-        #self.use_current_model(f'{MODEL_PATH}\\{MODEL_NAME}', trainX)
+        #self.use_current_model(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}', trainX)
         return self.get_predict(testX)

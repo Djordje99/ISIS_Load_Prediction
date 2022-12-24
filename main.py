@@ -10,9 +10,7 @@ from database.controller import DatabaseController
 
 if __name__ == '__main__':
     # gen_optimizer = GeneticFeatureSelection()
-
     # population = gen_optimizer.run_genetic_selection(64, 100)
-
     # print(population)
 
     app = QApplication(sys.argv)

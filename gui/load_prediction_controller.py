@@ -5,7 +5,7 @@ from PyQt5 import uic
 
 from database.controller import DatabaseController
 from services.training.model_creator import ModelCreator
-
+from services.predictor.predict_load import LoadPredictor
 
 class LoadPredictionController(QMainWindow):
     def __init__(self):
@@ -24,6 +24,20 @@ class LoadPredictionController(QMainWindow):
         self.csv_btn.clicked.connect(self.load_csv)
         self.save_csv_btn.clicked.connect(self.save_csv)
         self.train_btn.clicked.connect(self.init_training)
+        self.predict_btn.clicked.connect(self.predict)
+
+
+    def predict(self):
+        self.predictor = LoadPredictor()
+
+        date_form_predict = self.predict_date.dateTime()
+        date_from = date_form_predict.toString('yyyy-MM-dd')
+
+        day_number = self.predict_days_num.value()
+        date_to_predict = date_form_predict.addDays(day_number)
+        date_to = date_to_predict.toString('yyyy-MM-dd')
+
+        self.predictor.predict(date_from, date_to)
 
 
     def load_csv(self):
