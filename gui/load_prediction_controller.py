@@ -3,10 +3,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 
-from services.training.model_creator import ModelCreator
 from services.predictor.predict_load import LoadPredictor
 
 from gui.thread.save_to_sql_thread import SaveToSqlThread
+from gui.thread.training_thread import TrainingThread
+
 
 class LoadPredictionController(QMainWindow):
     def __init__(self):
@@ -18,7 +19,7 @@ class LoadPredictionController(QMainWindow):
 
         self.csv_path = ''
 
-        self.init_training()
+        #self.init_training()
 
 
     def __connect_buttons(self):
@@ -55,9 +56,9 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.thread = SaveToSqlThread()
-        self.thread.progress_signal.connect(self.data_saved)
-        self.thread.start()
+        thread = SaveToSqlThread(self.csv_path)
+        thread.finish_signal.connect(self.data_saved)
+        thread.start()
 
     def data_saved(self):
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
@@ -84,8 +85,6 @@ class LoadPredictionController(QMainWindow):
 
 
     def init_training(self):
-        self.model_creator = ModelCreator()
-
         # date_form = self.from_date_edit.dateTime()
         # date_to = self.to_date_edit.dateTime()
 
@@ -93,6 +92,14 @@ class LoadPredictionController(QMainWindow):
         #     QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
         #     return
 
-        self.model_creator.create_model()
+        thread = TrainingThread()
+        thread.finish_signal.connect(self.training_finished)
+        thread.start()
 
+        thread.wait()
+
+        del thread
+
+
+    def training_finished(self):
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)

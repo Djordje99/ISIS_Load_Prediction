@@ -39,5 +39,7 @@ class ModelCreator():
         print(f'Train Score: {round(trainScore, 2)}% MARE')
         print(f'Test Score: {round(testScore, 2)}% MARE')
 
-        custom_plotting = CustomPloting()
-        custom_plotting.show_plots(testPredict, testY)
+        # custom_plotting = CustomPloting()
+        # custom_plotting.show_plots(testPredict, testY)
+
+        return testPredict, testY
