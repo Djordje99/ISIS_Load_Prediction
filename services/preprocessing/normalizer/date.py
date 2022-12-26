@@ -46,9 +46,9 @@ class DateNormalizer():
 
 
     def __cerate_season_column(self):
-        month = self.data_frame['date'].dt.month
+        date = self.data_frame['date'].dt.date
         seasons = pd.DataFrame()
-        seasons['seasons'] = month.apply(get_seasons)
+        seasons['seasons'] = date.apply(get_seasons)
 
         seasons_encoded = pd.get_dummies(seasons.seasons, prefix='season')
 
@@ -67,12 +67,15 @@ class DateNormalizer():
         return self.data_frame
 
 
-def get_seasons(month):
-    if month == 12 or month == 1 or month == 2:
-        return 'winter'
-    elif month == 3 or month == 4 or month == 5:
-        return 'spring'
-    elif month == 6 or month == 7 or month == 8:
-        return 'autumn'
+def get_seasons(date):
+    month = date.month
+    day = date.day
+
+    if month in [12, 1, 2] or (month == 3 and day < 21):
+        return "winter"
+    elif month in [3, 4, 5] or (month == 6 and day < 21):
+        return "spring"
+    elif month in [6, 7, 8] or (month == 9 and day < 23):
+        return "summer"
     else:
-        return 'summer'
+        return "autumn"

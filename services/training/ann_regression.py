@@ -8,7 +8,7 @@ import os
 
 MODEL_NAME = 'model\\basic_previous_load_model'
 MODEL_PATH =  os.path.dirname(__file__)
-LOAD_MODEL_NAME = 'model\\basic_previous_load_model_305_MAPE'
+LOAD_MODEL_NAME = 'model\\basic_previous_load_model_272_MAPE'
 
 class AnnRegression(AnnBase):
     def get_model(self, size_shape):

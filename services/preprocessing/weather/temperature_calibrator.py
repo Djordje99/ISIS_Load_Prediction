@@ -28,9 +28,9 @@ class TemperatureCalibrator():
         maxs['date'] = pd.to_datetime(means['date'])
         mins['date'] = pd.to_datetime(means['date'])
 
-        data_frame.insert(2, 'meantemp', np.nan)
-        data_frame.insert(4, 'maxtemp', np.nan)
-        data_frame.insert(5, 'mintemp', np.nan)
+        data_frame.insert(2, 'mean_temp', np.nan)
+        data_frame.insert(4, 'max_temp', np.nan)
+        data_frame.insert(5, 'min_temp', np.nan)
 
         print(means)
 
@@ -40,5 +40,17 @@ class TemperatureCalibrator():
             data_frame.iloc[[indexs], [4]] = maxs['temp'][i]
             data_frame.iloc[[indexs], [5]] = mins['temp'][i]
 
+
+        return data_frame
+
+
+    def create_mean_temperature_previous_day(self, data_frame:pd.DataFrame):
+        data_frame.insert(2, 'mean_temp_previous_day', np.nan)
+        data_frame.insert(4, 'max_temp_previous_day', np.nan)
+        data_frame.insert(5, 'min_temp_previous_day', np.nan)
+
+        data_frame['mean_temp_previous_day'] = data_frame['mean_temp'].shift(24).fillna(0)
+        data_frame['max_temp_previous_day'] = data_frame['max_temp'].shift(24).fillna(0)
+        data_frame['min_temp_previous_day'] = data_frame['min_temp'].shift(24).fillna(0)
 
         return data_frame

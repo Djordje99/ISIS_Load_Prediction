@@ -3,9 +3,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 
-from database.controller import DatabaseController
 from services.training.model_creator import ModelCreator
 from services.predictor.predict_load import LoadPredictor
+
+from gui.thread.save_to_sql_thread import SaveToSqlThread
 
 class LoadPredictionController(QMainWindow):
     def __init__(self):
@@ -17,7 +18,7 @@ class LoadPredictionController(QMainWindow):
 
         self.csv_path = ''
 
-        #self.init_training()
+        self.init_training()
 
 
     def __connect_buttons(self):
@@ -54,9 +55,11 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.database_controller = DatabaseController()
-        self.database_controller.save_to_db(self.csv_path)
+        self.thread = SaveToSqlThread()
+        self.thread.progress_signal.connect(self.data_saved)
+        self.thread.start()
 
+    def data_saved(self):
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
 
         self.__set_dates()

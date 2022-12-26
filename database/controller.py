@@ -3,7 +3,6 @@ import pandas as pd
 
 from services.preprocessing.data_combiner import DataCombiner
 
-
 DATABASE_NAME = 'database/load_database.db'
 
 
@@ -11,6 +10,8 @@ class DatabaseController():
     def save_to_db(self, folder_path):
         self.data_combiner = DataCombiner(folder_path)
         self.data_frame = self.data_combiner.generate_training_data()
+
+        print(self.data_frame.head())
 
         self.connection = sqlite3.connect(DATABASE_NAME)
         self.data_frame.to_sql(name='Load', con=self.connection, if_exists='replace')
@@ -52,5 +53,7 @@ class DatabaseController():
         self.data_frame = self.data_frame.drop(['date'], axis=1)
 
         #self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y-%m-%d %H:%M:%S')
+
+
 
         return self.data_frame

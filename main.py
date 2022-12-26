@@ -4,8 +4,6 @@ from PyQt5.QtGui import *
 import sys
 
 from gui.load_prediction_controller import LoadPredictionController
-from optimizer.genetic_feature_selection import GeneticFeatureSelection
-from database.controller import DatabaseController
 
 
 if __name__ == '__main__':

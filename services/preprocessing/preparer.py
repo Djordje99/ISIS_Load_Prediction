@@ -1,8 +1,5 @@
 import numpy
 from sklearn.preprocessing import MinMaxScaler
-# from services.preprocessing.normalizer.date import DateNormalizer
-# from services.preprocessing.normalizer.missing_value import MissingValue
-# from services.preprocessing.normalizer.string import StringNormalizer
 from database.controller import DatabaseController
 
 
@@ -42,6 +39,9 @@ class Preparer:
         self.controller = DatabaseController()
         self.data_frame = self.controller.load_data()
         self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+        # self.selector = FeatureSelectionRFE()
+        # self.data_frame = self.selector.select_features(self.data_frame, 20)
 
         if len(selected_features) > 0:
             selected_features += '1'
