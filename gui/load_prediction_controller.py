@@ -3,10 +3,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 
-from services.predictor.predict_load import LoadPredictor
-
-from gui.thread.save_to_sql_thread import SaveToSqlThread
+from services.scorer.ploting import CustomPloting
+from gui.thread.saver_thread import SavingThread
 from gui.thread.training_thread import TrainingThread
+from gui.thread.predict_thread import PredictThread
 
 
 class LoadPredictionController(QMainWindow):
@@ -30,8 +30,6 @@ class LoadPredictionController(QMainWindow):
 
 
     def predict(self):
-        self.predictor = LoadPredictor()
-
         date_form_predict = self.predict_date.dateTime()
         date_from = date_form_predict.toString('yyyy-MM-dd')
 
@@ -39,7 +37,20 @@ class LoadPredictionController(QMainWindow):
         date_to_predict = date_form_predict.addDays(day_number)
         date_to = date_to_predict.toString('yyyy-MM-dd')
 
-        self.predictor.predict(date_from, date_to)
+        self.saver_thread = PredictThread(date_from, date_to)
+
+        # self.saver_thread.finish_signal.connect(self.saver_thread.deleteLater)
+        self.saver_thread.finished.connect(self.saver_thread.deleteLater)
+        self.saver_thread.finish_signal.connect(self.data_predicted)
+
+        self.saver_thread.start()
+
+
+    def data_predicted(self):
+        QMessageBox.information(self, "Info", 'Prediction Done', QMessageBox.Ok)
+
+
+
 
 
     def load_csv(self):
@@ -56,9 +67,13 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        thread = SaveToSqlThread(self.csv_path)
-        thread.finish_signal.connect(self.data_saved)
-        thread.start()
+        self.saver_thread = SavingThread(self.csv_path)
+
+        # self.saver_thread.finish_signal.connect(self.saver_thread.deleteLater)
+        self.saver_thread.finished.connect(self.saver_thread.deleteLater)
+        self.saver_thread.finish_signal.connect(self.data_saved)
+
+        self.saver_thread.start()
 
     def data_saved(self):
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
@@ -92,14 +107,23 @@ class LoadPredictionController(QMainWindow):
         #     QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
         #     return
 
-        thread = TrainingThread()
-        thread.finish_signal.connect(self.training_finished)
-        thread.start()
+        self.training_thread = TrainingThread()
 
-        thread.wait()
+        # self.training_thread.finish_signal.connect(self.training_thread.deleteLater)
+        self.training_thread.finished.connect(self.training_thread.deleteLater)
+        self.training_thread.finish_signal.connect(self.training_finished)
 
-        del thread
+        self.training_thread.start()
 
 
-    def training_finished(self):
+
+    def training_finished(self, y_predicted, y_test):
+        self.ploting = CustomPloting()
+
+        # self.widget.axes.plot([0,1,2,3,4], [10,1,20,3,40])
+        # self.setCentralWidget(self.widget)
+
+        # self.show()
+        self.ploting.show_plots(y_predicted, y_test)
+
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)

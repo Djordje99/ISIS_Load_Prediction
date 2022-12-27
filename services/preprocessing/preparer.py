@@ -17,16 +17,22 @@ class Preparer:
         self.number_of_columns = len(data_frame.columns)
         self.predictor_column_no = self.number_of_columns - 1
 
-        print(len(data_frame.columns))
+        print(f"Data_frame {len(data_frame)}")
 
         predict_dataset_values = data_frame.values
         predict_dataset_values = predict_dataset_values.astype('float32')
 
         dataset = self.scaler.fit_transform(predict_dataset_values)
 
+        print(f"dataset {len(dataset)}")
+
         X_test, y_test = self.create_dataset(dataset, len(data_frame.columns))
 
+        print(f'x_test : {len(X_test)}')
+
         X_test = numpy.reshape(X_test, (X_test.shape[0], 1, X_test.shape[1]))
+
+        print(f'x_test : {len(X_test)}')
 
         self.testX = X_test
         self.testY = y_test
@@ -135,9 +141,9 @@ class Preparer:
     def create_dataset(self, dataset, look_back):
         dataX, dataY = [], []
 
-        for i in range(len(dataset) - 1):
-            a = dataset[i, 0:look_back - 1]
+        for i in range(len(dataset)): # -1
+            a = dataset[i, 0:look_back - 1] #-1 
             dataX.append(a)
-            dataY.append(dataset[i, look_back - 1])
+            dataY.append(dataset[i, look_back - 1])#-1
 
         return numpy.array(dataX), numpy.array(dataY)

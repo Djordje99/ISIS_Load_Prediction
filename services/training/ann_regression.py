@@ -54,7 +54,7 @@ class AnnRegression(AnnBase):
 
 
     def predict(self, X_test):
-        self.model = self.get_model_from_path(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}')
+        self.model = self.get_model_from_path(f'{MODEL_PATH}\\{MODEL_NAME}')
         y_predict = self.model.predict(X_test)
         return y_predict
 
