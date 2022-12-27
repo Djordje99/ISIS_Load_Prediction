@@ -8,23 +8,25 @@ DATABASE_NAME = 'database/load_database.db'
 
 
 class DatabaseController():
-    def save_to_db(self, folder_path):
-        self.data_combiner = DataCombiner(folder_path)
-        self.data_frame = self.data_combiner.generate_training_data()
-
-        print(self.data_frame.head())
-
+    def get_max_min_dates(self):
         self.connection = sqlite3.connect(DATABASE_NAME)
-        self.data_frame.to_sql(name='Load', con=self.connection, if_exists='replace')
+        self.data_frame = pd.read_sql_query('SELECT * FROM Load', self.connection)
         self.connection.close()
 
-
-    def get_max_min_dates(self):
         return self.data_frame['date'].max(), self.data_frame['date'].min()
 
 
     def get_data_frame(self):
-        return self.data_frame
+        return self.load_data()
+
+
+    def save_to_db(self, folder_path, mode):
+        self.data_combiner = DataCombiner(folder_path)
+        self.data_frame = self.data_combiner.generate_training_data()
+
+        self.connection = sqlite3.connect(DATABASE_NAME)
+        self.data_frame.to_sql(name='Load', con=self.connection, if_exists=mode)
+        self.connection.close()
 
 
     def load_data(self):

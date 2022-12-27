@@ -9,6 +9,7 @@ from gui.thread.training_thread import TrainingThread
 from gui.thread.predict_thread import PredictThread
 from gui.thread.table_thread import TableThread
 
+SQLITE_MODE = ['append', 'replace']
 
 
 class LoadPredictionController(QMainWindow):
@@ -29,6 +30,7 @@ class LoadPredictionController(QMainWindow):
         self.save_csv_btn.clicked.connect(self.save_csv)
         self.train_btn.clicked.connect(self.init_training)
         self.predict_btn.clicked.connect(self.predict)
+        self.sqlite_mode.addItems(SQLITE_MODE)
 
 
     def predict(self):
@@ -40,8 +42,6 @@ class LoadPredictionController(QMainWindow):
         date_to = date_to_predict.toString('yyyy-MM-dd')
 
         self.saver_thread = PredictThread(date_from, date_to)
-
-        # self.saver_thread.finish_signal.connect(self.saver_thread.deleteLater)
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_predicted)
 
@@ -52,8 +52,8 @@ class LoadPredictionController(QMainWindow):
         QMessageBox.information(self, "Info", 'Prediction Done', QMessageBox.Ok)
         self.table_thread = TableThread(self.table)
         self.table_thread.finished.connect(self.table_thread.deleteLater)
-        self.table_thread.start()
 
+        self.table_thread.start()
 
 
     def load_csv(self):
@@ -62,6 +62,7 @@ class LoadPredictionController(QMainWindow):
 
         if self.csv_path != '':
             self.save_csv_btn.setEnabled(True)
+            self.mode = self.sqlite_mode.currentText()
         else:
             self.save_csv_btn.setEnabled(False)
             self.from_date_edit.setEnabled(False)
@@ -70,23 +71,21 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.saver_thread = SavingThread(self.csv_path)
-
-        # self.saver_thread.finish_signal.connect(self.saver_thread.deleteLater)
+        self.saver_thread = SavingThread(self.csv_path, self.mode)
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_saved)
 
         self.saver_thread.start()
 
-    def data_saved(self):
+
+    def data_saved(self, max_date, min_date):
         QMessageBox.information(self, "Info", 'Data is saved in database', QMessageBox.Ok)
 
-        self.__set_dates()
+        self.__set_dates(max_date, min_date)
 
 
-    def __set_dates(self):
-        max_date, min_date = self.database_controller.get_max_min_dates()
-
+    def __set_dates(self, max_date, min_date):
+        print(max_date)
         q_date_min = QDateTime(min_date)
         q_date_max = QDateTime(max_date)
 

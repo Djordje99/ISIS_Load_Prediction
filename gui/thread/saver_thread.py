@@ -1,15 +1,17 @@
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, QDateTime
 from database.controller import DatabaseController
 
 class SavingThread(QThread):
-    finish_signal = pyqtSignal()
+    finish_signal = pyqtSignal(str, str)
 
-    def __init__(self, path):
+    def __init__(self, path, mode):
         super(SavingThread, self).__init__()
         self.database_controller = DatabaseController()
         self.path = path
+        self.mode = mode
 
 
     def run(self):
-        self.database_controller.save_to_db(self.path)
-        self.finish_signal.emit()
+        self.database_controller.save_to_db(self.path, self.mode)
+        max_date, min_date = self.database_controller.get_max_min_dates()
+        self.finish_signal.emit(max_date, min_date)

@@ -108,9 +108,12 @@
                <bool>true</bool>
               </property>
               <property name="placeholderText">
-               <string>Import CSV file</string>
+               <string>Import folder with CSV files</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="sqlite_mode"/>
             </item>
             <item>
              <widget class="QPushButton" name="save_csv_btn">
