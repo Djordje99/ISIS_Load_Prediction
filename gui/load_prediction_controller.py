@@ -7,6 +7,8 @@ from services.scorer.ploting import CustomPloting
 from gui.thread.saver_thread import SavingThread
 from gui.thread.training_thread import TrainingThread
 from gui.thread.predict_thread import PredictThread
+from gui.thread.table_thread import TableThread
+
 
 
 class LoadPredictionController(QMainWindow):
@@ -48,8 +50,9 @@ class LoadPredictionController(QMainWindow):
 
     def data_predicted(self):
         QMessageBox.information(self, "Info", 'Prediction Done', QMessageBox.Ok)
-
-
+        self.table_thread = TableThread(self.table)
+        self.table_thread.finished.connect(self.table_thread.deleteLater)
+        self.table_thread.start()
 
 
 
