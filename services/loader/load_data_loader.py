@@ -20,7 +20,6 @@ class LoadDataLoader():
             data_frame_temp = self.__load_folder_data(folder)
 
             self.data_frame = pd.concat([self.data_frame, data_frame_temp], axis=0)
-
         self.__filter_data()
 
         return self.data_frame

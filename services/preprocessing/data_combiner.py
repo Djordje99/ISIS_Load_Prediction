@@ -60,7 +60,7 @@ class DataCombiner():
         data_frame = self.weather_calibrator.drop_features(data_frame)
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
         data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
-        data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
+        #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
         data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
         data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
         data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame)

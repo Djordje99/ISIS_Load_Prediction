@@ -86,8 +86,10 @@ class LoadPredictionController(QMainWindow):
 
     def __set_dates(self, max_date, min_date):
         print(max_date)
-        q_date_min = QDateTime(min_date)
-        q_date_max = QDateTime(max_date)
+        q_date_min = QDateTime.fromString(min_date, 'yyyy-MM-dd hh:mm:ss')
+        q_date_max = QDateTime.fromString(max_date, 'yyyy-MM-dd hh:mm:ss')
+
+        print(q_date_max)
 
         self.from_date_edit.setMaximumDateTime(q_date_max)
         self.from_date_edit.setMinimumDateTime(q_date_min)
