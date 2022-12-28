@@ -27,21 +27,38 @@ class LoadCalibrator():
 
         return data_frame
 
-    def create_previous_weekday_load_feature(self, data_frame:pd.DataFrame):
+    def create_previous_weekday_load_feature(self, data_frame:pd.DataFrame , previous_data_frame = pd.DataFrame()):
         year_mean = data_frame.groupby([data_frame['date'].dt.year]).mean()['load'].reset_index()
 
+        load_value = year_mean['load'][0]
+
         data_frame.insert(2, 'previous_weekday_load', np.nan)
-
-        data_frame['previous_weekday_load'] = data_frame['load'].shift(periods=168)
-
-        for i in range(0, 168):
-            data_frame['previous_weekday_load'][i] = year_mean['load'][0]
-
         data_frame.insert(2, 'previous_day_load', np.nan)
 
-        data_frame['previous_day_load'] = data_frame['load'].shift(periods=24)
+        if previous_data_frame.empty:
+            # for i in range(0, 168):
+            #     load_value = year_mean['load'][0]
+            #     #data_frame['previous_weekday_load'][i] = load_value
+            #     data_frame.loc[i, 'previous_weekday_load'] = load_value
 
-        for i in range(0, 24):
-            data_frame['previous_day_load'][i] = year_mean['load'][0]
+            # print(data_frame)
+
+            data_frame['previous_weekday_load'] = data_frame['load'].shift(periods=168, fill_value=load_value)
+
+            # print(data_frame)
+
+            # for i in range(0, 24):
+            #     load_value = year_mean['load'][0]
+            #     #data_frame['previous_day_load'][i] = load_value
+            #     data_frame.loc[i, 'previous_day_load'] = load_value
+
+            data_frame['previous_day_load'] = data_frame['load'].shift(periods=24, fill_value=load_value)
+
+            print(data_frame)
+
+        elif not previous_data_frame.empty:
+            data_frame['previous_day_load'] = previous_data_frame['load'].shift(periods=24)
+
+            data_frame['previous_weekday_load'] = previous_data_frame['load'].shift(periods=168)
 
         return data_frame

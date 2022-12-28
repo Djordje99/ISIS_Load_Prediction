@@ -71,7 +71,7 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.saver_thread = SavingThread(self.csv_path, self.mode)
+        self.saver_thread = SavingThread(self.csv_path, self.sqlite_mode.currentText())
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_saved)
 

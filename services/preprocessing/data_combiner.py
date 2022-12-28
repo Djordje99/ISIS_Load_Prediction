@@ -42,7 +42,7 @@ class DataCombiner():
         return weather_data_frame
 
 
-    def generate_training_data(self) -> pd.DataFrame:
+    def generate_training_data(self, previous_data_frame=pd.DataFrame()) -> pd.DataFrame:
         load_data_frame = self.__load_load_data()
         weather_data_frame = self.__load_weather_data(load_data_frame['date'].min(), load_data_frame['date'].max())
 
@@ -52,18 +52,23 @@ class DataCombiner():
 
         print(training_data)
 
-        training_data = self.preprocess_data(training_data)
+        training_data = self.preprocess_data(training_data, previous_data_frame=pd.DataFrame())
 
         return training_data
 
-    def preprocess_data(self, data_frame) -> pd.DataFrame:
+    def preprocess_data(self, data_frame, previous_data_frame) -> pd.DataFrame:
         data_frame = self.weather_calibrator.drop_features(data_frame)
+        data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
+
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
         data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
         #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
-        data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
-        data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
-        data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame)
+
+        #data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
+
+        print(data_frame.head())
+        data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame, previous_data_frame)
+        print(data_frame.head())
         data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
 
         self.date_normalizer = DateNormalizer(data_frame)
