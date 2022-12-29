@@ -55,6 +55,15 @@ class DateNormalizer():
         for name in seasons_encoded.columns:
             self.data_frame.insert(1, name, seasons_encoded[name])
 
+        columns = self.data_frame.columns
+        if 'season_summer' not in columns:
+            self.data_frame['season_summer'] = 0
+        if 'season_winter' not in columns:
+            self.data_frame['season_winter'] = 0
+        if 'season_spring' not in columns:
+            self.data_frame['season_spring'] = 0
+        if 'season_autumn' not in columns:
+            self.data_frame['season_autumn'] = 0
 
     def normalize_date(self):
         self.__create_hour_column()

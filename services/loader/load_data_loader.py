@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import datetime
 
 import logging
 logging.basicConfig(filename="log.log", format='%(asctime)s %(message)s',filemode='w')
@@ -39,7 +40,26 @@ class LoadDataLoader():
 
         self.data_frame = self.data_frame.drop('name', axis=1)
 
+        print(self.data_frame.head())
+
+        if((self.is_date_in_format(self.data_frame['date'].iloc[0], '%m/%d/%Y %H:%M'))):
+            self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%m/%d/%Y %H:%M')
+            self.data_frame['date'] = self.data_frame['date'].astype(str)
+        else:
+            self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%m/%d/%Y %H:%M:%S')
+            self.data_frame['date'] = self.data_frame['date'].astype(str)
+
+        print(self.data_frame.head())
+
         self.data_frame = self.data_frame[self.data_frame['date'].str.endswith("00:00")]
 
-        self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%m/%d/%Y %H:%M:%S')
+        self.data_frame['date'] = pd.to_datetime(self.data_frame['date'], format='%Y/%m/%d %H:%M:%S')
+
+
+    def is_date_in_format(self, date_str, date_format):
+        try:
+            datetime.datetime.strptime(date_str, date_format)
+            return True
+        except ValueError:
+            return False
 
