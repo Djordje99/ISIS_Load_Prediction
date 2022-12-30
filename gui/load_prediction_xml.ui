@@ -384,6 +384,25 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="export_btn">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Export</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>

@@ -8,6 +8,7 @@ from gui.thread.saver_thread import SavingThread
 from gui.thread.training_thread import TrainingThread
 from gui.thread.predict_thread import PredictThread
 from gui.thread.table_thread import TableThread
+from services.exporter.csv import CsvExporter
 
 SQLITE_MODE = ['append', 'replace']
 
@@ -31,6 +32,12 @@ class LoadPredictionController(QMainWindow):
         self.train_btn.clicked.connect(self.init_training)
         self.predict_btn.clicked.connect(self.predict)
         self.sqlite_mode.addItems(SQLITE_MODE)
+        self.export_btn.clicked.connect(self.export_csv)
+
+
+    def export_csv(self):
+        exporter = CsvExporter()
+        exporter.export()
 
 
     def predict(self):
