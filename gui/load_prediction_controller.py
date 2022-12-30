@@ -104,16 +104,18 @@ class LoadPredictionController(QMainWindow):
 
 
     def init_training(self):
-        # date_form = self.from_date_edit.dateTime()
-        # date_to = self.to_date_edit.dateTime()
+        date_form = self.from_date_edit.dateTime()
+        date_to = self.to_date_edit.dateTime()
 
-        # if date_to <= date_form:
-        #     QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
-        #     return
+        if date_to <= date_form:
+            QMessageBox.critical(self, "Error", 'Invalid dates input', QMessageBox.Ok)
+            return
 
-        self.training_thread = TrainingThread()
+        date_form = date_form.toString('yyyy-MM-dd')
+        date_to = date_to.toString('yyyy-MM-dd')
 
-        # self.training_thread.finish_signal.connect(self.training_thread.deleteLater)
+        self.training_thread = TrainingThread(date_form, date_to)
+
         self.training_thread.finished.connect(self.training_thread.deleteLater)
         self.training_thread.finish_signal.connect(self.training_finished)
 
@@ -124,10 +126,6 @@ class LoadPredictionController(QMainWindow):
     def training_finished(self, y_predicted, y_test):
         self.ploting = CustomPloting()
 
-        # self.widget.axes.plot([0,1,2,3,4], [10,1,20,3,40])
-        # self.setCentralWidget(self.widget)
-
-        # self.show()
         self.ploting.show_plots(y_predicted, y_test)
 
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)

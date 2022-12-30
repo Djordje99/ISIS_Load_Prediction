@@ -40,14 +40,10 @@ class Preparer:
         return X_test.copy(), y_test.copy()
 
 
-
-    def prepare_data_frame(self, selected_features=''):
+    def prepare_data_frame(self, date_form, date_to, selected_features=''):
         self.controller = DatabaseController()
-        self.data_frame = self.controller.load_data()
+        self.data_frame = self.controller.get_data_frame_from_date(date_form, date_to)
         self.scaler = MinMaxScaler(feature_range=(0, 1))
-
-        # self.selector = FeatureSelectionRFE()
-        # self.data_frame = self.selector.select_features(self.data_frame, 20)
 
         if len(selected_features) > 0:
             selected_features += '1'
@@ -64,8 +60,8 @@ class Preparer:
         return self.data_frame
 
 
-    def prepare_for_training(self, selected_features=[]):
-        self.prepare_data_frame(selected_features)
+    def prepare_for_training(self, date_from, date_to, selected_features=[]):
+        self.prepare_data_frame(date_from, date_to, selected_features)
 
         dataset = self.scaler.fit_transform(self.dataset_values)
 

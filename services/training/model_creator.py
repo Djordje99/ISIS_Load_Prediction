@@ -13,8 +13,8 @@ class ModelCreator():
         self.preparer = Preparer(SHARE_FOR_TRAINING)
 
 
-    def create_model(self):
-        trainX, trainY, testX, testY = self.preparer.prepare_for_training()
+    def create_model(self, date_from, date_to):
+        trainX, trainY, testX, testY = self.preparer.prepare_for_training(date_from, date_to)
 
         ann_regression = AnnRegression()
 
