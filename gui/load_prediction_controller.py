@@ -10,8 +10,9 @@ from gui.thread.predict_thread import PredictThread
 from gui.thread.table_thread import TableThread
 from services.exporter.csv import CsvExporter
 
-from gui.prediction_tab import PredictionTab
-from gui.configuration_tab import ConfigurationTab
+from gui.tabs.prediction_tab import PredictionTab
+from gui.tabs.configuration_tab import ConfigurationTab
+from gui.tabs.wind_generator_tab import WindGeneratorConfiguration
 
 
 SQLITE_MODE = ['append', 'replace']
@@ -29,6 +30,7 @@ class LoadPredictionController(QMainWindow):
 
         self.predict_tab = PredictionTab(self)
         self.configuration_tab = ConfigurationTab(self)
+        self.wind_generator_tab = WindGeneratorConfiguration(self)
         #self.init_training()
 
 
