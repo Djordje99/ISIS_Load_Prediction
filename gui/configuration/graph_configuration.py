@@ -53,7 +53,7 @@ class GraphConfiguration():
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.window.thermal_gas_graphicview.plot(RANGE, EMISSION_DEFAULT, name='co2 coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.window.thermal_gas_graphicview.plot(RANGE, EMISSION_DEFAULT, name='co2 gas', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def configure_consumption_coal_graph(self):
@@ -69,7 +69,7 @@ class GraphConfiguration():
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.window.thermal_coal_consumption_graphicview.plot(RANGE, FUEL_COST_DEFAULT, name='co2 coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.window.thermal_coal_consumption_graphicview.plot(RANGE, FUEL_COST_DEFAULT, name='consumption coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def configure_consumption_gas_graph(self):
@@ -85,4 +85,4 @@ class GraphConfiguration():
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.window.thermal_gas_consumption_graphicview.plot(RANGE, FUEL_COST_DEFAULT, name='co2 coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.window.thermal_gas_consumption_graphicview.plot(RANGE, FUEL_COST_DEFAULT, name='consumption coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
