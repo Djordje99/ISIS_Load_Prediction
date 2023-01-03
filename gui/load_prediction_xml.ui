@@ -898,7 +898,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QGraphicsView" name="thermal_coal_graphicview"/>
+                 <widget class="PlotWidget" name="thermal_coal_graphicview"/>
                 </item>
                </layout>
               </item>
@@ -912,8 +912,11 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
                   <property name="maximum">
-                   <number>99</number>
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -928,6 +931,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -940,6 +949,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -954,6 +969,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -966,6 +987,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -991,7 +1018,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QGraphicsView" name="thermal_gas_graphicview"/>
+                 <widget class="PlotWidget" name="thermal_gas_graphicview"/>
                 </item>
                </layout>
               </item>
@@ -1004,6 +1031,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1018,6 +1051,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1030,6 +1069,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1044,6 +1089,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1056,6 +1107,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1090,7 +1147,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QGraphicsView" name="thermal_coal_consumption_graphicview"/>
+               <widget class="PlotWidget" name="thermal_coal_consumption_graphicview"/>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_21">
@@ -1102,8 +1159,11 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
                   <property name="maximum">
-                   <number>99</number>
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1118,6 +1178,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1130,6 +1196,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1144,6 +1216,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1156,6 +1234,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1179,7 +1263,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QGraphicsView" name="thermal_gas_graphicview_2"/>
+               <widget class="PlotWidget" name="thermal_gas_consumption_graphicview"/>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -1190,6 +1274,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1204,6 +1294,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1216,6 +1312,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1230,6 +1332,12 @@
                     <height>60</height>
                    </size>
                   </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1242,6 +1350,12 @@
                     <width>16777215</width>
                     <height>60</height>
                    </size>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>100</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>

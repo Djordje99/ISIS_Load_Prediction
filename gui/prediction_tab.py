@@ -71,4 +71,4 @@ class PredictionTab():
 
     def plot(self, x, y, plotname, color):
         pen = pg.mkPen(color=color)
-        self.window.graphicsView.plot(x, y, name=plotname, symbolSize=30, symbolBrush=(color))
+        self.window.graphicsView.plot(x, y, name=plotname, symbolSize=6, symbolBrush=(color))
