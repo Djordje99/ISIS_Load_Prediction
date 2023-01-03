@@ -65,6 +65,8 @@ class LoadPredictionController(QMainWindow):
 
         self.table_thread.start()
 
+        self.predict_tab.refresh_graph()
+
 
     def load_csv(self):
         self.csv_path = QFileDialog.getExistingDirectory(self,'Select a directory','C:\'' if self.csv_path == "" else self.csv_path)
