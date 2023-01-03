@@ -44,6 +44,7 @@ class WindGeneratorConfiguration():
                 power_output.append(power_value)
 
         self.plot_graph(power_output)
+        self.set_max_min_power(power_output)
 
 
     def plot_graph(self, power_output):
@@ -62,3 +63,8 @@ class WindGeneratorConfiguration():
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
         self.window.wind_generator_power_graphicview.plot(WIND_SPEED, power_output, name='power', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+
+
+    def set_max_min_power(self, power_output):
+        self.window.max_prod_wind_edit_line.setText(f'{round(max(power_output), 4)} MW')
+        self.window.min_prod_wind_edit_line.setText(f'{round(min(power_output), 4)} MW')
