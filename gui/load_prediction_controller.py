@@ -10,6 +10,8 @@ from gui.thread.predict_thread import PredictThread
 from gui.thread.table_thread import TableThread
 from services.exporter.csv import CsvExporter
 
+from gui.prediction_tab import PredictionTab
+
 SQLITE_MODE = ['append', 'replace']
 
 
@@ -23,6 +25,7 @@ class LoadPredictionController(QMainWindow):
 
         self.csv_path = ''
 
+        self.predict_tab = PredictionTab(self)
         #self.init_training()
 
 
