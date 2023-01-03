@@ -38,7 +38,7 @@ class PredictionTab():
         hours = range(0, 24)
 
         self.plot(hours, load_data, 'Load', 'blue')
-        self.plot(hours, predicted_load, 'PredictedLoad', 'r')
+        self.plot(hours, predicted_load, 'Predicted Load', 'r')
 
         self.calculate_error(load_data, predicted_load)
 
@@ -60,7 +60,7 @@ class PredictionTab():
     def configure_graph(self):
         self.window.graphicsView.setBackground('w')
 
-        self.window.graphicsView.setTitle("Your Title Here", color="b", size="30pt")
+        self.window.graphicsView.setTitle(color="b", size="30pt")
 
         styles = {"color": "#f00", "font-size": "20px"}
         self.window.graphicsView.setLabel("left", "Load", **styles)
@@ -71,4 +71,4 @@ class PredictionTab():
 
     def plot(self, x, y, plotname, color):
         pen = pg.mkPen(color=color)
-        self.window.graphicsView.plot(x, y, name=plotname, pen=pen, symbolSize=30, symbolBrush=(color))
+        self.window.graphicsView.plot(x, y, name=plotname, symbolSize=30, symbolBrush=(color))
