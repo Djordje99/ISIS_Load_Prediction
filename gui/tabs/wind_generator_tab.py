@@ -6,7 +6,7 @@ AIR_DENSITY = 1.225
 DEFAULT_COLOR = 'r'
 
 
-class WindGeneratorConfiguration():
+class WindGeneratorTab():
     def __init__(self, window) -> None:
         self.window = window
         self.connect_spin_box()

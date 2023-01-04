@@ -12,7 +12,8 @@ from services.exporter.csv import CsvExporter
 
 from gui.tabs.prediction_tab import PredictionTab
 from gui.tabs.configuration_tab import ConfigurationTab
-from gui.tabs.wind_generator_tab import WindGeneratorConfiguration
+from gui.tabs.wind_generator_tab import WindGeneratorTab
+from gui.tabs.solar_generator_tab import SolarGeneratorTab
 
 
 SQLITE_MODE = ['append', 'replace']
@@ -30,7 +31,8 @@ class LoadPredictionController(QMainWindow):
 
         self.predict_tab = PredictionTab(self)
         self.configuration_tab = ConfigurationTab(self)
-        self.wind_generator_tab = WindGeneratorConfiguration(self)
+        self.wind_generator_tab = WindGeneratorTab(self)
+        self.solar_generator_tab = SolarGeneratorTab(self)
         #self.init_training()
 
 
