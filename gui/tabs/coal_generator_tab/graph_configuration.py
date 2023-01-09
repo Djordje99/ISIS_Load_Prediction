@@ -1,3 +1,5 @@
+from gui.tabs.coal_generator_tab.slider_configuration import CoalTabSliderConfiguration
+
 import pyqtgraph as pg
 
 FUEL_COST_DEFAULT = [20, 40, 65, 80, 100]
@@ -6,9 +8,9 @@ RANGE = [20, 40, 60, 80, 100]
 DEFAULT_COLOR = 'r'
 
 
-class CoalTabGraphConfiguration():
+class CoalTabGraphConfiguration(CoalTabSliderConfiguration):
     def __init__(self, window) -> None:
-        self.window = window
+        super().__init__(window)
         self.set_graphics()
 
 

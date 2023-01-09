@@ -1,8 +1,12 @@
+from gui.tabs.gas_generator_tab.slider_graph_update import GasTabSliderGraphUpdate
+
 FUEL_COST_DEFAULT = [20, 40, 65, 80, 100]
 EMISSION_DEFAULT = [40, 20, 45, 75, 100]
 
-class GasTabSliderConfiguration():
+
+class GasTabSliderConfiguration(GasTabSliderGraphUpdate):
     def __init__(self, window) -> None:
+        super(GasTabSliderConfiguration, self).__init__(window)
         self.window = window
         self.configure_sliders()
 

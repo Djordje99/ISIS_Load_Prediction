@@ -1,9 +1,11 @@
+from gui.tabs.coal_generator_tab.slider_graph_update import CoalTabSliderGraphUpdate
+
 FUEL_COST_DEFAULT = [20, 40, 65, 80, 100]
 EMISSION_DEFAULT = [40, 20, 45, 75, 100]
 
-class CoalTabSliderConfiguration():
+class CoalTabSliderConfiguration(CoalTabSliderGraphUpdate):
     def __init__(self, window) -> None:
-        self.window = window
+        super().__init__(window)
         self.configure_sliders()
 
 

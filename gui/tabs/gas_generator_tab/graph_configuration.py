@@ -1,13 +1,16 @@
 import pyqtgraph as pg
 
+from gui.tabs.gas_generator_tab.slider_configuration import GasTabSliderConfiguration
+
 FUEL_COST_DEFAULT = [20, 40, 65, 80, 100]
 EMISSION_DEFAULT = [40, 20, 45, 75, 100]
 RANGE = [20, 40, 60, 80, 100]
 DEFAULT_COLOR = 'r'
 
 
-class GasTabGraphConfiguration():
+class GasTabGraphConfiguration(GasTabSliderConfiguration):
     def __init__(self, window) -> None:
+        super(GasTabGraphConfiguration, self).__init__(window)
         self.window = window
         self.set_graphics()
 
