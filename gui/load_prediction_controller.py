@@ -15,7 +15,7 @@ from gui.tabs.coal_generator_tab.coal_generator_tab import CoalGeneratorTab
 from gui.tabs.gas_generator_tab.gas_generator_tab import GasGeneratorTab
 from gui.tabs.hydro_generator_tab import HydroGeneratorTab
 from gui.tabs.wind_generator_tab import WindGeneratorTab
-from gui.tabs.solar_generator_tab import SolarGeneratorTab
+from gui.tabs.solar_generator_tab.solar_generator_tab import SolarGeneratorTab
 from gui.tabs.optimize_tab import OptimizeTab
 
 
