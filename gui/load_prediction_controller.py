@@ -13,6 +13,7 @@ from services.exporter.csv import CsvExporter
 from gui.tabs.prediction_tab import PredictionTab
 from gui.tabs.coal_generator_tab.coal_generator_tab import CoalGeneratorTab
 from gui.tabs.gas_generator_tab.gas_generator_tab import GasGeneratorTab
+from gui.tabs.hydro_generator_tab import HydroGeneratorTab
 from gui.tabs.wind_generator_tab import WindGeneratorTab
 from gui.tabs.solar_generator_tab import SolarGeneratorTab
 
@@ -33,6 +34,7 @@ class LoadPredictionController(QMainWindow):
         self.predict_tab = PredictionTab(self)
         self.coal_generator_tab = CoalGeneratorTab(self)
         self.gas_generator_tab = GasGeneratorTab(self)
+        self.hydro_generator = HydroGeneratorTab(self)
         self.wind_generator_tab = WindGeneratorTab(self)
         self.solar_generator_tab = SolarGeneratorTab(self)
         #self.init_training()
