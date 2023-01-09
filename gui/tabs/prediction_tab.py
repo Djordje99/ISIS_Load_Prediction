@@ -62,7 +62,7 @@ class PredictionTab():
 
         self.window.graphicsView.setTitle(color="b", size="30pt")
 
-        styles = {"color": "#f00", "font-size": "20px"}
+        styles = {"color": "#f00", "font-size": "10px"}
         self.window.graphicsView.setLabel("left", "Load", **styles)
         self.window.graphicsView.setLabel("bottom", "Hour", **styles)
 
