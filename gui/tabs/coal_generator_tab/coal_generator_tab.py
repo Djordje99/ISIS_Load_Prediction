@@ -8,7 +8,6 @@ from load_optimization.generator_enum import GeneratorType
 class CoalGeneratorTab(CoalTabGraphConfiguration):
     def __init__(self, tab:QWidget) -> None:
         super(CoalGeneratorTab, self).__init__(tab)
-        coal_generator = self.get_coal_generator_model()
 
 
     def get_coal_generator_model(self):

@@ -25,7 +25,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="prediction">
        <property name="font">
@@ -1691,7 +1691,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_19">
               <item>
-               <widget class="QLabel" name="hidro_generator_count_label">
+               <widget class="QLabel" name="hydro_generator_count_label">
                 <property name="minimumSize">
                  <size>
                   <width>250</width>
@@ -1705,7 +1705,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Hidro Generator Count</string>
+                 <string>Hydro Generator Count</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -1713,7 +1713,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="hidro_generator_count_spin_box">
+               <widget class="QSpinBox" name="hydro_generator_count_spin_box">
                 <property name="minimumSize">
                  <size>
                   <width>90</width>

@@ -5,7 +5,6 @@ from load_optimization.generator_enum import GeneratorType
 class GasGeneratorTab(GasTabGraphConfiguration):
     def __init__(self, tab) -> None:
         super(GasGeneratorTab, self).__init__(tab)
-        gas_generator = self.get_gas_generator_model()
 
 
     def get_gas_generator_model(self):
