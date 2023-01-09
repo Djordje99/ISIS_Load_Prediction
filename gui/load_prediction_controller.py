@@ -33,12 +33,12 @@ class LoadPredictionController(QMainWindow):
         self.csv_path = ''
 
         self.predict_tab = PredictedLoadTab(self.predicted_load)
+        self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)
         self.hydro_generator = HydroGeneratorTab(self.hydro)
         self.wind_generator_tab = WindGeneratorTab(self.wind)
         self.solar_generator_tab = SolarGeneratorTab(self.solar)
-        self.optimize_tab = OptimizeTab(self.optimize)
         #self.init_training()
 
 

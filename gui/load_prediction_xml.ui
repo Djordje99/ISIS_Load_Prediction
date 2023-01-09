@@ -25,7 +25,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="prediction">
        <property name="font">
@@ -2224,7 +2224,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="solar_panel_efficiency_label_spin_box">
+               <widget class="QDoubleSpinBox" name="solar_panel_efficiency_spin_box">
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>

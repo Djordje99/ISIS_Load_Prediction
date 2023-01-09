@@ -1,3 +1,7 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
 import pyqtgraph as pg
 from math import pow
 
@@ -7,22 +11,28 @@ DEFAULT_COLOR = 'r'
 
 
 class WindGeneratorTab():
-    def __init__(self, window) -> None:
-        self.window = window
+    def __init__(self, tab:QWidget) -> None:
+        self.cross_sectional_aria_wind_spin_box = tab.findChild(QDoubleSpinBox, 'cross_sectional_aria_wind_spin_box')
+        self.cut_in_speed_spin_box = tab.findChild(QDoubleSpinBox, 'cut_in_speed_spin_box')
+        self.cut_out_speed_spin_box = tab.findChild(QDoubleSpinBox, 'cut_out_speed_spin_box')
+        self.wind_generator_power_graphicview = tab.findChild(pg.PlotWidget, 'wind_generator_power_graphicview')
+        self.max_prod_wind_edit_line = tab.findChild(QLineEdit, 'max_prod_wind_edit_line')
+        self.min_prod_wind_edit_line = tab.findChild(QLineEdit, 'min_prod_wind_edit_line')
+
         self.connect_spin_box()
         self.update_graph()
 
 
     def connect_spin_box(self):
-        self.window.cross_sectional_aria_wind_spin_box.valueChanged.connect(self.update_graph)
-        self.window.cut_in_speed_spin_box.valueChanged.connect(self.update_graph)
-        self.window.cut_out_speed_spin_box.valueChanged.connect(self.update_graph)
+        self.cross_sectional_aria_wind_spin_box.valueChanged.connect(self.update_graph)
+        self.cut_in_speed_spin_box.valueChanged.connect(self.update_graph)
+        self.cut_out_speed_spin_box.valueChanged.connect(self.update_graph)
 
 
     def get_spin_box_value(self):
-        value_1 = self.window.cross_sectional_aria_wind_spin_box.value()
-        value_2 = self.window.cut_in_speed_spin_box.value()
-        value_3 = self.window.cut_out_speed_spin_box.value()
+        value_1 = self.cross_sectional_aria_wind_spin_box.value()
+        value_2 = self.cut_in_speed_spin_box.value()
+        value_3 = self.cut_out_speed_spin_box.value()
 
         return value_1, value_2, value_3
 
@@ -48,23 +58,23 @@ class WindGeneratorTab():
 
 
     def plot_graph(self, power_output):
-        self.window.wind_generator_power_graphicview.clear()
+        self.wind_generator_power_graphicview.clear()
 
-        self.window.wind_generator_power_graphicview.setBackground('w')
+        self.wind_generator_power_graphicview.setBackground('w')
 
-        self.window.wind_generator_power_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
+        self.wind_generator_power_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.window.wind_generator_power_graphicview.setLabel("left", "Power (MW)", **styles)
-        self.window.wind_generator_power_graphicview.setLabel("bottom", "Wind Speed (m/s)", **styles)
+        self.wind_generator_power_graphicview.setLabel("left", "Power (MW)", **styles)
+        self.wind_generator_power_graphicview.setLabel("bottom", "Wind Speed (m/s)", **styles)
 
-        self.window.wind_generator_power_graphicview.addLegend()
+        self.wind_generator_power_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.window.wind_generator_power_graphicview.plot(WIND_SPEED, power_output, name='power', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.wind_generator_power_graphicview.plot(WIND_SPEED, power_output, name='power', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def set_max_min_power(self, power_output):
-        self.window.max_prod_wind_edit_line.setText(f'{round(max(power_output), 4)} MW')
-        self.window.min_prod_wind_edit_line.setText(f'{round(min(power_output), 4)} MW')
+        self.max_prod_wind_edit_line.setText(f'{round(max(power_output), 4)} MW')
+        self.min_prod_wind_edit_line.setText(f'{round(min(power_output), 4)} MW')
