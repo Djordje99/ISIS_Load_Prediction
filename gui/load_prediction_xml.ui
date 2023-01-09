@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>758</width>
-    <height>467</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -709,7 +709,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>5.000000000000000</double>
+                 <double>10.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -739,7 +739,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>10.000000000000000</double>
+                 <double>5.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1170,7 +1170,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>5.000000000000000</double>
+                 <double>10.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1200,7 +1200,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>10.000000000000000</double>
+                 <double>5.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1633,7 +1633,7 @@
                    <set>Qt::AlignCenter</set>
                   </property>
                   <property name="value">
-                   <double>5.000000000000000</double>
+                   <double>10.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -1663,7 +1663,7 @@
                    <set>Qt::AlignCenter</set>
                   </property>
                   <property name="value">
-                   <double>10.000000000000000</double>
+                   <double>5.000000000000000</double>
                   </property>
                  </widget>
                 </item>
