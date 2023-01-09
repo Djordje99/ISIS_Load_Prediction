@@ -50,11 +50,47 @@ class DataCombiner():
         training_data = training_data[training_data['load'].notna()]
         training_data = training_data.reset_index(drop=True)
 
-        print(training_data)
-
-        training_data = self.preprocess_data(training_data, previous_data_frame=pd.DataFrame())
+        training_data = self.preprocess_data(training_data, previous_data_frame)
 
         return training_data
+
+
+    def generate_training_data_append(self, previous_data_frame=pd.DataFrame()) -> pd.DataFrame:
+        training_data = self.__load_weather_data()
+
+        training_data['load'] = 0
+
+        training_data = training_data.reset_index(drop=True)
+
+        training_data = self.preprocess_test_data(training_data, previous_data_frame)
+
+        return training_data
+
+
+    def preprocess_test_data(self, data_frame, previous_data_frame):
+        data_frame = self.weather_calibrator.drop_features(data_frame)
+        data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
+
+        data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
+        data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
+        data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
+
+        #data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
+
+        #data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame, previous_data_frame)
+
+        data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
+
+        self.date_normalizer = DateNormalizer(data_frame)
+        data_frame = self.date_normalizer.normalize_date()
+
+        self.string_normalizer = StringNormalizer(data_frame)
+        data_frame = self.string_normalizer.normalize_string()
+
+        self.missing_value_normalizer = MissingValue(data_frame)
+        data_frame = self.missing_value_normalizer.normalize_missing_value()
+
+        return data_frame
 
     def preprocess_data(self, data_frame, previous_data_frame) -> pd.DataFrame:
         data_frame = self.weather_calibrator.drop_features(data_frame)
@@ -62,13 +98,12 @@ class DataCombiner():
 
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
         data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
-        #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
+        data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
 
         #data_frame = self.load_calibrator.create_previous_day_load_feature(data_frame)
 
-        print(data_frame.head())
-        data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame, previous_data_frame)
-        print(data_frame.head())
+        #data_frame = self.load_calibrator.create_previous_weekday_load_feature(data_frame, previous_data_frame)
+
         data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
 
         self.date_normalizer = DateNormalizer(data_frame)

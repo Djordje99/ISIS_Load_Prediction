@@ -138,7 +138,7 @@ class Preparer:
         dataX, dataY = [], []
 
         for i in range(len(dataset)): # -1
-            a = dataset[i, 0:look_back - 1] #-1 
+            a = dataset[i, 0:look_back - 1] #-1
             dataX.append(a)
             dataY.append(dataset[i, look_back - 1])#-1
 

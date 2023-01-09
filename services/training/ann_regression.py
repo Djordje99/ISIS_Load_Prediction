@@ -19,7 +19,7 @@ class AnnRegression(AnnBase):
             if self.number_of_hidden_layers > 1:
                 for i in range(self.number_of_hidden_layers - 1):
                     model.add(Dense(self.number_of_neurons_in_other_hidden_layers, kernel_initializer=self.kernel_initializer, activation=self.activation_function))
-
+#TODO drop out layer between layers
         model.add(Dense(1, kernel_initializer=self.kernel_initializer))
 
         return model
