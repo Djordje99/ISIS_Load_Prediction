@@ -10,7 +10,7 @@ IRRADIANCE = [0,0,0,0,0,0,15, 68, 181, 412, 628, 811, 900, 954, 898, 787, 339, 2
 DEFAULT_COLOR = 'r'
 
 
-class SolarGeneratorTabConfigure():
+class Configuration():
     def __init__(self, tab:QWidget) -> None:
         self.solar_panel_size_spin_box = tab.findChild(QDoubleSpinBox, 'solar_panel_size_spin_box')
         self.solar_panel_efficiency_spin_box = tab.findChild(QDoubleSpinBox, 'solar_panel_efficiency_spin_box')

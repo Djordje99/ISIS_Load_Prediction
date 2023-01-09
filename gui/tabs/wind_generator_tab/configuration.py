@@ -10,7 +10,7 @@ AIR_DENSITY = 1.225
 DEFAULT_COLOR = 'r'
 
 
-class WindGeneratorTab():
+class Configuration():
     def __init__(self, tab:QWidget) -> None:
         self.cross_sectional_aria_wind_spin_box = tab.findChild(QDoubleSpinBox, 'cross_sectional_aria_wind_spin_box')
         self.cut_in_speed_spin_box = tab.findChild(QDoubleSpinBox, 'cut_in_speed_spin_box')
@@ -18,6 +18,7 @@ class WindGeneratorTab():
         self.wind_generator_power_graphicview = tab.findChild(pg.PlotWidget, 'wind_generator_power_graphicview')
         self.max_prod_wind_edit_line = tab.findChild(QLineEdit, 'max_prod_wind_edit_line')
         self.min_prod_wind_edit_line = tab.findChild(QLineEdit, 'min_prod_wind_edit_line')
+        self.wind_generator_count_spin_box = tab.findChild(QSpinBox, 'wind_generator_count_spin_box')
 
         self.connect_spin_box()
         self.update_graph()

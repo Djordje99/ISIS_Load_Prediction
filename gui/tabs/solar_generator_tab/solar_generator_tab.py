@@ -2,11 +2,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from gui.tabs.solar_generator_tab.solar_generator_tab_configure import SolarGeneratorTabConfigure
+from gui.tabs.solar_generator_tab.configuration import Configuration
 from load_optimization.generator_enum import GeneratorType
 from load_optimization.generator.solar import SolarGenerator
 
-class SolarGeneratorTab(SolarGeneratorTabConfigure):
+class SolarGeneratorTab(Configuration):
     def __init__(self, tab: QWidget) -> None:
         super(SolarGeneratorTab, self).__init__(tab)
         generator = self.get_solar_generator_model()
