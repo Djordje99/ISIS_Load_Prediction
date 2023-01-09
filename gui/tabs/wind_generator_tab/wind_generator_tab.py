@@ -9,7 +9,6 @@ from load_optimization.generator.wind import WindGenerator
 class WindGeneratorTab(Configuration):
     def __init__(self, tab: QWidget) -> None:
         super().__init__(tab)
-        g = self.get_wind_generator_model()
 
     def get_wind_generator_model(self):
         #max and min power will be determine by wind speed

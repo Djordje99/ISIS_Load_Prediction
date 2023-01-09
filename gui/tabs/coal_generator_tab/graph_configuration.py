@@ -22,6 +22,8 @@ class CoalTabGraphConfiguration(CoalTabSliderConfiguration):
 
 
     def configure_co2_coal_graph(self):
+        self.thermal_coal_graphicview.clear()
+
         self.thermal_coal_graphicview.setBackground('w')
 
         self.thermal_coal_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
@@ -38,6 +40,8 @@ class CoalTabGraphConfiguration(CoalTabSliderConfiguration):
 
 
     def configure_consumption_coal_graph(self):
+        self.thermal_coal_consumption_graphicview.clear()
+
         self.thermal_coal_consumption_graphicview.setBackground('w')
 
         self.thermal_coal_consumption_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
