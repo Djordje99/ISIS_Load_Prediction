@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
+    <width>767</width>
     <height>495</height>
    </rect>
   </property>
@@ -413,7 +413,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="predicted_load">
        <attribute name="title">
         <string>Predicted Load</string>
        </attribute>
@@ -473,7 +473,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="optimization">
        <attribute name="title">
         <string>Optimization</string>
        </attribute>
@@ -630,7 +630,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_6">
+      <widget class="QWidget" name="coal">
        <attribute name="title">
         <string>Coal</string>
        </attribute>
@@ -1091,7 +1091,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_7">
+      <widget class="QWidget" name="gas">
        <attribute name="title">
         <string>Gas</string>
        </attribute>
@@ -1552,7 +1552,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_8">
+      <widget class="QWidget" name="hydro">
        <attribute name="title">
         <string>Hydro</string>
        </attribute>
@@ -1768,7 +1768,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="wind">
        <attribute name="title">
         <string>Wind</string>
        </attribute>
@@ -2093,7 +2093,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_4">
+      <widget class="QWidget" name="solar">
        <attribute name="title">
         <string>Solar</string>
        </attribute>

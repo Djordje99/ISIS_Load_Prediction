@@ -9,17 +9,21 @@ from database.controller import DatabaseController
 from services.scorer.scrorer import Scorer
 
 
-class PredictionTab():
-    def __init__(self, window) -> None:
+class PredictedLoadTab():
+    def __init__(self, tab:QWidget) -> None:
         self.database_controller = DatabaseController()
         self.scorer = Scorer()
-        self.window = window
+
+        self.graphicsView = tab.findChild(pg.PlotWidget, 'graphicsView')
+        self.mape_edit_line = tab.findChild(QLineEdit, 'mape_edit_line')
+        self.mse_edit_line = tab.findChild(QLineEdit, 'mse_edit_line')
+
         self.configure_graph()
         self.plot_graph()
 
 
     def refresh_graph(self):
-        self.window.graphicsView.clear()
+        self.graphicsView.clear()
         self.configure_graph()
         self.plot_graph()
 
@@ -28,8 +32,8 @@ class PredictionTab():
         mape_error = self.scorer.get_mean_absolute_percentage_error(load, predicted_load)
         mse_error = self.scorer.get_mean_square_error(load, predicted_load)
 
-        self.window.mape_edit_line.setText(f'{round(mape_error, 4)}% MAPE')
-        self.window.mse_edit_line.setText(f'{round(mse_error, 4)} MSE')
+        self.mape_edit_line.setText(f'{round(mape_error, 4)}% MAPE')
+        self.mse_edit_line.setText(f'{round(mse_error, 4)} MSE')
 
 
     def plot_graph(self):
@@ -58,17 +62,17 @@ class PredictionTab():
 
 
     def configure_graph(self):
-        self.window.graphicsView.setBackground('w')
+        self.graphicsView.setBackground('w')
 
-        self.window.graphicsView.setTitle(color="b", size="30pt")
+        self.graphicsView.setTitle(color="b", size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.window.graphicsView.setLabel("left", "Load", **styles)
-        self.window.graphicsView.setLabel("bottom", "Hour", **styles)
+        self.graphicsView.setLabel("left", "Load", **styles)
+        self.graphicsView.setLabel("bottom", "Hour", **styles)
 
-        self.window.graphicsView.addLegend()
+        self.graphicsView.addLegend()
 
 
     def plot(self, x, y, plotname, color):
         pen = pg.mkPen(color=color)
-        self.window.graphicsView.plot(x, y, name=plotname, symbolSize=6, symbolBrush=(color))
+        self.graphicsView.plot(x, y, name=plotname, symbolSize=6, symbolBrush=(color))
