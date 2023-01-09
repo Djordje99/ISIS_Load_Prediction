@@ -26,6 +26,11 @@ class CoalTabSliderGraphUpdate():
         self.thermal_coal_graphicview = tab.findChild(pg.PlotWidget, 'thermal_coal_graphicview')
         self.thermal_coal_consumption_graphicview = tab.findChild(pg.PlotWidget, 'thermal_coal_consumption_graphicview')
 
+        self.max_thermal_coal_power_spin_box = tab.findChild(QDoubleSpinBox, 'max_thermal_coal_power_spin_box')
+        self.min_thermal_coal_power_spin_box = tab.findChild(QDoubleSpinBox, 'min_thermal_coal_power_spin_box')
+        self.coal_cost_spin_box = tab.findChild(QDoubleSpinBox, 'coal_cost_spin_box')
+        self.thermal_coal_count_spin_box = tab.findChild(QSpinBox, 'thermal_coal_count_spin_box')
+
         self.connect_value_change()
 
 
