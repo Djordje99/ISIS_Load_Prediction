@@ -5,7 +5,7 @@ class Generator():
         self._max_production = max_production
         self._min_production = min_production
         self._generator_type = generator_type
-        self.count = count
+        self._count = count
 
     @property
     def max_production(self):
@@ -33,8 +33,8 @@ class Generator():
 
     @property
     def count(self):
-        return self.count
+        return self._count
 
     @count.setter
     def count(self, value):
-        self.count = value
+        self._count = value

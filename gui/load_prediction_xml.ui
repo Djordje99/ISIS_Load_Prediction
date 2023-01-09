@@ -25,7 +25,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="prediction">
        <property name="font">
@@ -822,7 +822,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="thremal_coal_count_spin_box">
+               <widget class="QSpinBox" name="thermal_coal_count_spin_box">
                 <property name="minimumSize">
                  <size>
                   <width>90</width>
@@ -1283,7 +1283,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="thremal_gas_count_spin_box">
+               <widget class="QSpinBox" name="thermal_gas_count_spin_box">
                 <property name="minimumSize">
                  <size>
                   <width>90</width>

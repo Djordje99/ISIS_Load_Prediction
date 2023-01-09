@@ -26,6 +26,11 @@ class GasTabSliderGraphUpdate():
         self.thermal_gas_graphicview = tab.findChild(pg.PlotWidget, 'thermal_gas_graphicview')
         self.thermal_gas_consumption_graphicview = tab.findChild(pg.PlotWidget, 'thermal_gas_consumption_graphicview')
 
+        self.max_thermal_gas_power_spin_box = tab.findChild(QDoubleSpinBox, 'max_thermal_gas_power_spin_box')
+        self.min_thermal_gas_power_spin_box = tab.findChild(QDoubleSpinBox, 'min_thermal_gas_power_spin_box')
+        self.gas_cost_spin_box = tab.findChild(QDoubleSpinBox, 'gas_cost_spin_box')
+        self.thermal_gas_count_spin_box = tab.findChild(QSpinBox, 'thermal_gas_count_spin_box')
+
         self.connect_value_change()
 
 
