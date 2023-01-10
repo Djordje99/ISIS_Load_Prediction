@@ -116,6 +116,9 @@ class HolidayCalibrator():
         #         data_frame.iloc[[indexes], [2]] = 1
 
         holiday_dates = [pd.to_datetime(holiday).date() for holiday_year in HOLIDAYS_2018_2021 for holiday in holiday_year]
-        data_frame.loc[data_frame['date'].dt.date.isin(holiday_dates), 'is_holiday'] = 1
+
+        data_frame = data_frame.drop(data_frame['date'].dt.date.isin(holiday_dates), axis=0)
+
+        #data_frame.loc[data_frame['date'].dt.date.isin(holiday_dates), 'is_holiday'] = 1
 
         return data_frame

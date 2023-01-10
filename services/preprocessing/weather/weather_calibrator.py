@@ -1,13 +1,13 @@
 import pandas as pd
 
-FEATURE_DROP = ['precip', 'windgust', 'winddir', 'dew', 'sealevelpressure','precipprob','preciptype','snow','snowdepth', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
+FEATURE_DROP = ['precip', 'windgust', 'conditions', 'feelslike', 'winddir', 'dew', 'sealevelpressure','precipprob','preciptype','snow','snowdepth', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
 MAX_TEMP = 90
 MIN_TEMP = 60
 
 
 class WeatherCalibrator():
     def interpolate_missing_value(self, data_frame:pd.DataFrame):
-        data_frame['feelslike'] = data_frame['feelslike'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
+        #data_frame['feelslike'] = data_frame['feelslike'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         data_frame['windspeed'] = data_frame['windspeed'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         data_frame['humidity'] = data_frame['humidity'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         #data_frame['windgust'] = data_frame['windgust'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
@@ -17,7 +17,7 @@ class WeatherCalibrator():
         #data_frame['dew'] = data_frame['dew'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         #data_frame['sealevelpressure'] = data_frame['sealevelpressure'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
 
-        #TODO data_frame = self.drop_rows(data_frame)
+        #data_frame = self.drop_rows(data_frame)
 
         return data_frame
 
@@ -28,6 +28,8 @@ class WeatherCalibrator():
 
 
     def drop_rows(self, data_frame):
-        indexes = data_frame[(data_frame['temp'] >= MIN_TEMP) & (data_frame['temp'] <= MAX_TEMP)].index
-        data_frame =  data_frame.drop(indexes, inplace=True)
+        data_frame = data_frame[(data_frame['temp'] >= MIN_TEMP) & (data_frame['temp'] <= MAX_TEMP)]
+
+        print(data_frame)
+
         return data_frame

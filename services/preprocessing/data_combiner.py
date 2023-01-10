@@ -14,7 +14,7 @@ import pandas as pd
 
 LOAD_PATH = 'NYS_Load_Data'
 WEATHER_PATH = 'NYS_Weather_Data\\New_York_City_NY'
-
+DATA_FRAME_ORDER = ['date', 'season_summer', 'season_autumn', 'season_winter', 'season_spring', 'cos_month', 'sin_month', 'cos_weekday', 'sin_weekday', 'cos_time', 'sin_time', 'temp', 'windspeed', 'humidity', 'cloudcover', 'load']
 
 class DataCombiner():
     def __init__(self, folder_path) -> None:
@@ -50,7 +50,7 @@ class DataCombiner():
         training_data = training_data[training_data['load'].notna()]
         training_data = training_data.reset_index(drop=True)
 
-        training_data = self.preprocess_data(training_data)
+        #training_data = self.preprocess_data(training_data)
 
         return training_data
 
@@ -60,18 +60,28 @@ class DataCombiner():
         data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
 
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
-        data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
-        data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
+        #data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
+        #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
 
-        data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
+        #data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
 
         self.date_normalizer = DateNormalizer(data_frame)
         data_frame = self.date_normalizer.normalize_date()
 
-        self.string_normalizer = StringNormalizer(data_frame)
-        data_frame = self.string_normalizer.normalize_string()
+        # self.string_normalizer = StringNormalizer(data_frame)
+        # data_frame = self.string_normalizer.normalize_string()
 
         self.missing_value_normalizer = MissingValue(data_frame)
         data_frame = self.missing_value_normalizer.normalize_missing_value()
+
+        print(data_frame)
+
+        data_frame = self.reorder_data_frame(data_frame)
+
+        return data_frame
+
+
+    def reorder_data_frame(self, data_frame):
+        data_frame = data_frame[DATA_FRAME_ORDER]
 
         return data_frame

@@ -20,7 +20,7 @@ class DateNormalizer():
         sin_date = np.sin(seconds*(2*np.pi/SECONDS_IN_DAY))
         cos_time = np.cos(seconds*(2*np.pi/SECONDS_IN_DAY))
 
-        self.data_frame.insert(1, 'sin_date', sin_date)
+        self.data_frame.insert(1, 'sin_time', sin_date)
         self.data_frame.insert(1, 'cos_time', cos_time)
 
 
