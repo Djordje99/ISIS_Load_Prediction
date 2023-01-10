@@ -16,7 +16,7 @@ class LoadPredictor():
         self.data_preparer = Preparer(TRAINING_SHARE)
 
 
-    def predict(self, date_form, date_to):
+    def predict(self, date_form, date_to, day_number):
         X_test, y_test = self.data_preparer.prepare_predict_date(date_form, date_to)
 
         y_predicted = self.ann_regression.predict(X_test)
@@ -30,7 +30,7 @@ class LoadPredictor():
         print(f'MAPE Accuracy: {mape}%')
 
         #SAVE TO DATABASE PREDICTION
-        self.controller.save_predicted_load(y_predicted, date_form, date_to)
+        self.controller.save_predicted_load(y_predicted, date_form, day_number)
 
 
     def predict_test_data(self, date_form, date_to, day_number):

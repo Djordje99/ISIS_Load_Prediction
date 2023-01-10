@@ -37,22 +37,23 @@ class LoadPredictionController(QMainWindow):
         self.training_folder_path = ''
         self.test_csv_path = ''
 
-        #self.predict_tab = PredictedLoadTab(self.predicted_load)
+        self.predict_tab = PredictedLoadTab(self.predicted_load)
         self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)
         self.hydro_generator = HydroGeneratorTab(self.hydro)
         self.wind_generator_tab = WindGeneratorTab(self.wind)
         self.solar_generator_tab = SolarGeneratorTab(self.solar)
+
+        self.sqlite_mode.addItems(SQLITE_MODE)
         #self.init_training()
 
 
     def __connect_buttons(self):
-        self.csv_btn.clicked.connect(self.load_csv)
-        self.save_csv_btn.clicked.connect(self.save_csv)
+        self.csv_btn.clicked.connect(self.load_training_data)
+        self.save_csv_btn.clicked.connect(self.save_training_data)
         self.train_btn.clicked.connect(self.init_training)
         self.predict_btn.clicked.connect(self.predict)
-        self.sqlite_mode.addItems(SQLITE_MODE)
         self.export_btn.clicked.connect(self.export_csv)
         self.load_test_btn.clicked.connect(self.load_test_data)
         self.save_test_btn.clicked.connect(self.save_test_data)
@@ -74,37 +75,7 @@ class LoadPredictionController(QMainWindow):
         QMessageBox.information(self, "Info", 'Test data is saved in database', QMessageBox.Ok)
 
 
-    def export_csv(self):
-        exporter = CsvExporter()
-        exporter.export()
-
-
-    def predict(self):
-        date_form_predict = self.predict_date.dateTime()
-        date_from = date_form_predict.toString('yyyy-MM-dd')
-
-        day_number = self.predict_days_num.value()
-        date_to_predict = date_form_predict.addDays(day_number)
-        date_to = date_to_predict.toString('yyyy-MM-dd')
-
-        self.saver_thread = PredictThread(date_from, date_to, day_number)
-        self.saver_thread.finished.connect(self.saver_thread.deleteLater)
-        self.saver_thread.finish_signal.connect(self.data_predicted)
-
-        self.saver_thread.start()
-
-
-    def data_predicted(self):
-        QMessageBox.information(self, "Info", 'Prediction Done', QMessageBox.Ok)
-        self.table_thread = TableThread(self.table)
-        self.table_thread.finished.connect(self.table_thread.deleteLater)
-
-        self.table_thread.start()
-
-        self.predict_tab.refresh_graph()
-
-
-    def load_csv(self):
+    def load_training_data(self):
         self.training_folder_path = QFileDialog.getExistingDirectory(self,'Select a directory','C:\'' if self.training_folder_path == "" else self.training_folder_path)
         self.csv_line_edit.setText(self.training_folder_path)
 
@@ -118,7 +89,7 @@ class LoadPredictionController(QMainWindow):
             self.train_btn.setEnabled(False)
 
 
-    def save_csv(self):
+    def save_training_data(self):
         self.saver_thread = SavingThread(self.training_folder_path, self.sqlite_mode.currentText())
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_saved)
@@ -170,10 +141,39 @@ class LoadPredictionController(QMainWindow):
         self.training_thread.start()
 
 
-
     def training_finished(self, y_predicted, y_test):
         self.ploting = CustomPloting()
 
         self.ploting.show_plots(y_predicted, y_test)
 
         QMessageBox.information(self, "Info", 'Training is finished', QMessageBox.Ok)
+
+
+    def predict(self):
+        date_form_predict = self.predict_date.dateTime()
+        date_from = date_form_predict.toString('yyyy-MM-dd')
+
+        day_number = self.predict_days_num.value()
+        date_to_predict = date_form_predict.addDays(day_number)
+        date_to = date_to_predict.toString('yyyy-MM-dd')
+
+        self.saver_thread = PredictThread(date_from, date_to, day_number)
+        self.saver_thread.finished.connect(self.saver_thread.deleteLater)
+        self.saver_thread.finish_signal.connect(self.data_predicted)
+
+        self.saver_thread.start()
+
+
+    def data_predicted(self):
+        QMessageBox.information(self, "Info", 'Prediction Done', QMessageBox.Ok)
+        self.table_thread = TableThread(self.table)
+        self.table_thread.finished.connect(self.table_thread.deleteLater)
+
+        self.table_thread.start()
+
+        self.predict_tab.refresh_graph()
+
+
+    def export_csv(self):
+        exporter = CsvExporter()
+        exporter.export()

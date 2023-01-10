@@ -37,15 +37,15 @@ class PredictedLoadTab():
 
 
     def plot_graph(self):
+        hours = range(0, 24)
         predicted_load, date_form, date_to = self.get_predicted_load()
         load_data = self.get_real_load(date_form, date_to)
-        hours = range(0, 24)
 
-        self.plot(hours, load_data, 'Load', 'blue')
+        if not load_data.empty:
+            self.plot(hours, load_data, 'Load', 'blue')
+            self.calculate_error(load_data, predicted_load)
+
         self.plot(hours, predicted_load, 'Predicted Load', 'r')
-
-        self.calculate_error(load_data, predicted_load)
-
 
     def get_predicted_load(self):
         data_frame = self.database_controller.load_predicted_load()
@@ -55,7 +55,7 @@ class PredictedLoadTab():
 
 
     def get_real_load(self, date_from, date_to):
-        data_frame = self.database_controller.get_data_frame_from_date(date_from, date_to)
+        data_frame = self.database_controller.load_training_data(date_from, date_to)
         data_frame = data_frame.head(24)
 
         return data_frame['load']

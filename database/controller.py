@@ -20,40 +20,27 @@ class DatabaseController():
         return self.data_frame['date'].max(), self.data_frame['date'].min()
 
 
-    def save_to_db(self, folder_path, mode):
-        self.connection = sqlite3.connect(DATABASE_NAME)
-        previous_data_frame = pd.read_sql_query('SELECT * FROM Load', self.connection)
-        previous_data_frame['date'] = pd.to_datetime(previous_data_frame['date'])
-        self.connection.close()
-
+    def save_training_data(self, folder_path, mode):
         self.data_combiner = DataCombiner(folder_path)
-        if mode == 'append':
-            self.data_frame = self.data_combiner.generate_training_data(previous_data_frame)
-        else:
-            self.data_frame = self.data_combiner.generate_training_data()
 
-        print(self.data_frame)
+        self.data_frame = self.data_combiner.generate_training_data()
 
         self.connection = sqlite3.connect(DATABASE_NAME)
         self.data_frame.to_sql(name='Load', con=self.connection, if_exists=mode)
         self.connection.close()
 
 
-    def load_data(self):
+    def load_training_data(self, from_date = None, to_date = None):
         self.connection = sqlite3.connect(DATABASE_NAME)
-        self.data_frame = pd.read_sql_query('SELECT * FROM Load', self.connection)
-        self.connection.close()
 
-        self.data_frame = self.data_frame.drop(['index'], axis=1)
-        self.data_frame = self.data_frame.drop(['date'], axis=1)
+        query = ''
+        parameters = []
 
-        return self.data_frame
-
-
-    def get_data_frame_from_date(self, from_date, to_date):
-        self.connection = sqlite3.connect(DATABASE_NAME)
-        query = 'SELECT * FROM Load WHERE date >= ? and date <= ?'
-        parameters = [from_date, to_date]
+        if from_date == None or to_date == None:
+            query = 'SELECT * FROM Load'
+        else:
+            query = 'SELECT * FROM Load WHERE date >= ? and date <= ?'
+            parameters = [from_date, to_date]
 
         self.data_frame = pd.read_sql_query(query, params=parameters, con=self.connection)
         self.connection.close()
@@ -68,15 +55,9 @@ class DatabaseController():
         date_from += ' 00:00:00'
         dates = pd.date_range(date_from, periods=day_number*24, freq='H')
 
-        #data_frame['date'] = dates
-
-        #data_frame['predicted_load'] = y_predicted
-
         data_frame = pd.DataFrame({'date': dates, 'predicted_load': y_predicted.ravel()})
 
         data_frame = data_frame.set_index('date', drop=True)
-
-        print(data_frame)
 
         self.connection = sqlite3.connect(DATABASE_NAME)
         data_frame.to_sql(name='PredictedLoad', con=self.connection, if_exists='replace')
@@ -98,9 +79,6 @@ class DatabaseController():
         data_frame['date'] = pd.to_datetime(data_frame['date'], format='%Y-%m-%dT%H:%M:%S')
 
         data_frame.insert(len(data_frame.columns), 'load', 0, True)
-
-
-        print(data_frame.head())
 
         self.data_combiner = DataCombiner(test_csv_path)
         data_frame = self.data_combiner.preprocess_data(data_frame)

@@ -12,7 +12,7 @@ class Preparer:
 
 
     def prepare_predict_date(self, from_date, to_date):
-        data_frame = self.controller.get_data_frame_from_date(from_date, to_date)
+        data_frame = self.controller.load_training_data(from_date, to_date)
 
         self.number_of_columns = len(data_frame.columns)
         self.predictor_column_no = self.number_of_columns - 1
@@ -71,7 +71,7 @@ class Preparer:
 
     def prepare_data_frame(self, date_form, date_to, selected_features=''):
         self.controller = DatabaseController()
-        self.data_frame = self.controller.get_data_frame_from_date(date_form, date_to)
+        self.data_frame = self.controller.load_training_data(date_form, date_to)
         self.scaler = MinMaxScaler(feature_range=(0, 1))
 
         if len(selected_features) > 0:

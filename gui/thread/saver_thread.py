@@ -14,6 +14,6 @@ class SavingThread(QThread):
 
     def run(self):
         debugpy.debug_this_thread()
-        self.database_controller.save_to_db(self.path, self.mode)
+        self.database_controller.save_training_data(self.path, self.mode)
         max_date, min_date = self.database_controller.get_max_min_dates()
         self.finish_signal.emit(max_date, min_date)
