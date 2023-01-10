@@ -64,19 +64,15 @@ class DatabaseController():
         return self.data_frame
 
 
-    def save_predicted_load(self, y_predicted, date_from, date_to):
-        data_frame = pd.DataFrame()
-
+    def save_predicted_load(self, y_predicted, date_from, day_number):
         date_from += ' 00:00:00'
-        date_to += ' 00:00:00'
-        dates = pd.date_range(date_from, date_to, freq='H')
+        dates = pd.date_range(date_from, periods=day_number*24, freq='H')
 
-        data_frame['date'] = dates
+        #data_frame['date'] = dates
 
-        last_row = data_frame.tail(1)
-        data_frame = data_frame.drop(last_row.index)
+        #data_frame['predicted_load'] = y_predicted
 
-        data_frame['predicted_load'] = y_predicted
+        data_frame = pd.DataFrame({'date': dates, 'predicted_load': y_predicted.ravel()})
 
         data_frame = data_frame.set_index('date', drop=True)
 

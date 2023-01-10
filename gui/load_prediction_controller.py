@@ -71,6 +71,8 @@ class LoadPredictionController(QMainWindow):
     def save_test_data(self):
         self.database_controller.save_test_data(self.test_csv_path)
 
+        QMessageBox.information(self, "Info", 'Test data is saved in database', QMessageBox.Ok)
+
 
     def export_csv(self):
         exporter = CsvExporter()
@@ -85,7 +87,7 @@ class LoadPredictionController(QMainWindow):
         date_to_predict = date_form_predict.addDays(day_number)
         date_to = date_to_predict.toString('yyyy-MM-dd')
 
-        self.saver_thread = PredictThread(date_from, date_to)
+        self.saver_thread = PredictThread(date_from, date_to, day_number)
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_predicted)
 
