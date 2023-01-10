@@ -92,33 +92,9 @@ class HolidayCalibrator():
         pass
 
     def calibrate_holidays(self, data_frame:pd.DataFrame):
-        data_frame.insert(2, 'is_holiday', np.zeros(len(data_frame)))
-
-        # holidays_2018_2021 = []
-        # holidays_2018_2021.extend(HOLIDAY_DATES_2018)
-        # holidays_2018_2021.extend(HOLIDAY_DATES_2019)
-        # holidays_2018_2021.extend(HOLIDAY_DATES_2020)
-        # holidays_2018_2021.extend(HOLIDAY_DATES_2021)
-
-        # holidays_2018_2021 = pd.date_range(dates=holidays_2018_2021)
-
-        # for holiday in holidays_2018_2021:
-        #     if holiday in data_frame['date'].dt.date.values:
-        #         date = data_frame['date'].dt.date
-        #         indexes = data_frame[date == holiday].index
-        #         data_frame.iloc[[indexes], [2]] = 1
-
-        # for holiday_year in HOLIDAYS_2018_2021:
-        #     for holiday in holiday_year:
-        #         date = data_frame['date'].dt.date
-        #         holiday_date = pd.to_datetime(holiday)
-        #         indexes = data_frame[date == holiday_date].index
-        #         data_frame.iloc[[indexes], [2]] = 1
 
         holiday_dates = [pd.to_datetime(holiday).date() for holiday_year in HOLIDAYS_2018_2021 for holiday in holiday_year]
 
-        data_frame = data_frame.drop(data_frame['date'].dt.date.isin(holiday_dates), axis=0)
-
-        #data_frame.loc[data_frame['date'].dt.date.isin(holiday_dates), 'is_holiday'] = 1
+        data_frame = data_frame[~data_frame['date'].dt.date.isin(holiday_dates)]
 
         return data_frame

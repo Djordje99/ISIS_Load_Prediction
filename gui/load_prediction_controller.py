@@ -37,7 +37,7 @@ class LoadPredictionController(QMainWindow):
         self.training_folder_path = ''
         self.test_csv_path = ''
 
-        #self.predict_tab = PredictedLoadTab(self.predicted_load)
+        self.predict_tab = PredictedLoadTab(self.predicted_load)
         self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)

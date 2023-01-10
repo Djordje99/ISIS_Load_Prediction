@@ -63,7 +63,7 @@ class DataCombiner():
         #data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
         #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
 
-        #data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
+        data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
 
         self.date_normalizer = DateNormalizer(data_frame)
         data_frame = self.date_normalizer.normalize_date()
