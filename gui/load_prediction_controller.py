@@ -3,6 +3,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 
+from database.controller import DatabaseController
+
 from services.scorer.ploting import CustomPloting
 from gui.thread.saver_thread import SavingThread
 from gui.thread.training_thread import TrainingThread
@@ -30,9 +32,12 @@ class LoadPredictionController(QMainWindow):
         self.__connect_buttons()
         self.show()
 
-        self.csv_path = ''
+        self.database_controller = DatabaseController()
 
-        self.predict_tab = PredictedLoadTab(self.predicted_load)
+        self.training_folder_path = ''
+        self.test_csv_path = ''
+
+        #self.predict_tab = PredictedLoadTab(self.predicted_load)
         self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)
@@ -49,6 +54,22 @@ class LoadPredictionController(QMainWindow):
         self.predict_btn.clicked.connect(self.predict)
         self.sqlite_mode.addItems(SQLITE_MODE)
         self.export_btn.clicked.connect(self.export_csv)
+        self.load_test_btn.clicked.connect(self.load_test_data)
+        self.save_test_btn.clicked.connect(self.save_test_data)
+
+
+    def load_test_data(self):
+        self.test_csv_path, _ = QFileDialog.getOpenFileName(self, "Select CSV file", "C:\'","CSV Files (*.csv);;All Files (*)")
+        self.load_test_line_edit.setText(self.test_csv_path)
+
+        if self.test_csv_path != '':
+            self.save_test_btn.setEnabled(True)
+        else:
+            self.save_test_btn.setEnabled(False)
+
+
+    def save_test_data(self):
+        self.database_controller.save_test_data(self.test_csv_path)
 
 
     def export_csv(self):
@@ -82,10 +103,10 @@ class LoadPredictionController(QMainWindow):
 
 
     def load_csv(self):
-        self.csv_path = QFileDialog.getExistingDirectory(self,'Select a directory','C:\'' if self.csv_path == "" else self.csv_path)
-        self.csv_line_edit.setText(self.csv_path)
+        self.training_folder_path = QFileDialog.getExistingDirectory(self,'Select a directory','C:\'' if self.training_folder_path == "" else self.training_folder_path)
+        self.csv_line_edit.setText(self.training_folder_path)
 
-        if self.csv_path != '':
+        if self.training_folder_path != '':
             self.save_csv_btn.setEnabled(True)
             self.mode = self.sqlite_mode.currentText()
         else:
@@ -96,7 +117,7 @@ class LoadPredictionController(QMainWindow):
 
 
     def save_csv(self):
-        self.saver_thread = SavingThread(self.csv_path, self.sqlite_mode.currentText())
+        self.saver_thread = SavingThread(self.training_folder_path, self.sqlite_mode.currentText())
         self.saver_thread.finished.connect(self.saver_thread.deleteLater)
         self.saver_thread.finish_signal.connect(self.data_saved)
 

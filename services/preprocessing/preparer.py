@@ -40,6 +40,35 @@ class Preparer:
         return X_test.copy(), y_test.copy()
 
 
+    def prepare_test_data(self, from_date, to_date):
+        data_frame = self.controller.load_test_data(from_date, to_date)
+
+        self.number_of_columns = len(data_frame.columns)
+        self.predictor_column_no = self.number_of_columns - 1
+
+        print(f"Data_frame {len(data_frame)}")
+
+        predict_dataset_values = data_frame.values
+        predict_dataset_values = predict_dataset_values.astype('float32')
+
+        dataset = self.scaler.fit_transform(predict_dataset_values)
+
+        print(f"dataset {len(dataset)}")
+
+        X_test, y_test = self.create_dataset(dataset, len(data_frame.columns))
+
+        print(f'x_test : {len(X_test)}')
+
+        X_test = numpy.reshape(X_test, (X_test.shape[0], 1, X_test.shape[1]))
+
+        print(f'x_test : {len(X_test)}')
+
+        self.testX = X_test
+        self.testY = y_test
+
+        return X_test.copy(), y_test.copy()
+
+
     def prepare_data_frame(self, date_form, date_to, selected_features=''):
         self.controller = DatabaseController()
         self.data_frame = self.controller.get_data_frame_from_date(date_form, date_to)

@@ -80,6 +80,8 @@ class DatabaseController():
 
         data_frame = data_frame.set_index('date', drop=True)
 
+        print(data_frame)
+
         self.connection = sqlite3.connect(DATABASE_NAME)
         data_frame.to_sql(name='PredictedLoad', con=self.connection, if_exists='replace')
         self.connection.close()
@@ -89,5 +91,40 @@ class DatabaseController():
         self.connection = sqlite3.connect(DATABASE_NAME)
         data_frame = pd.read_sql_query('SELECT * FROM PredictedLoad', self.connection)
         self.connection.close()
+
+        return data_frame
+
+
+    def save_test_data(self, test_csv_path):
+        data_frame = pd.read_csv(test_csv_path)
+
+        data_frame = data_frame.rename(columns={'datetime': 'date'})
+        data_frame['date'] = pd.to_datetime(data_frame['date'], format='%Y-%m-%dT%H:%M:%S')
+
+        data_frame.insert(len(data_frame.columns), 'load', 0, True)
+
+
+        print(data_frame.head())
+
+        self.data_combiner = DataCombiner(test_csv_path)
+        data_frame = self.data_combiner.preprocess_data(data_frame)
+
+        data_frame = data_frame.drop(['name'], axis=1)
+
+        self.connection = sqlite3.connect(DATABASE_NAME)
+        data_frame.to_sql(name='TestData', con=self.connection, if_exists='replace')
+        self.connection.close()
+
+
+    def load_test_data(self, from_date, to_date):
+        self.connection = sqlite3.connect(DATABASE_NAME)
+        query = 'SELECT * FROM TestData WHERE date >= ? and date <= ?'
+        parameters = [from_date, to_date]
+
+        data_frame = pd.read_sql_query(query, params=parameters, con=self.connection)
+        self.connection.close()
+
+        data_frame = data_frame.drop(['index'], axis=1)
+        data_frame = data_frame.drop(['date'], axis=1)
 
         return data_frame

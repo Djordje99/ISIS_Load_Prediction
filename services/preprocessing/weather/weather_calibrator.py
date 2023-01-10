@@ -17,7 +17,7 @@ class WeatherCalibrator():
         #data_frame['dew'] = data_frame['dew'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         #data_frame['sealevelpressure'] = data_frame['sealevelpressure'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
 
-        data_frame = self.drop_rows(data_frame)
+        #TODO data_frame = self.drop_rows(data_frame)
 
         return data_frame
 

@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 from services.predictor.predict_load import LoadPredictor
+import debugpy
 
 class PredictThread(QThread):
     finish_signal = pyqtSignal()
@@ -12,5 +13,6 @@ class PredictThread(QThread):
 
 
     def run(self):
-        self.predictor.predict(self.date_from, self.date_to)
+        debugpy.debug_this_thread()
+        self.predictor.predict_test_data(self.date_from, self.date_to)
         self.finish_signal.emit()
