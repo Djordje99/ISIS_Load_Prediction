@@ -73,9 +73,6 @@ class PredictedLoadTab():
         self.graphicsView.addLegend()
 
         self.graphicsView.showGrid(x=True, y=True)
-        #Set Range
-        self.graphicsView.setXRange(0, 10, padding=0)
-        self.graphicsView.setYRange(20, 55, padding=0)
 
     def plot(self, x, y, plotname, color):
         pen = pg.mkPen(color=color)

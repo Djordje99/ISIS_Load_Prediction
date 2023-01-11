@@ -26,7 +26,12 @@ class ModelCreator():
 
         print('Training duration: ' + str((time_end - time_begin)) + ' seconds')
 
-        trainPredict, trainY, testPredict, testY = self.preparer.inverse_transform(trainPredict, testPredict)
+        #trainPredict, trainY, testPredict, testY = self.preparer.inverse_transform(trainPredict, testPredict)
+
+        trainY = self.preparer.scaled_to_original(trainY)
+        testY = self.preparer.scaled_to_original(testY)
+        trainPredict = self.preparer.scaled_to_original(trainPredict)
+        testPredict = self.preparer.scaled_to_original(testPredict)
 
         scorer = Scorer()
         trainScore, testScore = scorer.get_rmse_score(trainY, trainPredict, testY, testPredict)

@@ -21,12 +21,15 @@ class LoadPredictor():
 
         y_predicted = self.ann_regression.predict(X_test)
 
-        y_predicted, y_test = self.data_preparer.inverse_predict_transform(y_predicted)
+        #y_predicted, y_test = self.data_preparer.inverse_predict_transform(y_predicted)
 
-        rmsr = self.scorer.get_mean_square_error(y_test, y_predicted)
+        y_predicted = self.data_preparer.scaled_to_original(y_predicted)
+        y_test = self.data_preparer.scaled_to_original(y_test)
+
+        rmsr = self.scorer.get_mean_square_error(y_test.ravel(), y_predicted.ravel())
         print(f"RMSR Accuracy: {rmsr}")
 
-        mape = self.scorer.get_mean_absolute_percentage_error(y_test, y_predicted)
+        mape = self.scorer.get_mean_absolute_percentage_error(y_test.ravel(), y_predicted.ravel())
         print(f'MAPE Accuracy: {mape}%')
 
         #SAVE TO DATABASE PREDICTION
@@ -38,16 +41,6 @@ class LoadPredictor():
 
         y_predicted = self.ann_regression.predict(X_test)
 
-        y_predicted = y_predicted * (MAX_LOAD - MIN_LOAD) + MIN_LOAD
+        y_predicted = self.data_preparer.scaled_to_original(y_predicted)
 
-
-        #y_predicted, y_test = self.data_preparer.inverse_predict_transform(y_predicted)
-
-        # rmsr = self.scorer.get_mean_square_error(y_test, y_predicted)
-        # print(f"RMSR Accuracy: {rmsr}")
-
-        # mape = self.scorer.get_mean_absolute_percentage_error(y_test, y_predicted)
-        # print(f'MAPE Accuracy: {mape}%')
-
-        #SAVE TO DATABASE PREDICTION
         self.controller.save_predicted_load(y_predicted, date_form, day_number)
