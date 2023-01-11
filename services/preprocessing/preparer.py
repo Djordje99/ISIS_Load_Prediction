@@ -3,12 +3,25 @@ from sklearn.preprocessing import MinMaxScaler
 from database.controller import DatabaseController
 
 
+MAX_LOAD = 11110.3
+MIN_LOAD = 3589.2
+
 class Preparer:
     def __init__(self, share_for_training):
         self.share_for_training = share_for_training
         self.controller = DatabaseController()
 
         self.scaler = MinMaxScaler(feature_range=(0, 1))
+
+
+    def scale_load_original(self, load):
+        original_data = load * (MAX_LOAD - MIN_LOAD) + MIN_LOAD
+        return original_data
+
+
+    def scale_load(self, load):
+        scaled = (load - MIN_LOAD) / (MAX_LOAD - MIN_LOAD)
+        return scaled
 
 
     def prepare_predict_date(self, from_date, to_date):
@@ -22,13 +35,10 @@ class Preparer:
         predict_dataset_values = data_frame.values
         predict_dataset_values = predict_dataset_values.astype('float32')
 
-        dataset = self.scaler.fit_transform(predict_dataset_values)
+        X_test, y_test = self.create_dataset(predict_dataset_values, len(data_frame.columns))
 
-        print(f"dataset {len(dataset)}")
-
-        X_test, y_test = self.create_dataset(dataset, len(data_frame.columns))
-
-        print(f'x_test : {len(X_test)}')
+        X_test = self.scaler.fit_transform(X_test)
+        y_test = self.scale_load(y_test)
 
         X_test = numpy.reshape(X_test, (X_test.shape[0], 1, X_test.shape[1]))
 
@@ -51,13 +61,10 @@ class Preparer:
         predict_dataset_values = data_frame.values
         predict_dataset_values = predict_dataset_values.astype('float32')
 
-        dataset = self.scaler.fit_transform(predict_dataset_values)
+        X_test, y_test = self.create_dataset(predict_dataset_values, len(data_frame.columns))
 
-        print(f"dataset {len(dataset)}")
-
-        X_test, y_test = self.create_dataset(dataset, len(data_frame.columns))
-
-        print(f'x_test : {len(X_test)}')
+        X_test = self.scaler.fit_transform(X_test)
+        y_test = self.scale_load(y_test)
 
         X_test = numpy.reshape(X_test, (X_test.shape[0], 1, X_test.shape[1]))
 

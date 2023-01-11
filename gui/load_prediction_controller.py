@@ -20,6 +20,7 @@ from gui.tabs.wind_generator_tab.wind_generator_tab import WindGeneratorTab
 from gui.tabs.solar_generator_tab.solar_generator_tab import SolarGeneratorTab
 from gui.tabs.optimize_tab import OptimizeTab
 
+from load_optimization.calculator import Calculator
 
 SQLITE_MODE = ['append', 'replace']
 
@@ -41,7 +42,7 @@ class LoadPredictionController(QMainWindow):
         self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)
-        self.hydro_generator = HydroGeneratorTab(self.hydro)
+        self.hydro_generator_tab = HydroGeneratorTab(self.hydro)
         self.wind_generator_tab = WindGeneratorTab(self.wind)
         self.solar_generator_tab = SolarGeneratorTab(self.solar)
 
@@ -57,6 +58,17 @@ class LoadPredictionController(QMainWindow):
         self.export_btn.clicked.connect(self.export_csv)
         self.load_test_btn.clicked.connect(self.load_test_data)
         self.save_test_btn.clicked.connect(self.save_test_data)
+        self.optimize_btn.clicked.connect(self.optimize)
+
+
+    def optimize(self):
+        coal_generator = self.coal_generator_tab.get_coal_generator_model()
+        gas_generator = self.gas_generator_tab.get_gas_generator_model()
+        hydro_generator = self.hydro_generator_tab.get_hydro_generator_model()
+        solar_generator = self.solar_generator_tab.get_solar_generator_model()
+        wind_generator = self.wind_generator_tab.get_wind_generator_model()
+
+        calculator = Calculator(coal_generator, gas_generator, hydro_generator, solar_generator, wind_generator)
 
 
     def load_test_data(self):

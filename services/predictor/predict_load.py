@@ -3,6 +3,8 @@ from database.controller import DatabaseController
 from services.scorer.scrorer import Scorer
 from services.preprocessing.preparer import Preparer
 
+import numpy as np
+
 TRAINING_SHARE = 0.85
 MAX_LOAD = 11110.3
 MIN_LOAD = 3589.2
@@ -21,7 +23,10 @@ class LoadPredictor():
 
         y_predicted = self.ann_regression.predict(X_test)
 
-        y_predicted, y_test = self.data_preparer.inverse_predict_transform(y_predicted)
+        y_test = self.data_preparer.scale_load_original(y_test)
+
+        y_predicted  = self.data_preparer.scale_load_original(y_predicted)
+        y_predicted = y_predicted.ravel()
 
         rmsr = self.scorer.get_mean_square_error(y_test, y_predicted)
         print(f"RMSR Accuracy: {rmsr}")
@@ -38,16 +43,8 @@ class LoadPredictor():
 
         y_predicted = self.ann_regression.predict(X_test)
 
-        y_predicted = y_predicted * (MAX_LOAD - MIN_LOAD) + MIN_LOAD
+        #y_predicted = np.interp(y_predicted, (0, 1), (MIN_LOAD, MAX_LOAD))
 
+        y_predicted  = self.data_preparer.scale_load_original(y_predicted)
 
-        #y_predicted, y_test = self.data_preparer.inverse_predict_transform(y_predicted)
-
-        # rmsr = self.scorer.get_mean_square_error(y_test, y_predicted)
-        # print(f"RMSR Accuracy: {rmsr}")
-
-        # mape = self.scorer.get_mean_absolute_percentage_error(y_test, y_predicted)
-        # print(f'MAPE Accuracy: {mape}%')
-
-        #SAVE TO DATABASE PREDICTION
         self.controller.save_predicted_load(y_predicted, date_form, day_number)

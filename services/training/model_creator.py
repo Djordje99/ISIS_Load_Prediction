@@ -28,6 +28,11 @@ class ModelCreator():
 
         trainPredict, trainY, testPredict, testY = self.preparer.inverse_transform(trainPredict, testPredict)
 
+        # trainPredict = self.preparer.scale_load_original(trainPredict)
+        # trainY = self.preparer.scale_load_original(trainY)
+        # testPredict = self.preparer.scale_load_original(testPredict)
+        # testY = self.preparer.scale_load_original(testY)
+
         scorer = Scorer()
         trainScore, testScore = scorer.get_rmse_score(trainY, trainPredict, testY, testPredict)
         print('Train Score: %.2f RMSE' % (trainScore))
