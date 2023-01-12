@@ -68,7 +68,12 @@ class LoadPredictionController(QMainWindow):
         solar_generator = self.solar_generator_tab.get_solar_generator_model()
         wind_generator = self.wind_generator_tab.get_wind_generator_model()
 
-        calculator = Calculator(coal_generator, gas_generator, hydro_generator, solar_generator, wind_generator)
+        cost_weight = self.optimize_tab.get_cost_weight_factor()
+        co2_weight = self.optimize_tab.get_co2_weight_factor()
+
+        calculator = Calculator(coal_generator, gas_generator, hydro_generator, solar_generator, wind_generator, cost_weight, co2_weight)
+
+        calculator.call_simplex()
 
 
     def load_test_data(self):
