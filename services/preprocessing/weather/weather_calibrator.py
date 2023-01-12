@@ -1,6 +1,6 @@
 import pandas as pd
 
-FEATURE_DROP = ['precip', 'windgust', 'conditions', 'feelslike', 'winddir', 'dew', 'sealevelpressure','precipprob','preciptype','snow','snowdepth', 'visibility','solarradiation','solarenergy','uvindex','severerisk']
+FEATURE_DROP = ['precip', 'windgust', 'conditions', 'feelslike', 'winddir', 'dew', 'sealevelpressure','precipprob','preciptype','snow','snowdepth', 'visibility','solarenergy','uvindex','severerisk']
 MAX_TEMP = 90
 MIN_TEMP = 60
 
@@ -13,6 +13,7 @@ class WeatherCalibrator():
         #data_frame['windgust'] = data_frame['windgust'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         #data_frame['winddir'] = data_frame['winddir'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         data_frame['cloudcover'] = data_frame['cloudcover'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
+        data_frame['solarradiation'] = data_frame['solarradiation'].fillna(0)
 
         #data_frame['dew'] = data_frame['dew'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")
         #data_frame['sealevelpressure'] = data_frame['sealevelpressure'].astype(float).interpolate(method="slinear", fill_value="extrapolate", limit_direction="both")

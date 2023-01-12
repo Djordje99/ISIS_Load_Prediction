@@ -22,7 +22,7 @@ class WindGeneratorTab(Configuration):
         wind_generator = WindGenerator(
             max_power,
             min_power,
-            GeneratorType.SOLAR,
+            GeneratorType.WIND,
             cross_section,
             cut_in_speed,
             cut_out_speed,

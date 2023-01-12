@@ -1,11 +1,18 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
 from database.controller import DatabaseController
 from load_optimization.generator.thermal import ThermalGenerator
 from load_optimization.generator.hydro import HydroGenerator
+from load_optimization.generator.wind import WindGenerator
+from load_optimization.generator.solar import SolarGenerator
 
+AIR_DENSITY = 1.225
 
 class Calculator():
     def __init__(self, coal_generator:ThermalGenerator, gas_generator:ThermalGenerator, hydro_generator:HydroGenerator,
-                    solar_generator, wind_generator,  cost_weight, co2_weight) -> None:
+                    solar_generator:SolarGenerator, wind_generator:WindGenerator,  cost_weight, co2_weight) -> None:
         self.database_controller = DatabaseController()
 
         self.coal_generator = coal_generator
@@ -17,12 +24,29 @@ class Calculator():
         self.co2_weight = co2_weight
 
         self.predicted_load_df = self.__load_predicted_load()
+        self.weather_data = self.__load_weather_data(self.predicted_load_df['date'].min())
 
 
     def __load_predicted_load(self):
         predicted_load_df = self.database_controller.load_predicted_load()
 
         return predicted_load_df
+
+
+    def __load_weather_data(self, date_min:str):
+        weather_data_df = None
+
+        date_max = date_min.split(' ')[0] + '23:00:00'
+
+        date = QDateTime.fromString(date_min, 'yyyy-MM-dd hh:mm:ss')
+        date_border = QDateTime(2021, 9, 7, 0, 0)
+
+        if (date < date_border):
+            weather_data_df = self.database_controller.load_training_data(date_min, date_max)
+        else:
+            weather_data_df = self.database_controller.load_test_data(date_min, date_max)
+
+        return weather_data_df
 
 
     def call_simplex(self):
@@ -68,3 +92,28 @@ class Calculator():
             c_hydro.append(self.co2_weight*self.hydro_generator.hydro_co2_emission + self.cost_weight*self.hydro_generator.fuel_price)
 
         return c_hydro
+
+
+    def get_wind_generator_power_output(self):
+        hourly_power = []
+
+        for wind_speed in self.weather_data['windspeed']:
+            if wind_speed >= self.wind_generator.cut_out_speed or wind_speed <= self.wind_generator.cut_in_speed:
+                hourly_power.append(0)
+            else:
+                power = (1/2) * AIR_DENSITY * self.wind_generator.cross_section * pow(wind_speed, 3) * self.wind_generator.count
+                power = power / 1000000
+                hourly_power.append(power)
+
+        return hourly_power
+
+
+    def get_solar_generator_power_output(self):
+        hourly_power = []
+
+        for solar_radiation in self.weather_data['solarradiation']:
+            power = self.solar_generator.panel_size * self.solar_generator.efficiency * solar_radiation * self.solar_generator.count
+            power = power / 1000000
+            hourly_power.append(power)
+
+        return hourly_power
