@@ -3,6 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from database.controller import DatabaseController
+from load_optimization.symplex import Simplex
 from load_optimization.generator.thermal import ThermalGenerator
 from load_optimization.generator.hydro import HydroGenerator
 from load_optimization.generator.wind import WindGenerator
@@ -14,7 +15,7 @@ class Calculator():
     def __init__(self, coal_generator:ThermalGenerator, gas_generator:ThermalGenerator, hydro_generator:HydroGenerator,
                     solar_generator:SolarGenerator, wind_generator:WindGenerator,  cost_weight, co2_weight) -> None:
         self.database_controller = DatabaseController()
-
+        self.simplex = Simplex()
         self.coal_generator = coal_generator
         self.gas_generator = gas_generator
         self.hydro_generator = hydro_generator
@@ -25,6 +26,9 @@ class Calculator():
 
         self.predicted_load_df = self.__load_predicted_load()
         self.weather_data = self.__load_weather_data(self.predicted_load_df['date'].min())
+
+        self.wind_power_output = self.get_wind_generator_power_output()
+        self.solar_power_output = self.get_solar_generator_power_output()
 
 
     def __load_predicted_load(self):
@@ -51,7 +55,28 @@ class Calculator():
 
     def call_simplex(self):
         c = self.create_objective_function()
-        print(c)
+        A_eq = [[1 for i in range(0, len(c))]]
+        integrality = [2 for i in range(0, len(c))]
+        bounds = []
+        results = []
+
+        for i in range(0, self.coal_generator.count):
+            bounds.append((self.coal_generator.min_production, self.coal_generator.max_production))
+
+        for i in range(0, self.gas_generator.count):
+            bounds.append((self.gas_generator.min_production, self.gas_generator.max_production))
+
+        for i in range(0, self.hydro_generator.count):
+            bounds.append((self.hydro_generator.min_production, self.hydro_generator.max_production))
+
+        for i in range(0, 24):
+            b_eq = [self.predicted_load_df['predicted_load'][i] - self.solar_power_output[i] - self.wind_power_output[i]]
+
+            result = self.simplex.optimize(A_eq=A_eq, b_eq=b_eq, bounds=bounds, c=c, integrality=integrality)
+
+            results.append(result)
+
+        return results
 
 
     def create_objective_function(self):
