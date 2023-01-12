@@ -1,7 +1,8 @@
 from re import VERBOSE
 
 
-EPOCH_NUMBER = 15
+
+EPOCH_NUMBER = 20
 BATCH_SIZE_NUMBER = 1
 COST_FUNCTION = 'mean_squared_error'
 OPTIMIZER = 'adam'
