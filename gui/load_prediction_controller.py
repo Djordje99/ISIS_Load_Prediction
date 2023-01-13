@@ -73,7 +73,9 @@ class LoadPredictionController(QMainWindow):
 
         calculator = Calculator(coal_generator, gas_generator, hydro_generator, solar_generator, wind_generator, cost_weight, co2_weight)
 
-        calculator.call_simplex()
+        result = calculator.call_simplex()
+
+        self.optimize_tab.update_table(result)
 
 
     def load_test_data(self):

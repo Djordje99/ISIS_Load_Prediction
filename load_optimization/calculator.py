@@ -9,13 +9,14 @@ from load_optimization.generator.hydro import HydroGenerator
 from load_optimization.generator.wind import WindGenerator
 from load_optimization.generator.solar import SolarGenerator
 
+from pulp import *
+
 AIR_DENSITY = 1.225
 
 class Calculator():
     def __init__(self, coal_generator:ThermalGenerator, gas_generator:ThermalGenerator, hydro_generator:HydroGenerator,
                     solar_generator:SolarGenerator, wind_generator:WindGenerator,  cost_weight, co2_weight) -> None:
         self.database_controller = DatabaseController()
-        self.simplex = Simplex()
         self.coal_generator = coal_generator
         self.gas_generator = gas_generator
         self.hydro_generator = hydro_generator
@@ -23,6 +24,8 @@ class Calculator():
         self.wind_generator = wind_generator
         self.cost_weight = cost_weight
         self.co2_weight = co2_weight
+
+        self.simplex = Simplex(cost_weight, co2_weight)
 
         self.predicted_load_df = self.__load_predicted_load()
         self.weather_data = self.__load_weather_data(self.predicted_load_df['date'].min())
@@ -54,69 +57,58 @@ class Calculator():
 
 
     def call_simplex(self):
-        c = self.create_objective_function()
-        A_eq = [[1 for i in range(0, len(c))]]
-        integrality = [2 for i in range(0, len(c))]
-        bounds = []
-        results = []
+        x_variables = self.create_generator_variable()
+        self.simplex.generator_variables = x_variables
+        results = {}
 
-        for i in range(0, self.coal_generator.count):
-            bounds.append((self.coal_generator.min_production, self.coal_generator.max_production))
+        for hour in range(0, 24):
+            predicted_load_hourly = self.predicted_load_df['predicted_load'][hour] - self.solar_power_output[hour] - self.wind_power_output[hour]
 
-        for i in range(0, self.gas_generator.count):
-            bounds.append((self.gas_generator.min_production, self.gas_generator.max_production))
+            result = self.simplex.optimization(predicted_load_hourly)
+            results[hour] = result
 
-        for i in range(0, self.hydro_generator.count):
-            bounds.append((self.hydro_generator.min_production, self.hydro_generator.max_production))
-
-        for i in range(0, 24):
-            b_eq = [self.predicted_load_df['predicted_load'][i] - self.solar_power_output[i] - self.wind_power_output[i]]
-
-            result = self.simplex.optimize(A_eq=A_eq, b_eq=b_eq, bounds=bounds, c=c, integrality=integrality)
-
-            results.append(result)
 
         return results
 
 
-    def create_objective_function(self):
-        c = []
-        c_coal = self.get_objective_function_coal()
-        c_gas = self.get_objective_function_gas()
-        c_hydro = self.get_objective_function_hydro()
+    def create_generator_variable(self):
+        x = {}
+        x_coal = self.get_coal_variable()
+        x_gas = self.get_gas_variable()
+        x_hydro = self.get_hydro_variable()
 
-        c.extend(c_coal)
-        c.extend(c_gas)
-        c.extend(c_hydro)
+        x.update(x_coal)
+        x.update(x_gas)
+        x.update(x_hydro)
 
-        return c
+        return x
 
 
-    def get_objective_function_coal(self):
-        c_coal = []
+    def get_coal_variable(self):
+        x_coal = {}
 
         for i in range(0, self.coal_generator.count):
-            c_coal.append(self.co2_weight*self.coal_generator.co2_emission_values[3] + self.cost_weight*self.coal_generator.fuel_price)
+            x_coal[f'coal_{i}'] = (self.coal_generator.min_production, self.coal_generator.max_production)
 
-        return c_coal
+        return x_coal
 
 
-    def get_objective_function_gas(self):
-        c_gas = []
+    def get_gas_variable(self):
+        x_gas = {}
 
         for i in range(0, self.gas_generator.count):
-            c_gas.append(self.co2_weight*self.gas_generator.co2_emission_values[3] + self.cost_weight*self.gas_generator.fuel_price)
+            x_gas[f'gas_{i}'] = (self.gas_generator.min_production, self.gas_generator.max_production)
 
-        return c_gas
+        return x_gas
 
 
-    def get_objective_function_hydro(self):
-        c_hydro = []
+    def get_hydro_variable(self):
+        x_hydro = {}
 
         for i in range(0, self.hydro_generator.count):
-            c_hydro.append(self.co2_weight*self.hydro_generator.hydro_co2_emission + self.cost_weight*self.hydro_generator.fuel_price)
+            x_hydro[f'hydro_{i}'] = (self.hydro_generator.min_production, self.hydro_generator.max_production)
 
-        return c_hydro
+        return x_hydro
 
 
     def get_wind_generator_power_output(self):

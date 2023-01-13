@@ -672,7 +672,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableWidget" name="tableWidget"/>
+           <widget class="QTableWidget" name="generator_table"/>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_24">
@@ -794,7 +794,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>10.000000000000000</double>
+                 <double>80.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -824,7 +824,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>5.000000000000000</double>
+                 <double>60.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -924,7 +924,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>1</number>
+                 <number>20</number>
                 </property>
                </widget>
               </item>
@@ -1255,7 +1255,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>10.000000000000000</double>
+                 <double>90.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1285,7 +1285,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <double>5.000000000000000</double>
+                 <double>70.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1385,7 +1385,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>1</number>
+                 <number>20</number>
                 </property>
                </widget>
               </item>
@@ -1717,8 +1717,11 @@
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
                   </property>
+                  <property name="singleStep">
+                   <double>90.000000000000000</double>
+                  </property>
                   <property name="value">
-                   <double>10.000000000000000</double>
+                   <double>80.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -1850,7 +1853,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>1</number>
+                 <number>20</number>
                 </property>
                </widget>
               </item>
