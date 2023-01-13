@@ -11,7 +11,6 @@ class HydroGeneratorTab():
         self.min_hydro_power_spin_box = tab.findChild(QDoubleSpinBox, 'min_hydro_power_spin_box')
         self.hydro_generator_count_spin_box = tab.findChild(QSpinBox, 'hydro_generator_count_spin_box')
         self.hydro_cost_spin_box = tab.findChild(QDoubleSpinBox, 'hydro_cost_spin_box')
-        self.hydro_co2_emission_spin_box = tab.findChild(QDoubleSpinBox, 'hydro_co2_emission_spin_box')
 
 
     def get_hydro_generator_model(self):
@@ -19,7 +18,8 @@ class HydroGeneratorTab():
         min_power = self.min_hydro_power_spin_box.value()
         hydro_generator_count = self.hydro_generator_count_spin_box.value()
         hydro_cost = self.hydro_cost_spin_box.value()
-        hydro_co2_emission = self.hydro_co2_emission_spin_box.value()
+        #TODO: add graphs
+        hydro_co2_emission = 5
 
         hydro_generator = HydroGenerator(
             max_power,
