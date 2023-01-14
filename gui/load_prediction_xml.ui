@@ -793,6 +793,9 @@
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
+                <property name="maximum">
+                 <double>999.990000000000009</double>
+                </property>
                 <property name="value">
                  <double>80.000000000000000</double>
                 </property>
@@ -822,6 +825,9 @@
                <widget class="QDoubleSpinBox" name="min_thermal_coal_power_spin_box">
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
                 </property>
                 <property name="value">
                  <double>60.000000000000000</double>
@@ -874,6 +880,9 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
                 </property>
                 <property name="value">
                  <double>1.000000000000000</double>
@@ -1370,6 +1379,9 @@
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
+                <property name="maximum">
+                 <double>999.000000000000000</double>
+                </property>
                 <property name="value">
                  <double>90.000000000000000</double>
                 </property>
@@ -1399,6 +1411,9 @@
                <widget class="QDoubleSpinBox" name="min_thermal_gas_power_spin_box">
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <double>999.990000000000009</double>
                 </property>
                 <property name="value">
                  <double>70.000000000000000</double>
@@ -1451,6 +1466,9 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+                <property name="maximum">
+                 <double>999.990000000000009</double>
                 </property>
                 <property name="value">
                  <double>1.000000000000000</double>
@@ -1951,6 +1969,9 @@
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
                     </property>
+                    <property name="maximum">
+                     <double>999.990000000000009</double>
+                    </property>
                     <property name="singleStep">
                      <double>90.000000000000000</double>
                     </property>
@@ -1983,6 +2004,9 @@
                    <widget class="QDoubleSpinBox" name="min_hydro_power_spin_box">
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="maximum">
+                     <double>999.990000000000009</double>
                     </property>
                     <property name="value">
                      <double>5.000000000000000</double>

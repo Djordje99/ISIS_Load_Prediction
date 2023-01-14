@@ -20,7 +20,7 @@ from gui.tabs.wind_generator_tab.wind_generator_tab import WindGeneratorTab
 from gui.tabs.solar_generator_tab.solar_generator_tab import SolarGeneratorTab
 from gui.tabs.optimize_tab import OptimizeTab
 
-from load_optimization.service.calculator import Calculator
+from load_optimization.service.optimizator.simplex.calculator import Calculator
 
 SQLITE_MODE = ['append', 'replace']
 
