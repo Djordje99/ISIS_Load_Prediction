@@ -1,4 +1,4 @@
-from load_optimization.generator.generator import Generator
+from load_optimization.generator_model.generator import Generator
 
 class HydroGenerator(Generator):
     def __init__(self, max_production, min_production, generator_type, count, fuel_price, hydro_co2_emission) -> None:

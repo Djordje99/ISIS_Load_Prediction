@@ -1,4 +1,4 @@
-from load_optimization.generator.generator import Generator
+from load_optimization.generator_model.generator import Generator
 
 class WindGenerator(Generator):
     def __init__(self, max_production, min_production, generator_type, cross_section, cut_in_speed, cut_out_speed, count) -> None:

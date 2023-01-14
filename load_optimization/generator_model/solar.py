@@ -1,4 +1,4 @@
-from load_optimization.generator.generator import Generator
+from load_optimization.generator_model.generator import Generator
 
 class SolarGenerator(Generator):
     def __init__(self, max_production, min_production, generator_type, panel_size, efficiency, count) -> None:

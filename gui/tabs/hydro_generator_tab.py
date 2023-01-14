@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from load_optimization.generator.hydro import HydroGenerator
-from load_optimization.generator_enum import GeneratorType
+from load_optimization.generator_model.hydro import HydroGenerator
+from load_optimization.enum.generator_enum import GeneratorType
 
 class HydroGeneratorTab():
     def __init__(self, tab:QWidget) -> None:
