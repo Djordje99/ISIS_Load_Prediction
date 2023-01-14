@@ -1,6 +1,7 @@
 from enum import Enum
 
-class GeneratorType(Enum):
+
+class GeneratorType(int, Enum):
     THERMAL_COAL = 1
     THERMAL_GAS = 2
     HYDRO = 3

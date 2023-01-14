@@ -3,7 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from database.controller import DatabaseController
-from load_optimization.service.optimizator.simplex.simplex import Simplex
+from load_optimization.service.optimizer.simplex.simplex import Simplex
 from load_optimization.generator_model.thermal import ThermalGenerator
 from load_optimization.generator_model.hydro import HydroGenerator
 from load_optimization.generator_model.wind import WindGenerator
