@@ -15,9 +15,7 @@ from services.exporter.csv import CsvExporter
 from gui.tabs.predicted_load_tab import PredictedLoadTab
 from gui.tabs.coal_generator_tab.coal_generator_tab import CoalGeneratorTab
 from gui.tabs.gas_generator_tab.gas_generator_tab import GasGeneratorTab
-from gui.tabs.hydro_generator_tab import HydroGeneratorTab
-from gui.tabs.wind_generator_tab.wind_generator_tab import WindGeneratorTab
-from gui.tabs.solar_generator_tab.solar_generator_tab import SolarGeneratorTab
+from gui.tabs.other_generator_tab import OtherGeneratorTab
 from gui.tabs.optimize_tab import OptimizeTab
 
 from load_optimization.service.optimizer.simplex.calculator import Calculator
@@ -42,9 +40,7 @@ class LoadPredictionController(QMainWindow):
         self.optimize_tab = OptimizeTab(self.optimization)
         self.coal_generator_tab = CoalGeneratorTab(self.coal)
         self.gas_generator_tab = GasGeneratorTab(self.gas)
-        self.hydro_generator_tab = HydroGeneratorTab(self.hydro)
-        self.wind_generator_tab = WindGeneratorTab(self.wind)
-        self.solar_generator_tab = SolarGeneratorTab(self.solar)
+        self.other_generator_tab = OtherGeneratorTab(self.hydro)
 
         self.sqlite_mode.addItems(SQLITE_MODE)
         #self.init_training()
@@ -74,16 +70,15 @@ class LoadPredictionController(QMainWindow):
         coal_co2_cost_values = self.coal_generator_tab.get_coal_co2_cost_slider_value()
         gas_co2_cost_values = self.gas_generator_tab.get_gas_co2_cost_slider_value()
 
-        #TODO GET GENERATOR COUNT
         coal_generator_count = self.coal_generator_tab.thermal_coal_count_spin_box.value()
         gas_generator_count = self.gas_generator_tab.thermal_gas_count_spin_box.value()
-        hydro_generator_count = self.hydro_generator_tab.hydro_generator_count_spin_box.value()
-        wind_generator_count = self.wind_generator_tab.wind_generator_count_spin_box.value()
-        solar_generator_count = self.solar_generator_tab.solar_panel_count_spin_box.value()
+        hydro_generator_count = self.other_generator_tab.hydro_generator_count_spin_box.value()
+        wind_generator_count = self.other_generator_tab.wind_generator_count_spin_box.value()
+        solar_generator_count = self.other_generator_tab.solar_panel_count_spin_box.value()
 
         coal_cost = self.coal_generator_tab.coal_cost_spin_box.value()
         gas_cost = self.gas_generator_tab.gas_cost_spin_box.value()
-        hydro_cost = self.hydro_generator_tab.hydro_cost_spin_box.value()
+        hydro_cost = self.other_generator_tab.hydro_cost_spin_box.value()
 
         calculator = Calculator(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
                                 coal_co2_emission_values, gas_co2_emission_values,
