@@ -1,10 +1,7 @@
 from PyQt5.QtWidgets import QWidget
-import pyqtgraph as pg
 
 from gui.tabs.coal_generator_tab.slider_configuration import CoalTabSliderConfiguration, EMISSION_DEFAULT, CO2_COST_DEFAULT, FUEL_COST_DEFAULT
 
-RANGE = [20, 40, 60, 80, 100]
-DEFAULT_COLOR = 'r'
 
 
 class CoalTabGraphConfiguration(CoalTabSliderConfiguration):
