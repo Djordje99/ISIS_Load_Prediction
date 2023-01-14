@@ -74,9 +74,22 @@ class LoadPredictionController(QMainWindow):
         coal_co2_cost_values = self.coal_generator_tab.get_coal_co2_cost_slider_value()
         gas_co2_cost_values = self.gas_generator_tab.get_gas_co2_cost_slider_value()
 
+        #TODO GET GENERATOR COUNT
+        coal_generator_count = self.coal_generator_tab.thermal_coal_count_spin_box.value()
+        gas_generator_count = self.gas_generator_tab.thermal_gas_count_spin_box.value()
+        hydro_generator_count = self.hydro_generator_tab.hydro_generator_count_spin_box.value()
+        wind_generator_count = self.wind_generator_tab.wind_generator_count_spin_box.value()
+        solar_generator_count = self.solar_generator_tab.solar_panel_count_spin_box.value()
+
+        coal_cost = self.coal_generator_tab.coal_cost_spin_box.value()
+        gas_cost = self.gas_generator_tab.gas_cost_spin_box.value()
+        hydro_cost = self.hydro_generator_tab.hydro_cost_spin_box.value()
+
         calculator = Calculator(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
                                 coal_co2_emission_values, gas_co2_emission_values,
-                                coal_co2_cost_values, gas_co2_cost_values)
+                                coal_co2_cost_values, gas_co2_cost_values,
+                                coal_generator_count, gas_generator_count, hydro_generator_count, wind_generator_count, solar_generator_count,
+                                coal_cost, gas_cost, hydro_cost)
 
         result = calculator.call_simplex()
 

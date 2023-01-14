@@ -8,29 +8,3 @@ from load_optimization.enum.generator_enum import GeneratorType
 class CoalGeneratorTab(CoalTabGraphConfiguration):
     def __init__(self, tab:QWidget) -> None:
         super(CoalGeneratorTab, self).__init__(tab)
-
-
-    def get_coal_generator_model(self):
-        coal_consumption = self.get_coal_consumption_slider_value()
-        co2_price = self.get_coal_co2_cost_slider_value()
-        co2_emission = self.get_coal_co2_emission_slider_value()
-        max_power = self.max_thermal_coal_power_spin_box.value()
-        min_power = self.min_thermal_coal_power_spin_box.value()
-        coal_cost = self.coal_cost_spin_box.value()
-        power_plant_count = self.thermal_coal_count_spin_box.value()
-
-        #Crate model
-        thermal_coal_generator = ThermalGenerator(
-            max_power,
-            min_power,
-            GeneratorType.THERMAL_COAL,
-            power_plant_count,
-            coal_cost,
-            co2_emission,
-            co2_price,
-            coal_consumption
-        )
-
-        return thermal_coal_generator
-
-
