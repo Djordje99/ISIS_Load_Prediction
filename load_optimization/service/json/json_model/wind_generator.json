@@ -2,8 +2,8 @@
     "max_production": 0,
     "min_production": 0,
     "generator_type": 5,
-    "count": 1,
-    "cross_section": 1.0,
+    "cross_section": 5.0,
     "cut_in_speed": 2.5,
-    "cut_out_speed": 15.0
+    "cut_out_speed": 25.0,
+    "count": 10
 }

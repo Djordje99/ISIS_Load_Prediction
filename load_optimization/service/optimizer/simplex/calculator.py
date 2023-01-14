@@ -4,10 +4,11 @@ from PyQt5.QtGui import *
 
 from database.controller import DatabaseController
 from load_optimization.service.optimizer.simplex.simplex import Simplex
-from load_optimization.generator_model.thermal import ThermalGenerator
-from load_optimization.generator_model.hydro import HydroGenerator
-from load_optimization.generator_model.wind import WindGenerator
-from load_optimization.generator_model.solar import SolarGenerator
+from load_optimization.service.json.model_loader import ModelLoader
+# from load_optimization.generator_model.thermal import ThermalGenerator
+# from load_optimization.generator_model.hydro import HydroGenerator
+# from load_optimization.generator_model.wind import WindGenerator
+# from load_optimization.generator_model.solar import SolarGenerator
 
 from pulp import *
 
@@ -18,16 +19,17 @@ AIR_DENSITY = 1.225
 
 
 class Calculator():
-    def __init__(self, coal_generator:ThermalGenerator, gas_generator:ThermalGenerator, hydro_generator:HydroGenerator,
-                    solar_generator:SolarGenerator, wind_generator:WindGenerator,  cost_weight, co2_weight) -> None:
+    def __init__(self, cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
+                coal_co2_emission_values, gas_co2_emission_values,
+                cola_co2_price_values, gas_co2_price_values) -> None:
+
         self.database_controller = DatabaseController()
-        self.coal_generator = coal_generator
-        self.gas_generator = gas_generator
-        self.hydro_generator = hydro_generator
-        self.solar_generator = solar_generator
-        self.wind_generator = wind_generator
-        self.cost_weight = cost_weight
-        self.co2_weight = co2_weight
+
+        self.coal_generator = ModelLoader.get_coal_generator()
+        self.gas_generator = ModelLoader.get_gas_generator()
+        self.hydro_generator = ModelLoader.get_hydro_generator()
+        self.solar_generator = ModelLoader.get_solar_generator()
+        self.wind_generator = ModelLoader.get_wind_generator()
 
         # COAL_POWER_RANGE = [i for i in np.linspace(self.coal_generator.min_production,
         #                                     self.coal_generator.max_production, 6)]
@@ -35,10 +37,10 @@ class Calculator():
         # GAS_POWER_RANGE = [i for i in np.linspace(self.gas_generator.min_production,
         #                                     self.gas_generator.max_production, 6)]
 
-        self.simplex = Simplex(cost_weight, co2_weight, self.coal_generator.consumption_values, self.gas_generator.consumption_values,
+        self.simplex = Simplex(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
                                 self.coal_generator.fuel_price, self.gas_generator.fuel_price, self.hydro_generator.fuel_price, #COAL_POWER_RANGE, GAS_POWER_RANGE,
-                                self.coal_generator.co2_emission_values, self.gas_generator.co2_emission_values, self.hydro_generator.hydro_co2_emission,
-                                self.coal_generator.co2_price_values, self.gas_generator.co2_price_values)
+                                coal_co2_emission_values, gas_co2_emission_values, self.hydro_generator.hydro_co2_emission,
+                                cola_co2_price_values, gas_co2_price_values)
 
         self.predicted_load_df = self.__load_predicted_load()
         self.weather_data = self.__load_weather_data(self.predicted_load_df['date'].min())

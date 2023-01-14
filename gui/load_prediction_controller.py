@@ -62,16 +62,21 @@ class LoadPredictionController(QMainWindow):
 
 
     def optimize(self):
-        coal_generator = self.coal_generator_tab.get_coal_generator_model()
-        gas_generator = self.gas_generator_tab.get_gas_generator_model()
-        hydro_generator = self.hydro_generator_tab.get_hydro_generator_model()
-        solar_generator = self.solar_generator_tab.get_solar_generator_model()
-        wind_generator = self.wind_generator_tab.get_wind_generator_model()
-
         cost_weight = self.optimize_tab.get_cost_weight_factor()
         co2_weight = self.optimize_tab.get_co2_weight_factor()
 
-        calculator = Calculator(coal_generator, gas_generator, hydro_generator, solar_generator, wind_generator, cost_weight, co2_weight)
+        coal_consumption_values = self.coal_generator_tab.get_coal_consumption_slider_value()
+        gas_consumption_values = self.gas_generator_tab.get_gas_consumption_slider_value()
+
+        coal_co2_emission_values = self.coal_generator_tab.get_coal_co2_emission_slider_value()
+        gas_co2_emission_values = self.gas_generator_tab.get_gas_co2_emission_slider_value()
+
+        coal_co2_cost_values = self.coal_generator_tab.get_coal_co2_cost_slider_value()
+        gas_co2_cost_values = self.gas_generator_tab.get_gas_co2_cost_slider_value()
+
+        calculator = Calculator(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
+                                coal_co2_emission_values, gas_co2_emission_values,
+                                coal_co2_cost_values, gas_co2_cost_values)
 
         result = calculator.call_simplex()
 

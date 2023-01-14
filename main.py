@@ -15,8 +15,6 @@ if __name__ == '__main__':
     model_loader = ModelLoader()
     model_loader.load_models()
 
-    cola_generator = ModelLoader.get_coal_generator()
-
     app = QApplication(sys.argv)
     main_window = LoadPredictionController()
 

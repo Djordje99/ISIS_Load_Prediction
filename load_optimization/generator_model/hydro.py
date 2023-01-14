@@ -1,7 +1,7 @@
 from load_optimization.generator_model.generator import Generator
 
 class HydroGenerator(Generator):
-    def __init__(self, max_production, min_production, generator_type, count, fuel_price, hydro_co2_emission) -> None:
+    def __init__(self, max_production, min_production, generator_type, fuel_price, hydro_co2_emission, count) -> None:
         super().__init__(max_production, min_production, generator_type, count)
         self._fuel_price = fuel_price
         self._hydro_co2_emission = hydro_co2_emission
