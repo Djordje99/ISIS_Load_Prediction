@@ -9,6 +9,7 @@ class GasGeneratorTab(GasTabGraphConfiguration):
 
     def get_gas_generator_model(self):
         gas_consumption = self.get_gas_consumption_slider_value()
+        co2_price = self.get_gas_co2_cost_slider_value()
         co2_emission = self.get_gas_co2_emission_slider_value()
         max_power = self.max_thermal_gas_power_spin_box.value()
         min_power = self.min_thermal_gas_power_spin_box.value()
@@ -21,9 +22,10 @@ class GasGeneratorTab(GasTabGraphConfiguration):
             min_power,
             GeneratorType.THERMAL_GAS,
             power_plant_count,
+            gas_cost,
             co2_emission,
-            gas_consumption,
-            gas_cost
+            co2_price,
+            gas_consumption
         )
 
         return thermal_gas_generator
