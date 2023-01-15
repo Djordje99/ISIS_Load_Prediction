@@ -82,16 +82,29 @@ class Calculator():
     def call_simplex(self):
         x_variables = self.create_generator_variable()
         self.simplex.generator_variables = x_variables
-        results = {}
+        generator_day_loads = {}
+        generator_day_costs = {}
+        generator_day_co2_emission = {}
 
         for hour in range(0, 24):
             predicted_load_hourly = self.predicted_load_df['predicted_load'][hour] - self.solar_power_output[hour] - self.wind_power_output[hour]
 
-            result = self.simplex.optimization(predicted_load_hourly)
-            results[hour] = result
+            generator_hour_loads, generator_hour_costs, generator_hour_co2_emission = self.simplex.optimization(predicted_load_hourly)
 
+            generator_hour_loads['solar'] = self.solar_power_output[hour]
+            generator_hour_loads['wind'] = self.wind_power_output[hour]
 
-        return results
+            generator_hour_costs['solar'] = 0
+            generator_hour_costs['wind'] = 0
+
+            generator_hour_co2_emission['solar'] = 0
+            generator_hour_co2_emission['wind'] = 0
+
+            generator_day_loads[hour] = generator_hour_loads
+            generator_day_costs[hour] = generator_hour_costs
+            generator_day_co2_emission[hour] = generator_hour_co2_emission
+
+        return generator_day_loads, generator_day_costs, generator_day_co2_emission
 
 
     def create_generator_variable(self):

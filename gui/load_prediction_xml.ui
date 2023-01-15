@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>833</width>
-    <height>458</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -547,7 +547,7 @@
        <attribute name="title">
         <string>Optimization</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
+       <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
          <layout class="QVBoxLayout" name="verticalLayout_34">
           <property name="leftMargin">
@@ -672,7 +672,41 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableWidget" name="generator_table"/>
+           <widget class="QTabWidget" name="tabWidget_2">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="generator_load">
+             <attribute name="title">
+              <string>Gnenerator Load</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QTableWidget" name="generator_load_table"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="generator_cost">
+             <attribute name="title">
+              <string>Generator Cost</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0">
+               <widget class="QTableWidget" name="generator_cost_table"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="generator_emission">
+             <attribute name="title">
+              <string>Generator Emission</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="0">
+               <widget class="QTableWidget" name="generator_co2_emission_table"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_24">

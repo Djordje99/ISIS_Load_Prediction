@@ -152,35 +152,70 @@ class Simplex():
     def optimization(self, load):
         is_running = True
 
-        # The constraints are added to 'prob' one at a time
         self.create_constrain(load)
 
         while(is_running):
             is_running = False
-            # The problem is solved using PuLP's choice of Solver
             self.problem.solve()
 
-            # The status of the solution is printed to the screen
-            print("Status:", LpStatus[self.problem.status])
-
-            # Each of the variables is printed with it's resolved optimum value
             for v in self.problem.variables():
                 print(v.name, "=", v.varValue)
                 if v.varValue != 0 and v.varValue < self.generator_variables[v.name][0]:
                     v.bounds(self.generator_variables[v.name][0], self.generator_variables[v.name][1])
                     is_running = True
 
-        # The optimised objective function value is printed to the screen
-        print("objective_function = ", value(self.problem.objective))
-
-        return self.get_generator_values()
+        return self.get_generator_load_values(), self.get_generator_cost_values(), self.get_generator_co2_emission_values()
 
 
-    def get_generator_values(self):
+    def get_generator_load_values(self):
         generator_values = {}
 
         for variable in self.problem.variables():
             generator_values[variable.name] = variable.varValue
+
+        generator_values = dict(sorted(generator_values.items()))
+
+        return generator_values
+
+
+    def get_generator_cost_values(self):
+        generator_values = {}
+
+        coal_m = self.get_coal_consumption_per_MW_function()
+        gas_m = self.get_gas_consumption_per_MW_function()
+
+        coal_co2_emission = self.get_coal_co2_emission_per_MW_function()
+        gas_co2_emission = self.get_gas_co2_emission_per_MW_function()
+
+        coal_co2_price = self.get_coal_co2_price_per_ton_function()
+        gas_co2_price = self.get_coal_co2_price_per_ton_function()
+
+        for variable in self.problem.variables():
+            if 'coal' in variable.name:
+                generator_values[variable.name] = variable.varValue*(coal_m*self.coal_price + coal_co2_emission*coal_co2_price)
+            if 'gas' in variable.name:
+                generator_values[variable.name] = variable.varValue*(gas_m*self.gas_price + gas_co2_emission*gas_co2_price)
+            if 'hydro' in variable.name:
+                generator_values[variable.name] = variable.varValue*(self.hydro_price + self.hydro_co2_emission*MAX_CO2_PRICE_PER_TON)
+
+        generator_values = dict(sorted(generator_values.items()))
+
+        return generator_values
+
+
+    def get_generator_co2_emission_values(self):
+        generator_values = {}
+
+        coal_co2_emission = self.get_coal_co2_emission_per_MW_function()
+        gas_co2_emission = self.get_gas_co2_emission_per_MW_function()
+
+        for variable in self.problem.variables():
+            if 'coal' in variable.name:
+                generator_values[variable.name] = variable.varValue*coal_co2_emission
+            if 'gas' in variable.name:
+                generator_values[variable.name] = variable.varValue*gas_co2_emission
+            if 'hydro' in variable.name:
+                generator_values[variable.name] = variable.varValue*self.hydro_co2_emission
 
         generator_values = dict(sorted(generator_values.items()))
 
