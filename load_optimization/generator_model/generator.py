@@ -1,11 +1,10 @@
 RANGE = [20, 40, 60, 80, 100]
 
 class Generator():
-    def __init__(self, max_production, min_production, generator_type, count) -> None:
+    def __init__(self, max_production, min_production, generator_type) -> None:
         self._max_production = max_production
         self._min_production = min_production
         self._generator_type = generator_type
-        self._count = count
 
     @property
     def max_production(self):
@@ -30,11 +29,3 @@ class Generator():
     @generator_type.setter
     def generator_type(self, value):
         self._generator_type = value
-
-    @property
-    def count(self):
-        return self._count
-
-    @count.setter
-    def count(self, value):
-        self._count = value

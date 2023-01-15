@@ -4,6 +4,5 @@
     "generator_type": 5,
     "cross_section": 5.0,
     "cut_in_speed": 2.5,
-    "cut_out_speed": 25.0,
-    "count": 10
+    "cut_out_speed": 25.0
 }

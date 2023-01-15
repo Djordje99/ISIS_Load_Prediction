@@ -20,7 +20,7 @@ AIR_DENSITY = 1.225
 
 class Calculator():
     def __init__(self, cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
-                coal_co2_emission_values, gas_co2_emission_values,
+                coal_co2_emission_values, gas_co2_emission_values, hydro_co2_emission,
                 cola_co2_price_values, gas_co2_price_values,
                 coal_generator_count, gas_generator_count, hydro_generator_count, solar_generator_count, wind_generator_count,
                 coal_price, gas_price, hydro_price) -> None:
@@ -47,7 +47,7 @@ class Calculator():
 
         self.simplex = Simplex(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
                                 coal_price, gas_price, hydro_price,
-                                coal_co2_emission_values, gas_co2_emission_values, self.hydro_generator.hydro_co2_emission,
+                                coal_co2_emission_values, gas_co2_emission_values, hydro_co2_emission,
                                 cola_co2_price_values, gas_co2_price_values)
 
         self.predicted_load_df = self.__load_predicted_load()

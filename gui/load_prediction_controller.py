@@ -66,6 +66,7 @@ class LoadPredictionController(QMainWindow):
 
         coal_co2_emission_values = self.coal_generator_tab.get_coal_co2_emission_slider_value()
         gas_co2_emission_values = self.gas_generator_tab.get_gas_co2_emission_slider_value()
+        hydro_co2_emission = self.other_generator_tab.hydro_co2_emission_spin_box.value()
 
         coal_co2_cost_values = self.coal_generator_tab.get_coal_co2_cost_slider_value()
         gas_co2_cost_values = self.gas_generator_tab.get_gas_co2_cost_slider_value()
@@ -81,7 +82,7 @@ class LoadPredictionController(QMainWindow):
         hydro_cost = self.other_generator_tab.hydro_cost_spin_box.value()
 
         calculator = Calculator(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
-                                coal_co2_emission_values, gas_co2_emission_values,
+                                coal_co2_emission_values, gas_co2_emission_values, hydro_co2_emission,
                                 coal_co2_cost_values, gas_co2_cost_values,
                                 coal_generator_count, gas_generator_count, hydro_generator_count, wind_generator_count, solar_generator_count,
                                 coal_cost, gas_cost, hydro_cost)

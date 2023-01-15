@@ -812,10 +812,10 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="maximum">
-                 <double>999.000000000000000</double>
+                 <double>9999.000000000000000</double>
                 </property>
                 <property name="value">
-                 <double>1.000000000000000</double>
+                 <double>1700.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -863,7 +863,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>20</number>
+                 <number>8</number>
                 </property>
                </widget>
               </item>
@@ -1328,10 +1328,10 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="maximum">
-                 <double>999.990000000000009</double>
+                 <double>9999.989999999999782</double>
                 </property>
                 <property name="value">
-                 <double>1.000000000000000</double>
+                 <double>8600.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1379,7 +1379,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>20</number>
+                 <number>8</number>
                 </property>
                </widget>
               </item>
@@ -1799,8 +1799,11 @@
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
                   </property>
+                  <property name="maximum">
+                   <double>9999.000000000000000</double>
+                  </property>
                   <property name="value">
-                   <double>1.000000000000000</double>
+                   <double>350.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -1847,8 +1850,11 @@
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
                   </property>
+                  <property name="maximum">
+                   <double>9999.989999999999782</double>
+                  </property>
                   <property name="value">
-                   <double>1.000000000000000</double>
+                   <double>5.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -1896,7 +1902,7 @@
                    <set>Qt::AlignCenter</set>
                   </property>
                   <property name="value">
-                   <number>20</number>
+                   <number>4</number>
                   </property>
                  </widget>
                 </item>
@@ -1950,7 +1956,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>1</number>
+                 <number>4</number>
                 </property>
                </widget>
               </item>
@@ -1998,7 +2004,7 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                 <property name="value">
-                 <number>1</number>
+                 <number>4</number>
                 </property>
                </widget>
               </item>

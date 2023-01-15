@@ -1,8 +1,8 @@
 from load_optimization.generator_model.generator import Generator
 
 class WindGenerator(Generator):
-    def __init__(self, max_production, min_production, generator_type, cross_section, cut_in_speed, cut_out_speed, count) -> None:
-        super().__init__(max_production, min_production, generator_type, count)
+    def __init__(self, max_production, min_production, generator_type, cross_section, cut_in_speed, cut_out_speed) -> None:
+        super().__init__(max_production, min_production, generator_type)
         self._cross_section = cross_section
         self._cut_in_speed = cut_in_speed
         self._cut_out_speed = cut_out_speed

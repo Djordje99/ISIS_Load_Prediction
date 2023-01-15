@@ -3,6 +3,5 @@
     "min_production": 0,
     "generator_type": 4,
     "panel_size": 100.0,
-    "efficiency": 25.0,
-    "count": 10
+    "efficiency": 25.0
 }

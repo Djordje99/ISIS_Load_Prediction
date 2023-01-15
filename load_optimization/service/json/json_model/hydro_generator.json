@@ -1,8 +1,5 @@
 {
     "max_production": 800.0,
     "min_production": 700.0,
-    "generator_type": 3,
-    "fuel_price": 40.0,
-    "hydro_co2_emission": 10.0,
-    "count": 4
+    "generator_type": 3
 }
