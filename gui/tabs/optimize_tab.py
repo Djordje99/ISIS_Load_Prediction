@@ -136,7 +136,6 @@ class OptimizeTab():
         chart.addSeries(series)
         chart.createDefaultAxes()
         chart.setAnimationOptions(QChart.SeriesAnimations)
-        chart.setTitle('Power production distributed between generators')
 
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)

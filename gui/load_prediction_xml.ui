@@ -358,14 +358,14 @@
                 <second>0</second>
                 <year>2021</year>
                 <month>9</month>
-                <day>7</day>
+                <day>14</day>
                </datetime>
               </property>
               <property name="maximumDate">
                <date>
                 <year>2021</year>
                 <month>9</month>
-                <day>7</day>
+                <day>14</day>
                </date>
               </property>
               <property name="minimumDate">
@@ -711,10 +711,10 @@
               <string>Distribution</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_11">
-              <item row="0" column="0">
+              <item row="1" column="0">
                <widget class="QChartView" name="pie_chart_distribution"/>
               </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QSlider" name="hour_generator_load_slider">
                 <property name="minimum">
                  <number>0</number>
@@ -745,6 +745,28 @@
                 </property>
                 <property name="tickInterval">
                  <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="cost_weighted_factor_label_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Power Production Distributed Between Generators</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
