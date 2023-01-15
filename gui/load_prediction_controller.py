@@ -89,9 +89,11 @@ class LoadPredictionController(QMainWindow):
 
         generator_loads, generator_costs, generator_co2_emission = calculator.call_simplex()
 
-        self.optimize_tab.update_generator_load_table(generator_loads)
-        self.optimize_tab.update_generator_cost_table(generator_costs)
-        self.optimize_tab.update_generator_co2_emission_table(generator_co2_emission)
+        self.optimize_tab.set_generator_values(generator_loads, generator_costs, generator_co2_emission)
+
+        self.optimize_tab.update_generator_load_table()
+        self.optimize_tab.update_generator_cost_table()
+        self.optimize_tab.update_generator_co2_emission_table()
 
 
     def load_test_data(self):
