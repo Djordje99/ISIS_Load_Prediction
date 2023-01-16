@@ -14,7 +14,7 @@ import pandas as pd
 
 LOAD_PATH = 'NYS_Load_Data'
 WEATHER_PATH = 'NYS_Weather_Data\\New_York_City_NY'
-DATA_FRAME_ORDER = ['date', 'season_summer', 'season_autumn', 'season_winter', 'season_spring', 'cos_month', 'sin_month', 'cos_weekday', 'sin_weekday', 'cos_time', 'sin_time', 'temp', 'windspeed', 'solarradiation', 'humidity', 'cloudcover', 'load']
+DATA_FRAME_ORDER = ['date', 'season_summer', 'season_autumn', 'season_winter', 'season_spring', 'cos_month', 'sin_month', 'cos_weekday', 'sin_weekday', 'cos_time', 'sin_time', 'temp', 'mean_temp', 'max_temp', 'min_temp', 'windspeed', 'solarradiation', 'humidity', 'cloudcover', 'load']
 
 class DataCombiner():
     def __init__(self, folder_path) -> None:
@@ -60,7 +60,7 @@ class DataCombiner():
         data_frame = self.weather_calibrator.interpolate_missing_value(data_frame)
 
         data_frame = self.temperature_calibrator.fill_missing_value(data_frame)
-        #data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
+        data_frame = self.temperature_calibrator.create_additional_temperature_feature(data_frame)
         #data_frame = self.temperature_calibrator.create_mean_temperature_previous_day(data_frame)
 
         data_frame = self.holiday_calibrator.calibrate_holidays(data_frame)
