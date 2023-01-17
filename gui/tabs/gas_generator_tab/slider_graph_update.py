@@ -102,14 +102,14 @@ class GasTabSliderGraphUpdate():
         self.thermal_gas_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_gas_graphicview.setLabel("left", "Emission", **styles)
-        self.thermal_gas_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_gas_graphicview.setLabel("left", "Emission [ton]", **styles)
+        self.thermal_gas_graphicview.setLabel("bottom", "Power [MW]", **styles)
 
         self.thermal_gas_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.thermal_gas_graphicview.plot(RANGE, value_list, name='co2 gas', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.thermal_gas_graphicview.plot(RANGE, value_list, name='gas co2 emission', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def update_gas_co2_cost(self):
@@ -122,14 +122,14 @@ class GasTabSliderGraphUpdate():
         self.thermal_gas_co2_cost_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_gas_co2_cost_graphicview.setLabel("left", "Emission", **styles)
-        self.thermal_gas_co2_cost_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_gas_co2_cost_graphicview.setLabel("left", "Cost [$]", **styles)
+        self.thermal_gas_co2_cost_graphicview.setLabel("bottom", "Amount [ton]", **styles)
 
         self.thermal_gas_co2_cost_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.thermal_gas_co2_cost_graphicview.plot(RANGE, value_list, name='co2 gas', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.thermal_gas_co2_cost_graphicview.plot(RANGE, value_list, name='co2 cost', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def update_gas_consumption(self):
@@ -142,12 +142,12 @@ class GasTabSliderGraphUpdate():
         self.thermal_gas_consumption_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_gas_consumption_graphicview.setLabel("left", "Cost", **styles)
-        self.thermal_gas_consumption_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_gas_consumption_graphicview.setLabel("left", "Consumption [ton]", **styles)
+        self.thermal_gas_consumption_graphicview.setLabel("bottom", "Power [MW]", **styles)
 
         self.thermal_gas_consumption_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.thermal_gas_consumption_graphicview.plot(RANGE, value_list, name='consumption gas', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.thermal_gas_consumption_graphicview.plot(RANGE, value_list, name='gas consumption', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 

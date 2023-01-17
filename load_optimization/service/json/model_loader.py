@@ -38,8 +38,8 @@ class ModelLoader(JsonHelper):
 
 
     def load_models(self):
-        ModelLoader.coal_generator = ThermalGenerator(**self.load_generator_as_json('D:\Master\ISIS\ISIS_Load_Prediction\load_optimization\service\json\json_model\coal_generator'))
-        ModelLoader.gas_generator = ThermalGenerator(**self.load_generator_as_json('D:\Master\ISIS\ISIS_Load_Prediction\load_optimization\service\json\json_model\gas_generator'))
-        ModelLoader.hydro_generator = HydroGenerator(**self.load_generator_as_json('D:\Master\ISIS\ISIS_Load_Prediction\load_optimization\service\json\json_model\hydro_generator'))
-        ModelLoader.wind_generator = WindGenerator(**self.load_generator_as_json('D:\Master\ISIS\ISIS_Load_Prediction\load_optimization\service\json\json_model\wind_generator'))
-        ModelLoader.solar_generator = SolarGenerator(**self.load_generator_as_json('D:\Master\ISIS\ISIS_Load_Prediction\load_optimization\service\json\json_model\solar_generator'))
+        ModelLoader.coal_generator = ThermalGenerator(**self.load_generator_as_json('D:\Fax\ISIS_Load_Prediction\load_optimization\service\json\json_model\coal_generator'))
+        ModelLoader.gas_generator = ThermalGenerator(**self.load_generator_as_json('D:\Fax\ISIS_Load_Prediction\load_optimization\service\json\json_model\gas_generator'))
+        ModelLoader.hydro_generator = HydroGenerator(**self.load_generator_as_json('D:\Fax\ISIS_Load_Prediction\load_optimization\service\json\json_model\hydro_generator'))
+        ModelLoader.wind_generator = WindGenerator(**self.load_generator_as_json('D:\Fax\ISIS_Load_Prediction\load_optimization\service\json\json_model\wind_generator'))
+        ModelLoader.solar_generator = SolarGenerator(**self.load_generator_as_json('D:\Fax\ISIS_Load_Prediction\load_optimization\service\json\json_model\solar_generator'))

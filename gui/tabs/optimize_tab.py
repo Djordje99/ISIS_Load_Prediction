@@ -63,7 +63,7 @@ class OptimizeTab():
         for i in range(len(self.generator_loads)):
             for j in range(len(self.generator_loads[0])):
                 key = keys[j]
-                self.generator_load_table.setItem(i, j, QTableWidgetItem(str(self.generator_loads[i][key]) + ' MW'))
+                self.generator_load_table.setItem(i, j, QTableWidgetItem(str(round(self.generator_loads[i][key], 2)) + ' MW'))
 
         self.generator_load_table.resizeColumnsToContents()
 
@@ -79,7 +79,7 @@ class OptimizeTab():
         for i in range(len(self.generator_costs)):
             for j in range(len(self.generator_costs[0])):
                 key = keys[j]
-                self.generator_cost_table.setItem(i, j, QTableWidgetItem(str(self.generator_costs[i][key]) + ' $'))
+                self.generator_cost_table.setItem(i, j, QTableWidgetItem(str(round(self.generator_costs[i][key] / 1000000, 2)) + ' M$'))
 
         self.generator_cost_table.resizeColumnsToContents()
 
@@ -95,7 +95,7 @@ class OptimizeTab():
         for i in range(len(self.generator_co2_emissions)):
             for j in range(len(self.generator_co2_emissions[0])):
                 key = keys[j]
-                self.generator_co2_emission_table.setItem(i, j, QTableWidgetItem(str(self.generator_co2_emissions[i][key]) + ' ton'))
+                self.generator_co2_emission_table.setItem(i, j, QTableWidgetItem(str(round(self.generator_co2_emissions[i][key] / 1000, 2)) + ' ton'))
 
         self.generator_co2_emission_table.resizeColumnsToContents()
 

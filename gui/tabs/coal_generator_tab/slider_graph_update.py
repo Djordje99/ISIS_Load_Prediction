@@ -101,14 +101,14 @@ class CoalTabSliderGraphUpdate():
         self.thermal_coal_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_coal_graphicview.setLabel("left", "Emission", **styles)
-        self.thermal_coal_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_coal_graphicview.setLabel("left", "Emission [ton]", **styles)
+        self.thermal_coal_graphicview.setLabel("bottom", "Power [MW]", **styles)
 
         self.thermal_coal_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.thermal_coal_graphicview.plot(RANGE, value_list, name='co2 coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.thermal_coal_graphicview.plot(RANGE, value_list, name='coal co2 emission', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
 
 
     def update_coal_co2_cost(self):
@@ -121,8 +121,8 @@ class CoalTabSliderGraphUpdate():
         self.thermal_coal_co2_cost_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_coal_co2_cost_graphicview.setLabel("left", "Cost", **styles)
-        self.thermal_coal_co2_cost_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_coal_co2_cost_graphicview.setLabel("left", "Cost [$]", **styles)
+        self.thermal_coal_co2_cost_graphicview.setLabel("bottom", "Amount [ton]", **styles)
 
         self.thermal_coal_co2_cost_graphicview.addLegend()
 
@@ -141,11 +141,11 @@ class CoalTabSliderGraphUpdate():
         self.thermal_coal_consumption_graphicview.setTitle(color=DEFAULT_COLOR, size="30pt")
 
         styles = {"color": "#f00", "font-size": "10px"}
-        self.thermal_coal_consumption_graphicview.setLabel("left", "Cost", **styles)
-        self.thermal_coal_consumption_graphicview.setLabel("bottom", "Power", **styles)
+        self.thermal_coal_consumption_graphicview.setLabel("left", "Consumption [ton]", **styles)
+        self.thermal_coal_consumption_graphicview.setLabel("bottom", "Power [MW]", **styles)
 
         self.thermal_coal_consumption_graphicview.addLegend()
 
         pen = pg.mkPen(color=DEFAULT_COLOR)
 
-        self.thermal_coal_consumption_graphicview.plot(RANGE, value_list, name='consumption coal', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))
+        self.thermal_coal_consumption_graphicview.plot(RANGE, value_list, name='coal consumption', pen=pen, symbolSize=3, symbolBrush=(DEFAULT_COLOR))

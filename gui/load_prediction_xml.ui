@@ -682,7 +682,11 @@
              </attribute>
              <layout class="QGridLayout" name="gridLayout_4">
               <item row="0" column="0">
-               <widget class="QTableWidget" name="generator_load_table"/>
+               <widget class="QTableWidget" name="generator_load_table">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -692,7 +696,11 @@
              </attribute>
              <layout class="QGridLayout" name="gridLayout_7">
               <item row="0" column="0">
-               <widget class="QTableWidget" name="generator_cost_table"/>
+               <widget class="QTableWidget" name="generator_cost_table">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -702,7 +710,11 @@
              </attribute>
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
-               <widget class="QTableWidget" name="generator_co2_emission_table"/>
+               <widget class="QTableWidget" name="generator_co2_emission_table">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
