@@ -39,22 +39,20 @@ class Calculator():
         self.solar_generator_count = solar_generator_count
         self.wind_generator_count = wind_generator_count
 
-        # COAL_POWER_RANGE = [i for i in np.linspace(self.coal_generator.min_production,
-        #                                     self.coal_generator.max_production, 6)]
-
-        # GAS_POWER_RANGE = [i for i in np.linspace(self.gas_generator.min_production,
-        #                                     self.gas_generator.max_production, 6)]
-
-        self.simplex = Simplex(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
-                                coal_price, gas_price, hydro_price,
-                                coal_co2_emission_values, gas_co2_emission_values, hydro_co2_emission,
-                                cola_co2_price_values, gas_co2_price_values)
-
         self.predicted_load_df = self.__load_predicted_load()
         self.weather_data = self.__load_weather_data(self.predicted_load_df['date'].min())
 
         self.wind_power_output = self.get_wind_generator_power_output()
         self.solar_power_output = self.get_solar_generator_power_output()
+
+        self.simplex = Simplex(cost_weight, co2_weight, coal_consumption_values, gas_consumption_values,
+                                coal_price, gas_price, hydro_price,
+                                coal_co2_emission_values, gas_co2_emission_values, hydro_co2_emission,
+                                cola_co2_price_values, gas_co2_price_values,
+                                self.coal_generator.max_fuel_consumption, self.gas_generator.max_fuel_consumption,
+                                self.coal_generator.max_co2_emission, self.gas_generator.max_co2_emission,
+                                self.predicted_load_df['predicted_load'].mean(),
+                                coal_generator_count, gas_generator_count, hydro_generator_count, solar_generator_count, wind_generator_count)
 
 
     def __load_predicted_load(self):

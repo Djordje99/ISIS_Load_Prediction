@@ -1,5 +1,5 @@
 {
-    "max_production": 800.0,
-    "min_production": 700.0,
+    "max_production": 350.0,
+    "min_production": 300.0,
     "generator_type": 3
 }

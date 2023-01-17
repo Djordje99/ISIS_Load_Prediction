@@ -1,7 +1,7 @@
 {
-    "max_production": 500.0,
-    "min_production": 200.0,
+    "max_production": 250.0,
+    "min_production": 100.0,
     "generator_type": 2,
-    "max_fuel_consumption" : 0.3,
-    "max_co2_emission" : 6
+    "max_fuel_consumption" : 1.3,
+    "max_co2_emission" : 60
 }

@@ -1,24 +1,39 @@
 from pulp import *
-from scipy.interpolate import interp1d
-from scipy.optimize import curve_fit
 from statistics import mean
+import numpy as np
 
-FUNCTION_RANGE = [0, 20, 40, 60, 80, 100]
-MAX_COAL_CONSUMPTION = 0.9 / 100
-MAX_GAS_CONSUMPTION = 0.3 / 100
-
-MAX_COAL_CO2_EMISSION = 40
-MAX_GAS_CO2_EMISSION = 20
+from load_optimization.service.optimizer.simplex.graph_linearization import GraphLinearization
 
 MAX_CO2_PRICE_PER_TON = 30
+
+COAL_PERCENTAGE = 0.5
+GAS_PERCENTAGE = 0.2
+HYDRO_PERCENTAGE = 0.2
+SOLAR_PERCENTAGE = 0.05
+WIND_PERCENTAGE = 0.05
 
 
 class Simplex():
     def __init__(self, cost_weight, co2_weight, cost_consumption_coal, cost_consumption_gas,
                 coal_price, gas_price, hydro_price, #coal_power_range, gas_power_range,
-                coal_co2_emission, gas_co2_emission, hydro_co2_emission, coal_co2_cost, gas_co2_cost) -> None:
+                coal_co2_emission, gas_co2_emission, hydro_co2_emission,
+                coal_co2_cost, gas_co2_cost,
+                max_coal_consumption, max_gas_consumption,
+                max_co2_coal_emission, max_co2_gas_emission,
+                mean_load,
+                coal_generator_count, gas_generator_count, hydro_generator_count, solar_generator_count, wind_generator_count) -> None:
+
+        self.graph_linearization = GraphLinearization()
 
         self.problem = LpProblem("Simple LP Problem", LpMinimize)
+
+        self.mean_load = mean_load
+
+        self.coal_generator_count = coal_generator_count
+        self.gas_generator_count = gas_generator_count
+        self.hydro_generator_count = hydro_generator_count
+        self.solar_generator_count = solar_generator_count
+        self.wind_generator_count = wind_generator_count
 
         self.cost_weight = cost_weight
         self.co2_weight = co2_weight
@@ -30,15 +45,17 @@ class Simplex():
         self.gas_price = gas_price
         self.hydro_price = hydro_price
 
-        # self.coal_power_range = coal_power_range
-        # self.gas_power_range = gas_power_range
-
         self.coal_co2_emission = coal_co2_emission
         self.gas_co2_emission = gas_co2_emission
         self.hydro_co2_emission = hydro_co2_emission
 
         self.coal_co2_cost = coal_co2_cost
         self.gas_co2_cost = gas_co2_cost
+
+        self.max_coal_consumption = max_coal_consumption
+        self.max_gas_consumption = max_gas_consumption
+        self.max_co2_coal_emission = max_co2_coal_emission
+        self.max_co2_gas_emission = max_co2_gas_emission
 
     @property
     def generator_variables(self):
@@ -48,63 +65,65 @@ class Simplex():
     def generator_variables(self, value):
         self._generator_variables = value
 
-        # Create problem variables
         self.create_simplex_variable()
 
-        # The objective function is added to 'prob' first
         self.create_objective_function()
 
 
     def get_coal_consumption_per_MW_function(self):
-        # x1 = self.coal_power_range[0]
-        # x2 = self.coal_power_range[len(self.coal_power_range) - 1]
+        a = 1
+        b = 0
 
-        # y1 = self.cost_consumption_coal[0] * MAX_COAL_CONSUMPTION
-        # y2 = self.cost_consumption_coal[len(self.cost_consumption_coal) - 1] * MAX_COAL_CONSUMPTION
+        if self.generator_variables.get('coal_0') is not None:
+            coal_power = self.generator_variables['coal_0']
+            a, b = self.graph_linearization.get_consumption_linear_approximation(self.cost_consumption_coal, self.mean_load,
+                                                                                COAL_PERCENTAGE, coal_power[1], coal_power[0], self.coal_generator_count)
 
-        # m = (y2 - y1) / (x2 - x1)
+            a = a * self.max_gas_consumption
 
-        m = mean(self.cost_consumption_coal) * MAX_COAL_CONSUMPTION
-
-        return m
+        return a, b
 
 
     def get_gas_consumption_per_MW_function(self):
-        # x1 = self.gas_power_range[0]
-        # x2 = self.gas_power_range[len(self.gas_power_range) - 1]
+        a = 1
+        b = 0
 
-        # y1 = self.cost_consumption_gas[0] * MAX_GAS_CONSUMPTION
-        # y2 = self.cost_consumption_gas[len(self.cost_consumption_gas) - 1] * MAX_GAS_CONSUMPTION
+        if self.generator_variables.get('gas_0') is not None:
+            gas_power = self.generator_variables['gas_0']
+            a, b = self.graph_linearization.get_consumption_linear_approximation(self.cost_consumption_gas, self.mean_load,
+                                                                                GAS_PERCENTAGE, gas_power[1], gas_power[0], self.gas_generator_count)
 
-        # m = (y2 - y1) / (x2 - x1)
+            a = a * self.max_gas_consumption
 
-        m = mean(self.cost_consumption_gas) * MAX_GAS_CONSUMPTION
-
-        return m
+        return a, b
 
 
     def get_coal_co2_emission_per_MW_function(self):
-        m = mean(self.coal_co2_emission) * MAX_COAL_CO2_EMISSION
+        a, b = np.polyfit([20, 100], [self.coal_co2_emission[0], self.coal_co2_emission[4]], 1)
+        a = a * self.max_co2_coal_emission
 
-        return m
+        return a
 
 
     def get_gas_co2_emission_per_MW_function(self):
-        m = mean(self.gas_co2_emission) * MAX_GAS_CO2_EMISSION
+        a, b = np.polyfit([20, 100], [self.gas_co2_emission[0], self.gas_co2_emission[4]], 1)
+        a = a * self.max_co2_gas_emission
 
-        return m
-
-
-    def get_coal_co2_price_per_ton_function(self):
-        m = mean(self.coal_co2_emission) * MAX_CO2_PRICE_PER_TON
-
-        return m
+        return a
 
 
     def get_coal_co2_price_per_ton_function(self):
-        m = mean(self.gas_co2_emission) * MAX_CO2_PRICE_PER_TON
+        a, b = np.polyfit([20, 100], [self.coal_co2_emission[0], self.coal_co2_emission[4]], 1)
+        a = a * MAX_CO2_PRICE_PER_TON
 
-        return m
+        return a
+
+
+    def get_coal_co2_price_per_ton_function(self):
+        a, b = np.polyfit([20, 100], [self.gas_co2_emission[0], self.gas_co2_emission[4]], 1)
+        a = a * MAX_CO2_PRICE_PER_TON
+
+        return a
 
 
     def create_simplex_variable(self):
@@ -116,8 +135,8 @@ class Simplex():
     def create_objective_function(self):
         objective_function = None
 
-        coal_m = self.get_coal_consumption_per_MW_function()
-        gas_m = self.get_gas_consumption_per_MW_function()
+        coal_a, coal_b = self.get_coal_consumption_per_MW_function()
+        gas_a, gas_b = self.get_gas_consumption_per_MW_function()
 
         coal_co2_emission = self.get_coal_co2_emission_per_MW_function()
         gas_co2_emission = self.get_gas_co2_emission_per_MW_function()
@@ -127,9 +146,9 @@ class Simplex():
 
         for key, variable in self.simplex_variable.items():
             if 'coal' in key:
-                objective_function += variable*(self.cost_weight*(coal_m*self.coal_price + coal_co2_emission*coal_co2_price) + self.co2_weight*(coal_co2_emission))
+                objective_function += variable*(self.cost_weight*(coal_a*self.coal_price + coal_co2_emission*coal_co2_price) + self.co2_weight*(coal_co2_emission)) + self.cost_weight*coal_b
             if 'gas' in key:
-                objective_function += variable*(self.cost_weight*(gas_m*self.gas_price + gas_co2_emission*gas_co2_price) + self.co2_weight*(gas_co2_emission))
+                objective_function += variable*(self.cost_weight*(gas_a*self.gas_price + gas_co2_emission*gas_co2_price) + self.co2_weight*(gas_co2_emission)) + self.co2_weight*gas_b
             if 'hydro' in key:
                 objective_function += variable*(self.cost_weight*(self.hydro_price + self.hydro_co2_emission*MAX_CO2_PRICE_PER_TON) + self.co2_weight*(self.hydro_co2_emission))
 
@@ -181,8 +200,8 @@ class Simplex():
     def get_generator_cost_values(self):
         generator_values = {}
 
-        coal_m = self.get_coal_consumption_per_MW_function()
-        gas_m = self.get_gas_consumption_per_MW_function()
+        coal_a, coal_b = self.get_coal_consumption_per_MW_function()
+        gas_a, gas_b = self.get_gas_consumption_per_MW_function()
 
         coal_co2_emission = self.get_coal_co2_emission_per_MW_function()
         gas_co2_emission = self.get_gas_co2_emission_per_MW_function()
@@ -192,9 +211,9 @@ class Simplex():
 
         for variable in self.problem.variables():
             if 'coal' in variable.name:
-                generator_values[variable.name] = variable.varValue*(coal_m*self.coal_price + coal_co2_emission*coal_co2_price)
+                generator_values[variable.name] = variable.varValue*coal_a*self.coal_price + coal_b + variable.varValue*coal_co2_emission*coal_co2_price
             if 'gas' in variable.name:
-                generator_values[variable.name] = variable.varValue*(gas_m*self.gas_price + gas_co2_emission*gas_co2_price)
+                generator_values[variable.name] = variable.varValue*gas_a*self.gas_price + gas_b + variable.varValue*gas_co2_emission*gas_co2_price
             if 'hydro' in variable.name:
                 generator_values[variable.name] = variable.varValue*(self.hydro_price + self.hydro_co2_emission*MAX_CO2_PRICE_PER_TON)
 

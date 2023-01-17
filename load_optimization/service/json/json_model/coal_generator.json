@@ -1,5 +1,5 @@
 {
-    "max_production": 800.0,
+    "max_production": 825.0,
     "min_production": 600.0,
     "generator_type": 1,
     "max_fuel_consumption" : 0.9,

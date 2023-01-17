@@ -2,7 +2,7 @@
     "max_production": 0,
     "min_production": 0,
     "generator_type": 5,
-    "cross_section": 5.0,
+    "cross_section": 30.0,
     "cut_in_speed": 2.5,
     "cut_out_speed": 25.0
 }
