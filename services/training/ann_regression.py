@@ -8,7 +8,7 @@ import os
 
 MODEL_NAME = 'model\\basic_previous_load_model'
 MODEL_PATH =  os.path.dirname(__file__)
-LOAD_MODEL_NAME = 'model\\basic_previous_load_model_272_MAPE'
+LOAD_MODEL_NAME = 'model\\basic_previous_load_model_best'
 
 class AnnRegression(AnnBase):
     def get_model(self, size_shape):
@@ -54,7 +54,7 @@ class AnnRegression(AnnBase):
 
 
     def predict(self, X_test):
-        self.model = self.get_model_from_path(f'{MODEL_PATH}\\{MODEL_NAME}')
+        self.model = self.get_model_from_path(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}')
         y_predict = self.model.predict(X_test)
         return y_predict
 
@@ -66,6 +66,6 @@ class AnnRegression(AnnBase):
 
 
     def compile_fit_predict(self, trainX, trainY, testX, size_shape):
-        self.compile_and_fit(trainX, trainY, size_shape)
-        #self.use_current_model(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}', trainX)
+        #self.compile_and_fit(trainX, trainY, size_shape)
+        self.use_current_model(f'{MODEL_PATH}\\{LOAD_MODEL_NAME}', trainX)
         return self.get_predict(testX)

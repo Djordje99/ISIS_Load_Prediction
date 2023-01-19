@@ -81,7 +81,7 @@ class Simplex():
 
             a = a * self.max_gas_consumption
 
-        return a, b
+        return abs(a), b
 
 
     def get_gas_consumption_per_MW_function(self):
@@ -95,35 +95,35 @@ class Simplex():
 
             a = a * self.max_gas_consumption
 
-        return a, b
+        return abs(a), b
 
 
     def get_coal_co2_emission_per_MW_function(self):
         a, b = np.polyfit([20, 100], [self.coal_co2_emission[0], self.coal_co2_emission[4]], 1)
         a = a * self.max_co2_coal_emission
 
-        return a
+        return abs(a)
 
 
     def get_gas_co2_emission_per_MW_function(self):
         a, b = np.polyfit([20, 100], [self.gas_co2_emission[0], self.gas_co2_emission[4]], 1)
         a = a * self.max_co2_gas_emission
 
-        return a
+        return abs(a)
 
 
     def get_coal_co2_price_per_ton_function(self):
         a, b = np.polyfit([20, 100], [self.coal_co2_emission[0], self.coal_co2_emission[4]], 1)
         a = a * MAX_CO2_PRICE_PER_TON
 
-        return a
+        return abs(a)
 
 
     def get_coal_co2_price_per_ton_function(self):
         a, b = np.polyfit([20, 100], [self.gas_co2_emission[0], self.gas_co2_emission[4]], 1)
         a = a * MAX_CO2_PRICE_PER_TON
 
-        return a
+        return abs(a)
 
 
     def create_simplex_variable(self):

@@ -22,11 +22,11 @@ class GraphLinearization():
 
         if generator_load_percentage[1] < 0.4:
             coefficients = np.polyfit([FUNCTION_RANGE[0], FUNCTION_RANGE[1]], [points[0], points[1]], 1)
-        elif single_generator_load[1] < 0.6 and single_generator_load[1] > 0.4:
+        elif generator_load_percentage[1] < 0.6 and generator_load_percentage[1] > 0.4:
             coefficients = np.polyfit([FUNCTION_RANGE[1], FUNCTION_RANGE[2]], [points[1], points[2]], 1)
-        elif single_generator_load[1] < 0.8 and single_generator_load[1] > 0.6:
+        elif generator_load_percentage[1] < 0.8 and generator_load_percentage[1] > 0.6:
             coefficients = np.polyfit([FUNCTION_RANGE[2], FUNCTION_RANGE[3]], [points[2], points[3]], 1)
-        elif single_generator_load[1] < 1 and single_generator_load[1] > 0.8:
+        elif generator_load_percentage[1] < 1 and generator_load_percentage[1] > 0.8:
             coefficients = np.polyfit([FUNCTION_RANGE[3], FUNCTION_RANGE[4]], [points[3], points[4]], 1)
 
         return coefficients[0], coefficients[1]
